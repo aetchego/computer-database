@@ -1,13 +1,13 @@
 package model;
 
-import java.time.LocalDate;
+import java.sql.Date;
 
 public class Computer {
 
 	private int id;
 	private String name;
-	private LocalDate introduced;
-	private LocalDate discontinued;
+	private Date introduced;
+	private Date discontinued;
 	private int company_id;
 	
 	public int getId() {
@@ -22,22 +22,27 @@ public class Computer {
 	public void setName(String name) {
 		this.name = name;
 	}
-	public LocalDate getIntroduced() {
+	public Date getIntroduced() {
 		return introduced;
 	}
-	public void setIntroduced(LocalDate introduced) {
+	public void setIntroduced(Date introduced) {
 		this.introduced = introduced;
 	}
-	public LocalDate getDiscontinued() {
+	public Date getDiscontinued() {
 		return discontinued;
 	}
-	public void setDiscontinued(LocalDate discontinued) {
-		this.discontinued = discontinued;
+	public void setDiscontinued(Date date) {
+		this.discontinued = date;
 	}
 	public int getCompany_id() {
 		return company_id;
 	}
 	public void setCompany_id(int company_id) {
 		this.company_id = company_id;
+	}
+	@Override
+	public String toString() {
+		return "Computer [id=" + id + ", name=" + name + ", introduced=" + introduced + ", discontinued=" + discontinued
+				+ ", company_id=" + company_id + "]";
 	}
 }

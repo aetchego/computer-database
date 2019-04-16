@@ -1,8 +1,10 @@
 package controller;
 
+import service.Service;
+
 public class Controller {
 
-	public static void print() {
-		System.out.println("ou");
+	public static void listComputers() {
+		Service.listComputers();
 	}
 }
