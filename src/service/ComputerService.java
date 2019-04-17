@@ -1,16 +1,20 @@
 package service;
 
-import java.sql.Connection;
 import java.sql.SQLException;
 
 import dao.ComputerDao;
+import dao.DaoException;
 import dao.DaoFactory;
 
-public class Service {
+public class ComputerService {
 
 	public static void listComputers() {
 		DaoFactory dc = DaoFactory.getInstance();
 		ComputerDao cd = dc.getComputer();
-		cd.read();
+		try {
+			cd.read();
+		} catch (DaoException | SQLException e) {
+			e.printStackTrace();
+		}
 	}
 }

@@ -5,8 +5,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-
-import model.Computer;
+import java.util.ArrayList;
 
 public class DaoUtilitaries {
 
@@ -41,5 +40,30 @@ public class DaoUtilitaries {
 	public static void closeConnexions(ResultSet rs) throws SQLException {
 		if (rs != null)	
 			rs.close();
+	}
+	
+	public static void closeConnexions(ResultSet rs, Statement st, Connection co) throws SQLException {
+		DaoUtilitaries.closeConnexions(rs);
+		DaoUtilitaries.closeConnexions(st, co);
+	}
+	
+	public static ArrayList<Object> databaseAccess(String sql, DaoFactory factory) {
+		Connection co = null;
+		PreparedStatement st = null;
+		ResultSet rs = null;
+		ArrayList<Object> con = new ArrayList<>();
+		
+		try {
+			co = factory.getConnection();
+			st = DaoUtilitaries.initPreparedRequest(co, sql);
+			rs = st.executeQuery();	
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			con.add(rs);
+			con.add(st);
+			con.add(co);
+		}
+		return con;
 	}
 }

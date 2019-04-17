@@ -1,7 +1,5 @@
 package main;
 
-import java.util.Scanner;
-
 import client.UserInterface;
 
 public class MainClass {

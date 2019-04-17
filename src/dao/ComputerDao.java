@@ -4,7 +4,9 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 
+import model.Company;
 import model.Computer;
 
 public class ComputerDao implements DaoInterface {
@@ -22,31 +24,16 @@ public class ComputerDao implements DaoInterface {
 	}
 
 	@Override
-	public void read() throws DaoException {
-		Connection co = null;
-		PreparedStatement st = null;
-		ResultSet rs = null;
+	public void read() throws DaoException, SQLException {
 		Computer computer = null;
-		
-		try {
-			co = factory.getConnection();
-			st = DaoUtilitaries.initPreparedRequest(co, "SELECT * FROM `computer-database-db`.computer");
-			rs = st.executeQuery();
-			while (rs.next()) {
-				computer = ComputerDao.toBean(rs);
-				System.out.println(computer.toString());
-			}		
-		} catch (SQLException e) {
-			e.printStackTrace();
-		} finally {
-			try {
-				DaoUtilitaries.closeConnexions(rs);
-				DaoUtilitaries.closeConnexions(st, co);
-				
-			} catch (SQLException e) {
-				e.printStackTrace();
-			}
+		ArrayList<Object> sql = new ArrayList<>();
+
+		sql = DaoUtilitaries.databaseAccess("SELECT * FROM `computer-database-db`.computer", this.factory);
+		while (((ResultSet) sql.get(0)).next()) {
+			computer = ComputerDao.toBean((ResultSet) sql.get(0));
+			System.out.println(computer.toString());
 		}
+		DaoUtilitaries.closeConnexions((ResultSet) sql.get(0), (PreparedStatement)sql.get(1), (Connection)sql.get(2));
 	}
 
 	@Override

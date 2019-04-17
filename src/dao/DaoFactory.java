@@ -10,7 +10,6 @@ public class DaoFactory {
 
 	private static final String PROP_FILE = "dao/dao.properties";
 	private static final String PROP_URL = "url";
-	private static final String PROP_DRIVER = "driver";
 	private static final String PROP_USR = "user";
 	private static final String PROP_PWD = "pwd";
 	
@@ -26,7 +25,6 @@ public class DaoFactory {
 	
 	public static DaoFactory getInstance() throws DaoConfigException {
 		String url;
-		String driver;
 		String usr;
 		String pwd;
 		Properties properties = new Properties();
@@ -38,7 +36,6 @@ public class DaoFactory {
 		try {
 			properties.load(fileProp);
 			url = properties.getProperty(PROP_URL);
-			driver = properties.getProperty(PROP_DRIVER);
 			usr = properties.getProperty(PROP_USR);
 			pwd = properties.getProperty(PROP_PWD);
 		} catch (Exception e) {
@@ -56,5 +53,9 @@ public class DaoFactory {
 	public ComputerDao getComputer() {
 	
 		return new ComputerDao(this);
+	}
+	
+	public CompanyDao getCompany() {
+		return CompanyDao.getInstance(this);
 	}
 }
