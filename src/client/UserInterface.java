@@ -2,7 +2,8 @@ package client;
 
 import java.util.Scanner;
 
-import controller.Controller;
+import controller.CompanyController;
+import controller.ComputerController;
 
 public class UserInterface {
 
@@ -32,10 +33,10 @@ public class UserInterface {
 	public void operations(int option) {
 		switch (option) {
 			case 1:
-				Controller.listComputers();
+				ComputerController.listComputers();
 				break;
 			case 2: 
-				System.out.println("List companies");
+				CompanyController.listCompanies();
 				break;
 			case 3: 
 				System.out.println("Show computers details");
