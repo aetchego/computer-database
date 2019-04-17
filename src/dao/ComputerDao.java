@@ -18,9 +18,11 @@ public class ComputerDao implements DaoInterface {
 	}
 	
 	@Override
-	public void create() throws DaoException {
-		// TODO Auto-generated method stub
-		
+	public void create(Computer computer) throws DaoException, SQLException {
+		ArrayList<Object> sql = new ArrayList<>();
+		sql = DaoUtilitaries.databaseAccess("insert into `computer-database-db`.computer(name, introduced, discontinued) values (?, ?, ?)", 
+		this.factory, 1, computer.getName(), computer.getIntroduced(), computer.getDiscontinued());
+		DaoUtilitaries.closeConnexions((ResultSet) sql.get(0), (PreparedStatement)sql.get(1), (Connection)sql.get(2));
 	}
 
 	@Override
@@ -28,7 +30,7 @@ public class ComputerDao implements DaoInterface {
 		Computer computer = null;
 		ArrayList<Object> sql = new ArrayList<>();
 
-		sql = DaoUtilitaries.databaseAccess("SELECT * FROM `computer-database-db`.computer", this.factory);
+		sql = DaoUtilitaries.databaseAccess("SELECT * FROM `computer-database-db`.computer", this.factory, 0);
 		while (((ResultSet) sql.get(0)).next()) {
 			computer = ComputerDao.toBean((ResultSet) sql.get(0));
 			System.out.println(computer.toString());
@@ -42,10 +44,26 @@ public class ComputerDao implements DaoInterface {
 		
 	}
 
+	public boolean doesExist(int id) throws SQLException {
+		ArrayList<Object> sql = new ArrayList<>();
+		boolean exists = true;
+
+		sql = DaoUtilitaries.databaseAccess("SELECT * FROM `computer-database-db`.computer where(id) LIKE ?", this.factory, 0, id);
+		if (!((ResultSet) sql.get(0)).next())
+			exists = false;
+		DaoUtilitaries.closeConnexions((ResultSet) sql.get(0), (PreparedStatement)sql.get(1), (Connection)sql.get(2));
+		return exists;
+	}
 	@Override
-	public void delete() throws DaoException {
-		// TODO Auto-generated method stub
-		
+	public void delete(int id) throws DaoException, SQLException {
+		try {
+			if (!this.doesExist(id)) {throw new DaoException("[ERROR] ID cannot be found in database.");}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		ArrayList<Object> sql = new ArrayList<>();
+		sql = DaoUtilitaries.databaseAccess("DELETE FROM `computer-database-db`.computer where(id) LIKE ?", this.factory, 1, id);
+		DaoUtilitaries.closeConnexions((ResultSet) sql.get(0), (PreparedStatement)sql.get(1), (Connection)sql.get(2));
 	}
 
 	private static Computer toBean(ResultSet rs) throws SQLException {

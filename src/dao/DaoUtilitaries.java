@@ -8,19 +8,6 @@ import java.sql.Statement;
 import java.util.ArrayList;
 
 public class DaoUtilitaries {
-
-/*	public static PreparedStatement initPreparedRequest(Connection co, String sql, Object ...objects) {
-		PreparedStatement st = null;
-		try {
-			st = co.prepareStatement(sql);
-			for (int i = 0; i < objects.length; i++) {
-				st.setObject(i + 1, objects[i]);
-			}
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-		return st;
-	}*/
 	
 	public static PreparedStatement initPreparedRequest(Connection co, String sql, Object ...objects) throws SQLException {
 		PreparedStatement st = co.prepareStatement(sql);
@@ -47,7 +34,7 @@ public class DaoUtilitaries {
 		DaoUtilitaries.closeConnexions(st, co);
 	}
 	
-	public static ArrayList<Object> databaseAccess(String sql, DaoFactory factory) {
+	public static ArrayList<Object> databaseAccess(String sql, DaoFactory factory, int update, Object ...objects) {
 		Connection co = null;
 		PreparedStatement st = null;
 		ResultSet rs = null;
@@ -55,8 +42,11 @@ public class DaoUtilitaries {
 		
 		try {
 			co = factory.getConnection();
-			st = DaoUtilitaries.initPreparedRequest(co, sql);
-			rs = st.executeQuery();	
+			st = DaoUtilitaries.initPreparedRequest(co, sql, objects);
+			if (update == 0)
+				rs = st.executeQuery();
+			else
+				st.executeUpdate();
 		} catch (SQLException e) {
 			e.printStackTrace();
 		} finally {

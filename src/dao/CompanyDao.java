@@ -25,7 +25,7 @@ public class CompanyDao {
 
 		if (this.companies == null) {
 			companies = new Companies();
-			sql = DaoUtilitaries.databaseAccess("SELECT * FROM `computer-database-db`.company", this.factory);
+			sql = DaoUtilitaries.databaseAccess("SELECT * FROM `computer-database-db`.company", this.factory, 0);
 			while (((ResultSet) sql.get(0)).next())
 				CompanyDao.toBean((ResultSet) sql.get(0), companies);
 			DaoUtilitaries.closeConnexions((ResultSet) sql.get(0), (PreparedStatement)sql.get(1), (Connection)sql.get(2));	

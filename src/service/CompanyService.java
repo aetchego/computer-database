@@ -1,5 +1,6 @@
 package service;
 
+import java.sql.Date;
 import java.sql.SQLException;
 
 import dao.CompanyDao;
@@ -13,18 +14,8 @@ public class CompanyService {
 		CompanyDao dc = df.getCompany();
 		try {
 			dc.read();
-			//dc.read();
 		} catch (DaoException | SQLException e) {
-			e.printStackTrace();
-		}
-		
-		CompanyDao mm = df.getCompany();
-		try {
-			mm.read();
-			mm.read();
-			dc.read();
-		} catch (DaoException | SQLException e) {
-			e.printStackTrace();
+			e.getMessage();
 		}
 	}
 }
