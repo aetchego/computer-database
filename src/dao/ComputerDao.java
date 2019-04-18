@@ -11,8 +11,9 @@ import model.Computer;
 
 public class ComputerDao implements DaoInterface {
 
+	private final String UPDATE = "UPDATE `computer-database-db`.computer SET name = ?, introduced = ?, discontinued = ?, company_id = ? WHERE id = ?";
 	private DaoFactory factory;
-	private final String INSERT = "insert into `computer-database-db`.computer(name, introduced, discontinued, company_id) values (?, ?, ?, ?)";
+	private final String INSERT = "INSERT into `computer-database-db`.computer(name, introduced, discontinued, company_id) values (?, ?, ?, ?)";
 	private final String SELECT = "SELECT `computer-database-db`.computer.id, `computer-database-db`.computer.name, `computer-database-db`.computer.introduced, `computer-database-db`.computer.discontinued, `computer-database-db`.company.name AS company_name, `computer-database-db`.computer.company_id\n" + 
 			"from `computer-database-db`.company\n" + 
 			"RIGHT JOIN `computer-database-db`.computer\n" + 
@@ -54,9 +55,19 @@ public class ComputerDao implements DaoInterface {
 	}
 
 	@Override
-	public void update() throws DaoException {
-		// TODO Auto-generated method stub
-		
+	public void update(Computer computer, Integer id) throws DaoException, SQLException {
+		ArrayList<Object> sql = new ArrayList<>();
+		try {
+			DaoUtilitaries.databaseAccess(sql, UPDATE, this.factory, 1, computer.getName(), computer.getIntroduced(), computer.getDiscontinued(), computer.getCompanyId(), id);
+			if ((Integer) sql.get(3) == 0)
+				throw new DaoException();
+			System.out.println("************************************\nComputer has been updated !\n************************************\n");
+		} catch (SQLException e) {
+			e.printStackTrace();
+			System.out.println("[ERROR] Oops, something went wrong.");
+		} finally {
+			DaoUtilitaries.closeConnexions((ResultSet) sql.get(0), (PreparedStatement)sql.get(1), (Connection)sql.get(2));
+		}
 	}
 
 	@Override

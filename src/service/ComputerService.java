@@ -55,4 +55,19 @@ public class ComputerService {
 			System.out.println("[ERROR] ID does not exist.");
 		}
 	}
+
+	public static void updateComputer(String name, Date dateIn, Date dateOut, Integer brand, int id) {
+		Computer computer = new Computer();
+		computer.setName(name);
+		computer.setIntroduced(dateIn);
+		computer.setDiscontinued(dateOut);
+		computer.setCompanyId(brand);
+		DaoFactory factory = DaoFactory.getInstance();
+		ComputerDao cd = factory.getComputer();
+		try {
+			cd.update(computer, id);
+		} catch (DaoException | SQLException e) {
+			System.out.println("[ERROR] ID does not exist.");
+		}
+	}
 }

@@ -3,6 +3,7 @@ package controller;
 import java.util.ArrayList;
 import java.util.Date;
 
+import client.UserException;
 import dao.DaoUtilitaries;
 
 import java.sql.Connection;
@@ -15,52 +16,60 @@ import service.ComputerService;
 
 public class ComputerController {
 
-	public static void listComputers() {
+	private java.sql.Date dateIn = null;
+	private java.sql.Date dateOut = null;
+	private Integer brand = null;
+	
+	public void listComputers() {
 		ComputerService.listComputers();
 	}
 	
-	public static void createComputer(String name, String inDate, String outDate, String tbrand) {
-		
-		java.sql.Date dateIn = null;
-		java.sql.Date dateOut = null;
-		Integer brand = null;
-		
-		if (name.isEmpty()) {
-			System.out.println("[ERROR] You must specify computer's name.");
-			return ;
-		}
-		try {
-			if (!inDate.isEmpty()) {
-				dateIn = new java.sql.Date(new SimpleDateFormat("dd/MM/yyyy").parse(inDate).getTime());
-			}
-			if (!outDate.isEmpty()) {
-				dateOut = new java.sql.Date(new SimpleDateFormat("dd/MM/yyyy").parse(outDate).getTime());
-			}
-			if (!tbrand.isEmpty()) {
-				try {
-					brand = Integer.parseInt(tbrand);
-				} catch(Exception e) {
-					System.out.println("[ERROR] Invalid ID.");
-					return;
-				}	
-			}
-			if (!inDate.isEmpty() && !outDate.isEmpty() && (inDate.compareTo(outDate) > 0)) {
-				System.out.println("[ERROR] Introduced date cannot be after discontinued date.");
-				return ;
-			}
-			
-		} catch (ParseException e) {
-			System.out.println("[ERROR] This is not a valid date.");
-			return ;
-		}
-		ComputerService.createComputer(name, dateIn, dateOut, brand);
+	public void checkDetails(String name, String inDate, String outDate, String tbrand) throws UserException, ParseException, Exception {
+		if (name.isEmpty())
+			throw new UserException();
+		if (!inDate.isEmpty())
+			dateIn = new java.sql.Date(new SimpleDateFormat("dd/MM/yyyy").parse(inDate).getTime());
+		if (!outDate.isEmpty())
+			dateOut = new java.sql.Date(new SimpleDateFormat("dd/MM/yyyy").parse(outDate).getTime());
+		if (!tbrand.isEmpty())
+			brand = Integer.parseInt(tbrand);
 	}
 	
-	public static void showDetails(int id) {
+	public void createComputer(String name, String inDate, String outDate, String brand) {
+		try {
+			this.checkDetails(name, inDate, outDate, brand);
+			ComputerService.createComputer(name, dateIn, dateOut, this.brand);
+		} catch (UserException e) {
+			System.out.println("[ERROR] You must specify computer's name.");
+			System.out.println("[ERROR] Introduced date cannot be after discontinued date.");
+		} catch (ParseException e) {
+			System.out.println("[ERROR] This is not a valid date.");
+		} catch (Exception e) {
+			System.out.println("[ERROR] ID must be a number.");
+		}
+	}
+	
+	public void showDetails(int id) {
 		ComputerService.showDetails(id);
 	}
 	
-	public static void deleteComputer(int id) {
+	public void deleteComputer(int id) {
 		ComputerService.deleteComputer(id);
 	}
+	
+	public void updateComputer(String name, String inDate, String outDate, String brand, int id) {
+		try {
+			this.checkDetails(name, inDate, outDate, brand);
+			ComputerService.updateComputer(name, this.dateIn, this.dateOut, this.brand, id);
+		} catch (UserException e) {
+			System.out.println("[ERROR] You must specify computer's name.");
+			System.out.println("[ERROR] Introduced date cannot be after discontinued date.");
+		} catch (ParseException e) {
+			System.out.println("[ERROR] This is not a valid date.");
+		} catch (Exception e) {
+			System.out.println("[ERROR] ID must be a number.");
+		}
+	}
+	
+	
 }

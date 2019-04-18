@@ -8,6 +8,6 @@ public interface DaoInterface {
 
 	void create(Computer computer) throws DaoException, SQLException;
 	void read() throws DaoException, SQLException;
-	void update() throws DaoException;
 	void delete(int id) throws DaoException, SQLException;
+	void update(Computer computer, Integer id) throws DaoException, SQLException;
 }

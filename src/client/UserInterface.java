@@ -8,6 +8,7 @@ import controller.ComputerController;
 public class UserInterface {
 
 	private Scanner sc;
+	private ComputerController controller = new ComputerController();
 	private String name = null;
 	private String inDate = null;
 	private String outDate = null;
@@ -36,7 +37,7 @@ public class UserInterface {
 	}
 	
 	public void askDetails() {
-		System.out.println("\nInsert computer's name (mandatory) :");
+		System.out.println("\nInsert computer's name :");
 		this.name = sc.nextLine();
 		System.out.println("\nInsert computer's introduction date [dd/MM/yyyy] (optionnal) :");
 		this.inDate = sc.nextLine();
@@ -47,6 +48,7 @@ public class UserInterface {
 	}
 	
 	public void askId() {
+		this.id = 0;
 		System.out.println("\nPlease give the computer's ID you wishes to apply operations on :");
 		try {
 			this.id = Integer.parseInt(sc.nextLine());
@@ -56,27 +58,32 @@ public class UserInterface {
 	}
 	
 	public void operations(int option) {
+		
 		switch (option) {
 			case 1:
-				ComputerController.listComputers();
+				controller.listComputers();
 				break;
 			case 2: 
 				CompanyController.listCompanies();
 				break;
 			case 3: 
 				this.askId();
-				if (this.id != 0) {ComputerController.showDetails(this.id);}
+				if (this.id != 0) {controller.showDetails(this.id);}
 				break;
 			case 4: 
 				this.askDetails();
-				ComputerController.createComputer(this.name, this.inDate, this.outDate, this.brand);
+				controller.createComputer(this.name, this.inDate, this.outDate, this.brand);
 				break;
 			case 5: 
-				System.out.println("Update a computer");
+				this.askId();
+				if (this.id != 0) {
+					this.askDetails();
+					controller.updateComputer(this.name, this.inDate, this.outDate, this.brand, this.id);
+				}
 				break;
 			case 6: 
 				this.askId();
-				if (this.id != 0) {ComputerController.deleteComputer(this.id);}
+				if (this.id != 0) {controller.deleteComputer(this.id);}
 				break;
 			case 7:
 				System.out.println("Bye !");
