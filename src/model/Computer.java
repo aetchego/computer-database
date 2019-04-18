@@ -8,8 +8,15 @@ public class Computer {
 	private String name;
 	private Date introduced;
 	private Date discontinued;
-	private int company_id;
+	private String brand;
+	private Integer companyId;
 	
+	public String getBrand() {
+		return brand;
+	}
+	public void setBrand(String companyName) {
+		this.brand = companyName;
+	}
 	public int getId() {
 		return id;
 	}
@@ -34,15 +41,20 @@ public class Computer {
 	public void setDiscontinued(Date date) {
 		this.discontinued = date;
 	}
-	public int getCompany_id() {
-		return company_id;
+
+	public Integer getCompanyId() {
+		return companyId;
 	}
-	public void setCompany_id(int company_id) {
-		this.company_id = company_id;
+	public void setCompanyId(Integer companyId) {
+		this.companyId = companyId;
 	}
 	@Override
 	public String toString() {
-		return "Computer [id=" + id + ", name=" + name + ", introduced=" + introduced + ", discontinued=" + discontinued
-				+ ", company_id=" + company_id + "]";
+		return "[" + id + "] [ name = " + name + " ] [ introduced = " + introduced + " ] [ discontinued = " + discontinued
+				+ " ] [ brand = " + brand + " ]";
+	}
+	
+	public String toLittleString() {
+		return "[" + id + "] [ name = " + name + " ] [ brand = " + brand +" ]";
 	}
 }

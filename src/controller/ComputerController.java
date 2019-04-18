@@ -23,7 +23,7 @@ public class ComputerController {
 		
 		java.sql.Date dateIn = null;
 		java.sql.Date dateOut = null;
-		String brand = null;
+		Integer brand = null;
 		
 		if (name.isEmpty()) {
 			System.out.println("[ERROR] You must specify computer's name.");
@@ -36,8 +36,19 @@ public class ComputerController {
 			if (!outDate.isEmpty()) {
 				dateOut = new java.sql.Date(new SimpleDateFormat("dd/MM/yyyy").parse(outDate).getTime());
 			}
-			if (!tbrand.isEmpty())
-				brand = tbrand;
+			if (!tbrand.isEmpty()) {
+				try {
+					brand = Integer.parseInt(tbrand);
+				} catch(Exception e) {
+					System.out.println("[ERROR] Invalid ID.");
+					return;
+				}	
+			}
+			if (!inDate.isEmpty() && !outDate.isEmpty() && (inDate.compareTo(outDate) > 0)) {
+				System.out.println("[ERROR] Introduced date cannot be after discontinued date.");
+				return ;
+			}
+			
 		} catch (ParseException e) {
 			System.out.println("[ERROR] This is not a valid date.");
 			return ;
@@ -45,17 +56,11 @@ public class ComputerController {
 		ComputerService.createComputer(name, dateIn, dateOut, brand);
 	}
 	
-	/*public static boolean isExist(int id) {
-		ArrayList<Object> sql = new ArrayList<>();
-		sql = DaoUtilitaries.databaseAccess("", 
-		this.factory, 1, computer.getName(), computer.getIntroduced(), computer.getDiscontinued());
-		DaoUtilitaries.closeConnexions((ResultSet) sql.get(0), (PreparedStatement)sql.get(1), (Connection)sql.get(2));
-		return true;
-	}*/
+	public static void showDetails(int id) {
+		ComputerService.showDetails(id);
+	}
 	
 	public static void deleteComputer(int id) {
-		//System.out.println(ComputerController.isExist(id));
-		//System.out.println(id);
 		ComputerService.deleteComputer(id);
 	}
 }

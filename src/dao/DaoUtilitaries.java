@@ -34,11 +34,11 @@ public class DaoUtilitaries {
 		DaoUtilitaries.closeConnexions(st, co);
 	}
 	
-	public static ArrayList<Object> databaseAccess(String sql, DaoFactory factory, int update, Object ...objects) {
+	public static void databaseAccess(ArrayList<Object> infos, String sql, DaoFactory factory, int update, Object ...objects) throws SQLException {
 		Connection co = null;
 		PreparedStatement st = null;
 		ResultSet rs = null;
-		ArrayList<Object> con = new ArrayList<>();
+		int count = 0;
 		
 		try {
 			co = factory.getConnection();
@@ -46,14 +46,12 @@ public class DaoUtilitaries {
 			if (update == 0)
 				rs = st.executeQuery();
 			else
-				st.executeUpdate();
-		} catch (SQLException e) {
-			e.printStackTrace();
+				count = st.executeUpdate();
 		} finally {
-			con.add(rs);
-			con.add(st);
-			con.add(co);
+			infos.add(rs);
+			infos.add(st);
+			infos.add(co);
+			infos.add(count);
 		}
-		return con;
 	}
 }

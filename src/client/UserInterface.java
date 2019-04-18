@@ -42,7 +42,7 @@ public class UserInterface {
 		this.inDate = sc.nextLine();
 		System.out.println("\nInsert computer's discontinuation date [dd/MM/yyyy] (optionnal) :");
 		this.outDate = sc.nextLine();
-		System.out.println("\nInsert computer's brand (optionnal) :");
+		System.out.println("\nInsert computer brand's id (optionnal) :");
 		this.brand = sc.nextLine();
 	}
 	
@@ -64,7 +64,8 @@ public class UserInterface {
 				CompanyController.listCompanies();
 				break;
 			case 3: 
-				System.out.println("Show computer's details");
+				this.askId();
+				if (this.id != 0) {ComputerController.showDetails(this.id);}
 				break;
 			case 4: 
 				this.askDetails();

@@ -11,8 +11,8 @@ import model.Computer;
 public class ComputerService {
 
 	public static void listComputers() {
-		DaoFactory dc = DaoFactory.getInstance();
-		ComputerDao cd = dc.getComputer();
+		DaoFactory factory = DaoFactory.getInstance();
+		ComputerDao cd = factory.getComputer();
 		try {
 			cd.read();
 		} catch (DaoException | SQLException e) {
@@ -20,27 +20,39 @@ public class ComputerService {
 		}
 	}
 	
-	public static void createComputer(String name, Date inDate, Date outDate, String brand) {
+	public static void createComputer(String name, Date inDate, Date outDate, Integer brand) {
 		Computer computer = new Computer();
 		computer.setName(name);
 		computer.setIntroduced(inDate);
 		computer.setDiscontinued(outDate);
+		computer.setCompanyId(brand);
 		
-		DaoFactory dc = DaoFactory.getInstance();
-		ComputerDao cd = dc.getComputer();
+		DaoFactory factory = DaoFactory.getInstance();
+		ComputerDao cd = factory.getComputer();
 		try {
 			cd.create(computer);
 		} catch (DaoException | SQLException e) {
-			e.printStackTrace();
+			System.out.println("[ERROR] Company's ID does not exist.");
 		}
 	}
 	
 	public static void deleteComputer(int id) {
-		DaoFactory dc = DaoFactory.getInstance();
-		ComputerDao cd = dc.getComputer();
+		DaoFactory factory = DaoFactory.getInstance();
+		ComputerDao cd = factory.getComputer();
 		try {
 			cd.delete(id);
 		} catch (DaoException | SQLException e) {
+			System.out.println("[ERROR] ID does not exist.");
+		}
+	}
+	
+	public static void showDetails(int id) {
+		DaoFactory factory = DaoFactory.getInstance();
+		ComputerDao cd = factory.getComputer();
+		try {
+			cd.showDetails(id);
+		} catch (DaoException | SQLException e) {
+			System.out.println("[ERROR] ID does not exist.");
 		}
 	}
 }

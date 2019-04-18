@@ -4,7 +4,6 @@ public class DaoException extends RuntimeException {
 
 	private static final long serialVersionUID = 1L;
 
-	public DaoException(String msg) {
-		System.out.println(msg);
+	public DaoException() {
 	}
 }
