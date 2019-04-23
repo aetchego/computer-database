@@ -1,6 +1,7 @@
 package model;
 
 import java.sql.Date;
+import java.util.ArrayList;
 
 public class Computer {
 
@@ -41,7 +42,6 @@ public class Computer {
 	public void setDiscontinued(Date date) {
 		this.discontinued = date;
 	}
-
 	public Integer getCompanyId() {
 		return companyId;
 	}

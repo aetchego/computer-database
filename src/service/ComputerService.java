@@ -2,6 +2,8 @@ package service;
 
 import java.sql.Date;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.Optional;
 
 import dao.ComputerDao;
 import dao.DaoException;
@@ -10,13 +12,18 @@ import model.Computer;
 
 public class ComputerService {
 
-	public static void listComputers() {
+	public static void listComputers(int offset, int limit) {
 		DaoFactory factory = DaoFactory.getInstance();
 		ComputerDao cd = factory.getComputer();
+		Optional <ArrayList<Computer>> optional;
+		ArrayList<Computer> computers = new ArrayList<>();
 		try {
-			cd.read();
+			optional = cd.read(offset, limit);
+			computers = optional.get();
+			for (Computer e : computers)
+				System.out.println(e.toLittleString());
 		} catch (DaoException | SQLException e) {
-			e.printStackTrace();
+			System.out.println("[ERROR] Ooops, something went wrong !");
 		}
 	}
 	
@@ -30,7 +37,8 @@ public class ComputerService {
 		DaoFactory factory = DaoFactory.getInstance();
 		ComputerDao cd = factory.getComputer();
 		try {
-			cd.create(computer);
+		cd.create(computer);
+		System.out.println("***************************************\nComputer has been added to database !\n***************************************\n");
 		} catch (DaoException | SQLException e) {
 			System.out.println("[ERROR] Company's ID does not exist.");
 		}
@@ -41,16 +49,21 @@ public class ComputerService {
 		ComputerDao cd = factory.getComputer();
 		try {
 			cd.delete(id);
+			System.out.println("*******************************************\nComputer has been deleted from database !\n*******************************************\n");
 		} catch (DaoException | SQLException e) {
 			System.out.println("[ERROR] ID does not exist.");
 		}
 	}
 	
 	public static void showDetails(int id) {
+		Optional<Computer> optional;
+		Computer computer;
 		DaoFactory factory = DaoFactory.getInstance();
 		ComputerDao cd = factory.getComputer();
 		try {
-			cd.showDetails(id);
+			optional = cd.showDetails(id);
+			computer = optional.get();
+			System.out.println(computer.toString());
 		} catch (DaoException | SQLException e) {
 			System.out.println("[ERROR] ID does not exist.");
 		}
@@ -66,6 +79,7 @@ public class ComputerService {
 		ComputerDao cd = factory.getComputer();
 		try {
 			cd.update(computer, id);
+			System.out.println("************************************\nComputer has been updated !\n************************************\n");
 		} catch (DaoException | SQLException e) {
 			System.out.println("[ERROR] ID does not exist.");
 		}

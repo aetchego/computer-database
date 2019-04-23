@@ -7,7 +7,7 @@ public final class Companies {
 
 	private ArrayList<Company> companies = new ArrayList<>();
 
-	public List<Company> getCompanies() {
+	public ArrayList<Company> getCompanies() {
 		return companies;
 	}
 	

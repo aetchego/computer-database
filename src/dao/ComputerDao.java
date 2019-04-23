@@ -5,6 +5,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Optional;
 
 import model.Company;
 import model.Computer;
@@ -17,7 +18,7 @@ public class ComputerDao implements DaoInterface {
 	private final String SELECT = "SELECT `computer-database-db`.computer.id, `computer-database-db`.computer.name, `computer-database-db`.computer.introduced, `computer-database-db`.computer.discontinued, `computer-database-db`.company.name AS company_name, `computer-database-db`.computer.company_id\n" + 
 			"from `computer-database-db`.company\n" + 
 			"RIGHT JOIN `computer-database-db`.computer\n" + 
-			"ON `computer-database-db`.company.id = `computer-database-db`.computer.company_id";
+			"ON `computer-database-db`.company.id = `computer-database-db`.computer.company_id LIMIT ? OFFSET ?";
 	private final String DELETE = "DELETE FROM `computer-database-db`.computer where(id) LIKE ?";
 	private final String DETAILS = SELECT + " WHERE(`computer-database-db`.computer.id) LIKE ?";
 	
@@ -30,28 +31,26 @@ public class ComputerDao implements DaoInterface {
 		ArrayList<Object> sql = new ArrayList<>();
 		try {
 			DaoUtilitaries.databaseAccess(sql, INSERT, this.factory, 1, computer.getName(), computer.getIntroduced(), computer.getDiscontinued(), computer.getCompanyId());
-			System.out.println("***************************************\nComputer has been added to database !\n***************************************\n");
 		} finally {
 			DaoUtilitaries.closeConnexions((ResultSet) sql.get(0), (PreparedStatement)sql.get(1), (Connection)sql.get(2));
 		}
 	}
 
 	@Override
-	public void read() throws DaoException, SQLException {
-		Computer computer = null;
+	public Optional<ArrayList<Computer>> read(int offset, int limit) throws DaoException, SQLException {
+		Computer computer;
+		ArrayList<Computer> computers = new ArrayList<>();
 		ArrayList<Object> sql = new ArrayList<>();
-
 		try {
-			DaoUtilitaries.databaseAccess(sql, SELECT, this.factory, 0);
+			DaoUtilitaries.databaseAccess(sql, SELECT, this.factory, 0, limit, offset);
 			while (((ResultSet) sql.get(0)).next()) {
 				computer = ComputerDao.toBean((ResultSet) sql.get(0));
-				System.out.println(computer.toLittleString());
+				computers.add(computer);
 			}
-		} catch (SQLException e) {
-			System.out.println("[ERROR] Oops, something went wrong.");
 		} finally {
 			DaoUtilitaries.closeConnexions((ResultSet) sql.get(0), (PreparedStatement)sql.get(1), (Connection)sql.get(2));
 		}
+		return Optional.ofNullable(computers);
 	}
 
 	@Override
@@ -61,10 +60,6 @@ public class ComputerDao implements DaoInterface {
 			DaoUtilitaries.databaseAccess(sql, UPDATE, this.factory, 1, computer.getName(), computer.getIntroduced(), computer.getDiscontinued(), computer.getCompanyId(), id);
 			if ((Integer) sql.get(3) == 0)
 				throw new DaoException();
-			System.out.println("************************************\nComputer has been updated !\n************************************\n");
-		} catch (SQLException e) {
-			e.printStackTrace();
-			System.out.println("[ERROR] Oops, something went wrong.");
 		} finally {
 			DaoUtilitaries.closeConnexions((ResultSet) sql.get(0), (PreparedStatement)sql.get(1), (Connection)sql.get(2));
 		}
@@ -77,29 +72,24 @@ public class ComputerDao implements DaoInterface {
 			DaoUtilitaries.databaseAccess(sql, DELETE, this.factory, 1, id);
 			if ((Integer) sql.get(3) == 0)
 				throw new DaoException();
-			System.out.println("*******************************************\nComputer has been deleted from database !\n*******************************************\n");
-		} catch (SQLException e) {
-			System.out.println("[ERROR] Oops, something went wrong.");
 		} finally {
 			DaoUtilitaries.closeConnexions((ResultSet) sql.get(0), (PreparedStatement)sql.get(1), (Connection)sql.get(2));
 		}
 	}
 	
-	public void showDetails(int id) throws DaoException, SQLException {
+	public Optional<Computer> showDetails(int id) throws DaoException, SQLException {
 		ArrayList<Object> sql = new ArrayList<>();
-		Computer computer = new Computer();
+		Computer computer;
 		
 		try {
 			DaoUtilitaries.databaseAccess(sql, DETAILS, this.factory, 0, id);
 			if (!((ResultSet) sql.get(0)).next())
 				throw new DaoException();
 			computer = ComputerDao.toBean((ResultSet) sql.get(0));
-			System.out.println(computer.toString());
-		} catch (SQLException e) {
-			System.out.println("[ERROR] Oops, something went wrong.");
 		} finally {
 			DaoUtilitaries.closeConnexions((ResultSet) sql.get(0), (PreparedStatement)sql.get(1), (Connection)sql.get(2));
 		}
+		return Optional.ofNullable(computer);
 	}
 
 	private static Computer toBean(ResultSet rs) throws SQLException {

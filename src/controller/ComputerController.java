@@ -20,8 +20,8 @@ public class ComputerController {
 	private java.sql.Date dateOut = null;
 	private Integer brand = null;
 	
-	public void listComputers() {
-		ComputerService.listComputers();
+	public void listComputers(int offset, int limit) {
+		ComputerService.listComputers(offset, limit);
 	}
 	
 	public void checkDetails(String name, String inDate, String outDate, String tbrand) throws UserException, ParseException, Exception {
