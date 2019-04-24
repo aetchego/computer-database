@@ -1,10 +1,9 @@
 package service;
 
-import java.sql.Date;
 import java.sql.SQLException;
-import java.util.ArrayList;
 import java.util.Optional;
-
+import client.Display;
+import client.UserException;
 import dao.CompanyDao;
 import dao.DaoException;
 import dao.DaoFactory;
@@ -13,18 +12,27 @@ import model.Company;
 
 public class CompanyService {
 
-	public static void listCompanies() {
-		DaoFactory df = DaoFactory.getInstance();
-		CompanyDao dc = df.getCompany();
+	private DaoFactory df = DaoFactory.getInstance();
+	private CompanyDao dc = df.getCompany();
+	private Display<Company> display = new Display<>();
+	private static CompanyService instance = null;
+	
+	private CompanyService() {
+	}
+	
+	public static CompanyService getInstance() {
+		if (instance == null)
+			instance = new CompanyService();
+		return instance;
+	}
+	
+	public void listCompanies() {
 		Optional<Companies> optional;
-		ArrayList<Company> companies = new ArrayList<Company>();
 		try {
 			optional = dc.read();
-			companies = (optional.get()).getCompanies();
-			for (Company e : companies)
-				System.out.println(e.toString());
+			display.displayFull(optional.get().getCompanies());
 		} catch (DaoException | SQLException e) {
-			System.out.println("[ERROR] Ooops, something went wrong !");
+			throw new UserException("[ERROR] Ooops, something went wrong !");
 		}
 	}
 }

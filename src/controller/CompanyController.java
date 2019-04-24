@@ -4,7 +4,19 @@ import service.CompanyService;
 
 public class CompanyController {
 
-	public static void listCompanies() {
-		CompanyService.listCompanies();
+	private static CompanyController instance = null;
+	private static CompanyService companyService = CompanyService.getInstance();
+	
+	private CompanyController() {	
+	}
+	
+	public static CompanyController getInstance() {
+		if (instance == null)
+			instance = new CompanyController();
+		return instance;
+	}
+	
+	public void listCompanies() {
+		companyService.listCompanies();
 	}
 }

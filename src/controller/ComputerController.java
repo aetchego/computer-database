@@ -1,14 +1,6 @@
 package controller;
 
-import java.util.ArrayList;
-import java.util.Date;
-
 import client.UserException;
-import dao.DaoUtilitaries;
-
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 
@@ -19,14 +11,25 @@ public class ComputerController {
 	private java.sql.Date dateIn = null;
 	private java.sql.Date dateOut = null;
 	private Integer brand = null;
+	private static ComputerController instance = null;
+	private ComputerService computerService = ComputerService.getInstance();
+	
+	private ComputerController() {
+	}
+	
+	public static ComputerController getInstance() {
+		if (instance == null)
+			instance = new ComputerController();
+		return instance;
+	}
 	
 	public void listComputers(int offset, int limit) {
-		ComputerService.listComputers(offset, limit);
+		computerService.listComputers(offset, limit);
 	}
 	
 	public void checkDetails(String name, String inDate, String outDate, String tbrand) throws UserException, ParseException, Exception {
 		if (name.isEmpty())
-			throw new UserException();
+			throw new UserException("[ERROR] Name cannot be empty.");
 		if (!inDate.isEmpty())
 			dateIn = new java.sql.Date(new SimpleDateFormat("dd/MM/yyyy").parse(inDate).getTime());
 		if (!outDate.isEmpty())
@@ -38,7 +41,7 @@ public class ComputerController {
 	public void createComputer(String name, String inDate, String outDate, String brand) {
 		try {
 			this.checkDetails(name, inDate, outDate, brand);
-			ComputerService.createComputer(name, dateIn, dateOut, this.brand);
+			computerService.createComputer(name, dateIn, dateOut, this.brand);
 		} catch (UserException e) {
 			System.out.println("[ERROR] You must specify computer's name.");
 			System.out.println("[ERROR] Introduced date cannot be after discontinued date.");
@@ -50,17 +53,17 @@ public class ComputerController {
 	}
 	
 	public void showDetails(int id) {
-		ComputerService.showDetails(id);
+		computerService.showDetails(id);
 	}
 	
 	public void deleteComputer(int id) {
-		ComputerService.deleteComputer(id);
+		computerService.deleteComputer(id);
 	}
 	
 	public void updateComputer(String name, String inDate, String outDate, String brand, int id) {
 		try {
 			this.checkDetails(name, inDate, outDate, brand);
-			ComputerService.updateComputer(name, this.dateIn, this.dateOut, this.brand, id);
+			computerService.updateComputer(name, this.dateIn, this.dateOut, this.brand, id);
 		} catch (UserException e) {
 			System.out.println("[ERROR] You must specify computer's name.");
 			System.out.println("[ERROR] Introduced date cannot be after discontinued date.");

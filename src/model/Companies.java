@@ -5,9 +5,9 @@ import java.util.List;
 
 public final class Companies {
 
-	private ArrayList<Company> companies = new ArrayList<>();
+	private List<Company> companies = new ArrayList<>();
 
-	public ArrayList<Company> getCompanies() {
+	public List<Company> getCompanies() {
 		return companies;
 	}
 	

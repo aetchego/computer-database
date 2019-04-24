@@ -1,5 +1,6 @@
 package client;
 
+import java.lang.ModuleLayer.Controller;
 import java.util.Scanner;
 
 import controller.CompanyController;
@@ -8,14 +9,15 @@ import controller.ComputerController;
 public class UserInterface {
 
 	private Scanner sc;
-	private ComputerController controller = new ComputerController();
 	private String name = null;
 	private String inDate = null;
 	private String outDate = null;
 	private String brand = null;
 	private int offset;
 	private int limit;
-	private int id = 0;
+	private int id;
+	CompanyController companyController = CompanyController.getInstance();
+	ComputerController computerController = ComputerController.getInstance();
 	
 	public void displayChoices() {
 		int choice = 0;
@@ -32,6 +34,7 @@ public class UserInterface {
 				try {
 					choice = Integer.parseInt(sc.nextLine());
 				} catch(Exception e) {
+					throw new UserException("[ERROR] This is not a valid choice.");
 				}	
 			} while (choice < 1 || choice > 7);
 			this.operations(choice);	
@@ -46,16 +49,16 @@ public class UserInterface {
 		System.out.println("\nInsert computer's discontinuation date [dd/MM/yyyy] (optionnal) :");
 		this.outDate = sc.nextLine();
 		System.out.println("\nInsert computer brand's id (optionnal) :");
-		this.brand = sc.nextLine();
+		this.brand = sc.nextLine(); 
 	}
 	
-	public void askId() {
+	public void askId(){
 		this.id = 0;
 		System.out.println("\nPlease give the computer's ID you wishes to apply operations on :");
 		try {
 			this.id = Integer.parseInt(sc.nextLine());
 		} catch(Exception e) {
-			System.out.println("[ERROR] This is not a valid ID.");
+			throw new UserException("[ERROR] This is not a valid ID.");
 		}
 	}
 	
@@ -68,7 +71,7 @@ public class UserInterface {
 			System.out.println("\nPlease, give the maximum results number you want to retrieve :");
 			this.limit = Integer.parseInt(sc.nextLine());
 		} catch(Exception e) {
-			System.out.println("[ERROR] Offset et limit values must be positive numbers.");
+			throw new UserException("[ERROR] Offset et limit values must be positive numbers.");
 		}
 	}
 	
@@ -77,29 +80,29 @@ public class UserInterface {
 		switch (option) {
 			case 1:
 				this.askPagination();
-				if (this.offset > -1 && this.limit > -1) {controller.listComputers(this.offset, this.limit);}
+				if (this.offset > -1 && this.limit > -1) {computerController.listComputers(this.offset, this.limit);}
 				break;
 			case 2: 
-				CompanyController.listCompanies();
+				companyController.listCompanies();
 				break;
 			case 3: 
 				this.askId();
-				if (this.id != 0) {controller.showDetails(this.id);}
+				if (this.id != 0) {computerController.showDetails(this.id);}
 				break;
 			case 4: 
 				this.askDetails();
-				controller.createComputer(this.name, this.inDate, this.outDate, this.brand);
+				computerController.createComputer(this.name, this.inDate, this.outDate, this.brand);
 				break;
 			case 5: 
 				this.askId();
 				if (this.id != 0) {
 					this.askDetails();
-					controller.updateComputer(this.name, this.inDate, this.outDate, this.brand, this.id);
+					computerController.updateComputer(this.name, this.inDate, this.outDate, this.brand, this.id);
 				}
 				break;
 			case 6: 
 				this.askId();
-				if (this.id != 0) {controller.deleteComputer(this.id);}
+				if (this.id != 0) {computerController.deleteComputer(this.id);}
 				break;
 			case 7:
 				System.out.println("Bye !");

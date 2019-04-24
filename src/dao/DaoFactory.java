@@ -52,7 +52,7 @@ public class DaoFactory {
 	
 	public ComputerDao getComputer() {
 	
-		return new ComputerDao(this);
+		return ComputerDao.getInstance(this);
 	}
 	
 	public CompanyDao getCompany() {
