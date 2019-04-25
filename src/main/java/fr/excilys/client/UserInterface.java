@@ -2,6 +2,8 @@ package fr.excilys.client;
 
 import java.util.Scanner;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import fr.excilys.controller.CompanyController;
 import fr.excilys.controller.ComputerController;
 
@@ -18,7 +20,7 @@ public class UserInterface {
 	CompanyController companyController = CompanyController.getInstance();
 	ComputerController computerController = ComputerController.getInstance();
 	
-	public void displayChoices() throws UserException {
+	public void displayChoices() {
 		int choice = 0;
 		while (choice != 7) {
 			do {
@@ -33,7 +35,7 @@ public class UserInterface {
 				try {
 					choice = Integer.parseInt(sc.nextLine());
 				} catch(Exception e) {
-					throw new UserException("[ERROR] This is not a valid choice.");
+					System.out.println("[ERROR] This is not a valid choice.");
 				}	
 			} while (choice < 1 || choice > 7);
 			this.operations(choice);	
@@ -74,9 +76,10 @@ public class UserInterface {
 		}
 	}
 	
-	public void operations(int option) throws UserException {
+	public void operations(int option) {
 		
-		switch (option) {
+		try {
+			switch (option) {
 			case 1:
 				this.askPagination();
 				if (this.offset > -1 && this.limit > -1) {computerController.listComputers(this.offset, this.limit);}
@@ -107,7 +110,10 @@ public class UserInterface {
 				System.out.println("Bye !");
 				sc.close();
 				System.exit(1);
-				
+			}	
+		} catch (UserException e) {
+			Logger logger = LoggerFactory.getLogger(UserInterface.class);
+		    logger.info(e.getMsg());
 		}
 	}
 }

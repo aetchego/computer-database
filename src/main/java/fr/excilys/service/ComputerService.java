@@ -68,7 +68,7 @@ public class ComputerService {
 		}
 	}
 	
-	public void showDetails(int id) {
+	public void showDetails(int id) throws UserException {
 		Optional<Computer> optional;
 		DaoFactory factory = DaoFactory.getInstance();
 		ComputerDao cd = factory.getComputer();
@@ -76,9 +76,7 @@ public class ComputerService {
 			optional = cd.showDetails(id);
 			display.displayElement(optional.get());
 		} catch (DaoException | SQLException e) {
-			//e.printStackTrace();
-			System.out.println("[ERROR] ID does not exist.");
-			//throw new UserException("[ERROR] ID does not exist.");
+			throw new UserException("[ERROR] ID does not exist.");
 		}
 	}
 

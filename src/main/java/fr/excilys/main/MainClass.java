@@ -1,6 +1,5 @@
 package fr.excilys.main;
 
-import fr.excilys.client.UserException;
 import fr.excilys.client.UserInterface;
 
 public class MainClass {
@@ -8,10 +7,6 @@ public class MainClass {
 	public static void main(String[] args) {
 		
 		UserInterface ui = new UserInterface();
-		try {
-			ui.displayChoices();
-		} catch (UserException e) {
-		}
+		ui.displayChoices();
 	}
-
 }

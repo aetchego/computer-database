@@ -52,7 +52,7 @@ public class ComputerController {
 		}
 	}
 	
-	public void showDetails(int id) {
+	public void showDetails(int id) throws UserException {
 		computerService.showDetails(id);
 	}
 	
