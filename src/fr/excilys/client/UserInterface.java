@@ -1,10 +1,9 @@
-package client;
+package fr.excilys.client;
 
-import java.lang.ModuleLayer.Controller;
 import java.util.Scanner;
 
-import controller.CompanyController;
-import controller.ComputerController;
+import fr.excilys.controller.CompanyController;
+import fr.excilys.controller.ComputerController;
 
 public class UserInterface {
 

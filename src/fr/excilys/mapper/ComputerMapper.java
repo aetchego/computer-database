@@ -1,9 +1,9 @@
-package mapper;
+package fr.excilys.mapper;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-import model.Computer;
+import fr.excilys.model.Computer;
 
 public class ComputerMapper {
 

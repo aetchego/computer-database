@@ -1,10 +1,10 @@
-package controller;
+package fr.excilys.controller;
 
-import client.UserException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 
-import service.ComputerService;
+import fr.excilys.client.UserException;
+import fr.excilys.service.ComputerService;
 
 public class ComputerController {
 

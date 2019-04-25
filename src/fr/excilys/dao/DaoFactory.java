@@ -1,4 +1,4 @@
-package dao;
+package fr.excilys.dao;
 
 import java.io.InputStream;
 import java.sql.Connection;
@@ -8,7 +8,7 @@ import java.util.Properties;
 
 public class DaoFactory {
 
-	private static final String PROP_FILE = "dao/dao.properties";
+	private static final String PROP_FILE = "fr.excilys.dao/dao.properties";
 	private static final String PROP_URL = "url";
 	private static final String PROP_USR = "user";
 	private static final String PROP_PWD = "pwd";

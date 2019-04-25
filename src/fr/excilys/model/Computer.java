@@ -1,7 +1,6 @@
-package model;
+package fr.excilys.model;
 
 import java.sql.Date;
-import java.util.ArrayList;
 
 public class Computer {
 

@@ -1,4 +1,4 @@
-package dao;
+package fr.excilys.dao;
 
 public class DaoException extends RuntimeException {
 

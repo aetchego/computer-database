@@ -1,4 +1,4 @@
-package service;
+package fr.excilys.service;
 
 import java.sql.Date;
 import java.sql.SQLException;
@@ -6,12 +6,12 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-import client.Display;
-import client.UserException;
-import dao.ComputerDao;
-import dao.DaoException;
-import dao.DaoFactory;
-import model.Computer;
+import fr.excilys.client.Display;
+import fr.excilys.client.UserException;
+import fr.excilys.dao.ComputerDao;
+import fr.excilys.dao.DaoException;
+import fr.excilys.dao.DaoFactory;
+import fr.excilys.model.Computer;
 
 public class ComputerService {
 

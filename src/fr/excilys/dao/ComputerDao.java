@@ -1,4 +1,4 @@
-package dao;
+package fr.excilys.dao;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -8,9 +8,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-import mapper.ComputerMapper;
-import model.Company;
-import model.Computer;
+import fr.excilys.mapper.ComputerMapper;
+import fr.excilys.model.Computer;
 
 public class ComputerDao {
 

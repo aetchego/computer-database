@@ -1,7 +1,7 @@
-package main;
+package fr.excilys.main;
 
-import client.UserException;
-import client.UserInterface;
+import fr.excilys.client.UserException;
+import fr.excilys.client.UserInterface;
 
 public class MainClass {
 

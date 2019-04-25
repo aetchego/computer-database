@@ -1,7 +1,7 @@
-package controller;
+package fr.excilys.controller;
 
-import client.UserException;
-import service.CompanyService;
+import fr.excilys.client.UserException;
+import fr.excilys.service.CompanyService;
 
 public class CompanyController {
 

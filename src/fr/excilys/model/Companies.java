@@ -1,4 +1,4 @@
-package model;
+package fr.excilys.model;
 
 import java.util.ArrayList;
 import java.util.List;

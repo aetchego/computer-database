@@ -1,16 +1,15 @@
-package dao;
+package fr.excilys.dao;
 
 import java.sql.Connection;
+
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Optional;
 
-import mapper.CompanyMapper;
-import model.Companies;
-import model.Company;
-import model.Computer;
+import fr.excilys.mapper.CompanyMapper;
+import fr.excilys.model.Companies;
 
 public class CompanyDao {
 

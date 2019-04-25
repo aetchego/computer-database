@@ -1,9 +1,9 @@
-package mapper;
+package fr.excilys.mapper;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import model.Companies;
-import model.Company;
+import fr.excilys.model.Companies;
+import fr.excilys.model.Company;
 
 public class CompanyMapper {
 
