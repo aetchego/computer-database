@@ -23,7 +23,7 @@ public class ComputerController {
 		return instance;
 	}
 	
-	public void listComputers(int offset, int limit) {
+	public void listComputers(int offset, int limit) throws UserException {
 		computerService.listComputers(offset, limit);
 	}
 	
@@ -56,7 +56,7 @@ public class ComputerController {
 		computerService.showDetails(id);
 	}
 	
-	public void deleteComputer(int id) {
+	public void deleteComputer(int id) throws UserException {
 		computerService.deleteComputer(id);
 	}
 	

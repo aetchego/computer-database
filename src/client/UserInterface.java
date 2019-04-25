@@ -19,7 +19,7 @@ public class UserInterface {
 	CompanyController companyController = CompanyController.getInstance();
 	ComputerController computerController = ComputerController.getInstance();
 	
-	public void displayChoices() {
+	public void displayChoices() throws UserException {
 		int choice = 0;
 		while (choice != 7) {
 			do {
@@ -52,7 +52,7 @@ public class UserInterface {
 		this.brand = sc.nextLine(); 
 	}
 	
-	public void askId(){
+	public void askId() throws UserException{
 		this.id = 0;
 		System.out.println("\nPlease give the computer's ID you wishes to apply operations on :");
 		try {
@@ -62,7 +62,7 @@ public class UserInterface {
 		}
 	}
 	
-	public void askPagination() {
+	public void askPagination() throws UserException {
 		this.offset = 0;
 		this.limit = 0;
 		try {
@@ -75,7 +75,7 @@ public class UserInterface {
 		}
 	}
 	
-	public void operations(int option) {
+	public void operations(int option) throws UserException {
 		
 		switch (option) {
 			case 1:

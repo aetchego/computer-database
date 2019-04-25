@@ -1,5 +1,6 @@
 package controller;
 
+import client.UserException;
 import service.CompanyService;
 
 public class CompanyController {
@@ -16,7 +17,7 @@ public class CompanyController {
 		return instance;
 	}
 	
-	public void listCompanies() {
+	public void listCompanies() throws UserException {
 		companyService.listCompanies();
 	}
 }

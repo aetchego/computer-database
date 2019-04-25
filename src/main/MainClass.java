@@ -1,5 +1,6 @@
 package main;
 
+import client.UserException;
 import client.UserInterface;
 
 public class MainClass {
@@ -7,7 +8,10 @@ public class MainClass {
 	public static void main(String[] args) {
 		
 		UserInterface ui = new UserInterface();
-		ui.displayChoices();
+		try {
+			ui.displayChoices();
+		} catch (UserException e) {
+		}
 	}
 
 }

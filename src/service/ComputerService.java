@@ -27,7 +27,7 @@ public class ComputerService {
 			instance = new ComputerService();
 		return instance;
 	}
-	public void listComputers(int offset, int limit) {
+	public void listComputers(int offset, int limit) throws UserException {
 		DaoFactory factory = DaoFactory.getInstance();
 		ComputerDao cd = factory.getComputer();
 		List<Computer> computers = new ArrayList<>();
@@ -40,7 +40,7 @@ public class ComputerService {
 		}
 	}
 	
-	public void createComputer(String name, Date inDate, Date outDate, Integer brand) {
+	public void createComputer(String name, Date inDate, Date outDate, Integer brand) throws UserException {
 		Computer computer = new Computer();
 		computer.setName(name);
 		computer.setIntroduced(inDate);
@@ -57,7 +57,7 @@ public class ComputerService {
 		}
 	}
 	
-	public void deleteComputer(int id) {
+	public void deleteComputer(int id) throws UserException {
 		DaoFactory factory = DaoFactory.getInstance();
 		ComputerDao cd = factory.getComputer();
 		try {
@@ -82,7 +82,7 @@ public class ComputerService {
 		}
 	}
 
-	public void updateComputer(String name, Date dateIn, Date dateOut, Integer brand, int id) {
+	public void updateComputer(String name, Date dateIn, Date dateOut, Integer brand, int id) throws UserException {
 		Computer computer = new Computer();
 		computer.setName(name);
 		computer.setIntroduced(dateIn);

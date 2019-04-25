@@ -26,7 +26,7 @@ public class CompanyService {
 		return instance;
 	}
 	
-	public void listCompanies() {
+	public void listCompanies() throws UserException {
 		Optional<Companies> optional;
 		try {
 			optional = dc.read();
