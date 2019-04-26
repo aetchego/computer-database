@@ -6,8 +6,8 @@ public class UserException extends Exception {
 	private String msg;
 
 	public UserException(String msg) {
+		super(msg);
 		this.msg = msg;
-		System.out.println(msg);
 	}
 	
 	public String getMsg() {
