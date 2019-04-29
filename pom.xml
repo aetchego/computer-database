@@ -7,6 +7,7 @@
   <groupId>fr.excilys</groupId>
   <artifactId>cdb_project</artifactId>
   <version>0.0.1-SNAPSHOT</version>
+  <packaging>jar</packaging>
   
  <name>cdb_project</name>
   <!-- FIXME change it to the project's website -->
@@ -51,6 +52,12 @@
     <version>4.0.1</version>
     <scope>provided</scope>
 	</dependency>
+	
+	<dependency>
+     <groupId>jstl</groupId>
+     <artifactId>jstl</artifactId>
+     <version>1.2</version>
+ </dependency>
     
   </dependencies>
 
