@@ -13,6 +13,8 @@ import fr.excilys.dao.DaoException;
 import fr.excilys.dao.DaoFactory;
 import fr.excilys.model.Computer;
 
+
+
 public class ComputerService {
 
 	private static ComputerService instance = null;
@@ -27,17 +29,19 @@ public class ComputerService {
 			instance = new ComputerService();
 		return instance;
 	}
-	public void listComputers(int offset, int limit) throws UserException {
+	public List<Computer> listComputers(int offset, int limit) throws UserException {
 		DaoFactory factory = DaoFactory.getInstance();
 		ComputerDao cd = factory.getComputer();
 		List<Computer> computers = new ArrayList<>();
 		
 		try {
 			computers = cd.read(offset, limit);
-			display.displayFull(computers);
+		//	display.displayFull(computers);
 		} catch (DaoException | SQLException e) {
+			//e.printStackTrace();
 			throw new UserException("[ERROR] Ooops, something went wrong !");
 		}
+		return computers;
 	}
 	
 	public void createComputer(String name, Date inDate, Date outDate, Integer brand) throws UserException {

@@ -12,21 +12,25 @@ public class DaoFactory {
 	private static final String PROP_URL = "url";
 	private static final String PROP_USR = "user";
 	private static final String PROP_PWD = "pwd";
+	private static final String PROP_DRIVER = "driver";
 	
 	private String url;
 	private String usr;
 	private String pwd;
+	private String driver;
 	
-	DaoFactory(String url, String usr, String pwd) {
+	DaoFactory(String url, String usr, String pwd, String driver) {
 		this.url = url;
 		this.usr = usr;
 		this.pwd = pwd;
+		this.driver = driver;
 	}
 	
 	public static DaoFactory getInstance() throws DaoConfigException {
 		String url;
 		String usr;
 		String pwd;
+		String driver;
 		Properties properties = new Properties();
 		ClassLoader classLoader = Thread.currentThread().getContextClassLoader();
 		InputStream fileProp = classLoader.getResourceAsStream(PROP_FILE);
@@ -38,11 +42,19 @@ public class DaoFactory {
 			url = properties.getProperty(PROP_URL);
 			usr = properties.getProperty(PROP_USR);
 			pwd = properties.getProperty(PROP_PWD);
+			driver = properties.getProperty(PROP_DRIVER);
+			System.out.println("ok file");
 		} catch (Exception e) {
+			System.out.println("properties");
 			throw new DaoConfigException("Impossible to load properties file.");
 		}
 
-		DaoFactory instance = new DaoFactory(url, usr, pwd);
+		try {
+            Class.forName(driver);
+        } catch ( ClassNotFoundException e ) {
+            throw new DaoConfigException("Cannot find driver.");
+        }
+		DaoFactory instance = new DaoFactory(url, usr, pwd, driver);
 		return instance;
 	}
 	

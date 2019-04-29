@@ -2,8 +2,10 @@ package fr.excilys.controller;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.List;
 
 import fr.excilys.client.UserException;
+import fr.excilys.model.Computer;
 import fr.excilys.service.ComputerService;
 
 public class ComputerController {
@@ -23,8 +25,8 @@ public class ComputerController {
 		return instance;
 	}
 	
-	public void listComputers(int offset, int limit) throws UserException {
-		computerService.listComputers(offset, limit);
+	public List<Computer> listComputers(int offset, int limit) throws UserException {
+		return (computerService.listComputers(offset, limit));
 	}
 	
 	public void checkDetails(String name, String inDate, String outDate, String tbrand) throws UserException, ParseException, Exception {

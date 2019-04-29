@@ -79,20 +79,22 @@
                     </tr>
                 </thead>
                 <!-- Browse attribute computers -->
+                
                 <tbody id="results">
+                <c:forEach items="${computers}" var="s">
                     <tr>
                         <td class="editMode">
                             <input type="checkbox" name="cb" class="cb" value="0">
                         </td>
                         <td>
-                            <a href="editComputer.html" onclick="">MacBook Pro</a>
+                            <a href="editComputer.html" onclick="">${s.name}</a>
                         </td>
-                        <td>2006-01-10</td>
-                        <td></td>
-                        <td>Apple Inc.</td>
+                        <td>${s.introduced}</td>
+                        <td>${s.discontinued}</td>
+                        <td>${s.brand}</td>
 
                     </tr>
-                    
+                   </c:forEach>
                 </tbody>
             </table>
         </div>
@@ -117,7 +119,7 @@
                 </a>
             </li>
         </ul>
-
+		</div>
         <div class="btn-group btn-group-sm pull-right" role="group" >
             <button type="button" class="btn btn-default">10</button>
             <button type="button" class="btn btn-default">50</button>
