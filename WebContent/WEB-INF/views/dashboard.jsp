@@ -17,7 +17,7 @@
 <body>
     <header class="navbar navbar-inverse navbar-fixed-top">
         <div class="container">
-            <a class="navbar-brand" href="dashboard.html"> Application - Computer Database </a>
+            <a class="navbar-brand" href="dashboard"> Application - Computer Database </a>
         </div>
     </header>
 
@@ -104,27 +104,27 @@
         <div class="container text-center">
             <ul class="pagination">
                 <li>
-                    <a href="#" aria-label="Previous">
+                    <a href="dashboard?previous=true" aria-label="Previous">
                       <span aria-hidden="true">&laquo;</span>
                   </a>
               </li>
-              <li><a href="#">1</a></li>
-              <li><a href="#">2</a></li>
-              <li><a href="#">3</a></li>
-              <li><a href="#">4</a></li>
-              <li><a href="#">5</a></li>
+              <c:forEach begin="1" end="${pageNumber}" varStatus="loop">
+              <li><a href="dashboard?pageAt=${loop.index}">${loop.index}</a></li>
+              </c:forEach>
+         
               <li>
-                <a href="#" aria-label="Next">
+                <a href="dashboard?next=true" aria-label="Next">
                     <span aria-hidden="true">&raquo;</span>
                 </a>
             </li>
         </ul>
-		</div>
+		
         <div class="btn-group btn-group-sm pull-right" role="group" >
-            <button type="button" class="btn btn-default">10</button>
-            <button type="button" class="btn btn-default">50</button>
-            <button type="button" class="btn btn-default">100</button>
+            <a href="dashboard?size=10" class="btn btn-default">10</a>
+            <a href="dashboard?size=50" class="btn btn-default">50</a>
+            <a href="dashboard?size=100" class="btn btn-default">100</a>
         </div>
+       </div>
 
     </footer>
 <script src="../js/jquery.min.js"></script>

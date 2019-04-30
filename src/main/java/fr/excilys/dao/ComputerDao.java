@@ -21,6 +21,7 @@ public class ComputerDao {
 			+ "ON `computer-database-db`.company.id = `computer-database-db`.computer.company_id";
 	private final String DELETE = "DELETE FROM `computer-database-db`.computer where(id) LIKE ?";
 	private final String DETAILS = SELECT + " WHERE(`computer-database-db`.computer.id) LIKE ?";
+	private final String COUNT = "SELECT COUNT(*) AS rowcount FROM `computer-database-db`.computer";
 	private static ComputerDao instance = null;
 	private ComputerMapper computerMapper = ComputerMapper.getInstance();
 
@@ -101,5 +102,20 @@ public class ComputerDao {
 					(Connection) sql.get(2));
 		}
 		return Optional.ofNullable(computer);
+	}
+	
+	public int countComputers() throws DaoException, SQLException {
+		int res = 0;
+		ArrayList<Object> sql = new ArrayList<>();
+		try {
+			DaoUtilitaries.databaseAccess(sql, COUNT, this.factory, 0);
+			((ResultSet) sql.get(0)).next();
+			res = ((ResultSet) sql.get(0)).getInt("rowcount");
+
+		} finally {
+			DaoUtilitaries.closeConnexions((ResultSet) sql.get(0), (PreparedStatement) sql.get(1),
+					(Connection) sql.get(2));
+		}
+		return res;
 	}
 }

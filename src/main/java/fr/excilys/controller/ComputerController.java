@@ -12,8 +12,6 @@ public class ComputerController {
 
 	private java.sql.Date dateIn = null;
 	private java.sql.Date dateOut = null;
-	// private Integer brand = null;
-	private String brand;
 	private static ComputerController instance = null;
 	private ComputerService computerService = ComputerService.getInstance();
 
@@ -38,8 +36,6 @@ public class ComputerController {
 			dateIn = new java.sql.Date(new SimpleDateFormat("dd/MM/yyyy").parse(inDate).getTime());
 		if (!outDate.isEmpty())
 			dateOut = new java.sql.Date(new SimpleDateFormat("dd/MM/yyyy").parse(outDate).getTime());
-		// if (!tbrand.isEmpty())
-		// brand = Integer.parseInt(tbrand);
 	}
 
 	public void createComputer(String name, String inDate, String outDate, String brand) {
@@ -67,8 +63,6 @@ public class ComputerController {
 	public void updateComputer(String name, String inDate, String outDate, String brand, int id) {
 		try {
 			this.checkDetails(name, inDate, outDate);
-			// computerService.updateComputer(name, this.dateIn, this.dateOut, this.brand,
-			// id);
 		} catch (UserException e) {
 			System.out.println("[ERROR] You must specify computer's name.");
 			System.out.println("[ERROR] Introduced date cannot be after discontinued date.");
@@ -77,6 +71,12 @@ public class ComputerController {
 		} catch (Exception e) {
 			System.out.println("[ERROR] ID must be a number.");
 		}
+	}
+	
+	public int countComputers() throws UserException {
+		int res = 0;
+		res = computerService.countComputers();
+		return res;
 	}
 
 }

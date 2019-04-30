@@ -96,4 +96,14 @@ public class ComputerService {
 			throw new UserException("[ERROR] ID does not exist.");
 		}
 	}
+	
+	public int countComputers() throws UserException {
+		int res = 0;
+		try {
+			res = cd.countComputers();
+		} catch (DaoException | SQLException e) {
+			throw new UserException("[ERROR] Ooops, something went wrong !");
+		}
+		return res;
+	}
 }
