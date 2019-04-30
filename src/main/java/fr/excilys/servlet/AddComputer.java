@@ -1,7 +1,6 @@
 package fr.excilys.servlet;
 
 import java.io.IOException;
-import java.util.List;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -11,25 +10,22 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import fr.excilys.client.UserException;
-import fr.excilys.controller.ComputerController;
-import fr.excilys.model.Computer;
+import fr.excilys.controller.CompanyController;
+import fr.excilys.model.Companies;
 
-@WebServlet(urlPatterns = "/dashboard")
-public class ListComputer extends HttpServlet {
-
-	private ComputerController controller = ComputerController.getInstance();
+@WebServlet(urlPatterns = "/addComputer")
+public class AddComputer extends HttpServlet {
 
 	public void doGet(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
 
+		CompanyController controller = CompanyController.getInstance();
 		try {
-			List<Computer> computers = controller.listComputers(0, 150);
-			req.setAttribute("computerNumber", computers.size());
-			req.setAttribute("computers", computers);
+			Companies companies = controller.listCompanies();
+			req.setAttribute("companies", companies.getCompanies());
 		} catch (UserException e) {
 			e.printStackTrace();
 		}
-
-		RequestDispatcher rd = req.getRequestDispatcher("/WEB-INF/views/dashboard.jsp");
+		RequestDispatcher rd = req.getRequestDispatcher("/WEB-INF/views/addComputer.jsp");
 		rd.forward(req, res);
 	}
 }

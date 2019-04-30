@@ -1,6 +1,7 @@
 package fr.excilys.model;
 
 import java.sql.Date;
+import java.util.List;
 
 public class Computer {
 
@@ -10,50 +11,79 @@ public class Computer {
 	private Date discontinued;
 	private String brand;
 	private Integer companyId;
-	
+	private Company company;
+
 	public String getBrand() {
 		return brand;
 	}
+
 	public void setBrand(String companyName) {
 		this.brand = companyName;
 	}
+
 	public int getId() {
 		return id;
 	}
+
 	public void setId(int id) {
 		this.id = id;
 	}
+
 	public String getName() {
 		return name;
 	}
+
 	public void setName(String name) {
 		this.name = name;
 	}
+
 	public Date getIntroduced() {
 		return introduced;
 	}
+
 	public void setIntroduced(Date introduced) {
 		this.introduced = introduced;
 	}
+
 	public Date getDiscontinued() {
 		return discontinued;
 	}
+
 	public void setDiscontinued(Date date) {
 		this.discontinued = date;
 	}
+
 	public Integer getCompanyId() {
 		return companyId;
 	}
+
+	public Company getCompany() {
+		return company;
+	}
+
 	public void setCompanyId(Integer companyId) {
 		this.companyId = companyId;
 	}
+
+	public void searchCompany(String name, Companies companies) {
+		List<Company> comp = companies.getCompanies();
+		for (Company e : comp) {
+			System.out.println(e.getName() + " " + name);
+			if (e.getName().equals(name)) {
+				System.out.println("similaire");
+				this.company = e;
+				this.companyId = e.getId();
+			}
+		}
+	}
+
 	@Override
 	public String toString() {
-		return "[" + id + "] [ name = " + name + " ] [ introduced = " + introduced + " ] [ discontinued = " + discontinued
-				+ " ] [ brand = " + brand + " ]";
+		return "[" + id + "] [ name = " + name + " ] [ introduced = " + introduced + " ] [ discontinued = "
+				+ discontinued + " ] [ brand = " + brand + " ]";
 	}
-	
+
 	public String toLittleString() {
-		return "[" + id + "] [ name = " + name + " ] [ brand = " + brand +" ]";
+		return "[" + id + "] [ name = " + name + " ] [ brand = " + brand + " ]";
 	}
 }

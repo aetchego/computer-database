@@ -9,7 +9,7 @@ public class UserException extends Exception {
 		super(msg);
 		this.msg = msg;
 	}
-	
+
 	public String getMsg() {
 		return msg;
 	}

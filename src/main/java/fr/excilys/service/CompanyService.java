@@ -1,7 +1,6 @@
 package fr.excilys.service;
 
 import java.sql.SQLException;
-import java.util.Optional;
 
 import fr.excilys.client.Display;
 import fr.excilys.client.UserException;
@@ -17,23 +16,24 @@ public class CompanyService {
 	private CompanyDao dc = df.getCompany();
 	private Display<Company> display = new Display<>();
 	private static CompanyService instance = null;
-	
+
 	private CompanyService() {
 	}
-	
+
 	public static CompanyService getInstance() {
 		if (instance == null)
 			instance = new CompanyService();
 		return instance;
 	}
-	
-	public void listCompanies() throws UserException {
-		Optional<Companies> optional;
+
+	public Companies listCompanies() throws UserException {
+		Companies companies;
 		try {
-			optional = dc.read();
-			display.displayFull(optional.get().getCompanies());
+			companies = dc.read();
+			// display.displayFull(optional.get().getCompanies());
 		} catch (DaoException | SQLException e) {
 			throw new UserException("[ERROR] Ooops, something went wrong !");
 		}
+		return companies;
 	}
 }

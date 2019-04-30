@@ -15,7 +15,7 @@ import javax.servlet.http.HttpServletResponse;
 public class TestServlet extends HttpServlet {
 
 	public void doGet(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
-		
+
 		List<String> test = new ArrayList<>();
 		test.add("Alizé");
 		test.add("Agathe");

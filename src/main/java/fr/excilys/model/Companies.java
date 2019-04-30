@@ -10,7 +10,7 @@ public final class Companies {
 	public List<Company> getCompanies() {
 		return companies;
 	}
-	
+
 	public void addCompany(Company company) {
 		this.companies.add(company);
 	}

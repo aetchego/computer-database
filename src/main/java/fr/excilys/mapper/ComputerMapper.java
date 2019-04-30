@@ -8,16 +8,17 @@ import fr.excilys.model.Computer;
 public class ComputerMapper {
 
 	private static ComputerMapper instance = null;
-	
+
 	private ComputerMapper() {
-		
+
 	}
-	
+
 	public static ComputerMapper getInstance() {
 		if (instance == null)
 			instance = new ComputerMapper();
 		return instance;
 	}
+
 	public Computer toBean(ResultSet rs) throws SQLException {
 		Computer computer = new Computer();
 		computer.setId(rs.getInt("id"));
