@@ -2,6 +2,7 @@ package fr.excilys.model;
 
 import java.sql.Date;
 import java.util.List;
+import java.util.Objects;
 
 public class Computer {
 
@@ -85,5 +86,27 @@ public class Computer {
 
 	public String toLittleString() {
 		return "[" + id + "] [ name = " + name + " ] [ brand = " + brand + " ]";
+	}
+
+	@Override
+	public int hashCode() {
+		return Objects.hash(brand, company, companyId, discontinued, id, introduced, name);
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj) {
+			return true;
+		}
+		if (obj == null) {
+			return false;
+		}
+		if (!(obj instanceof Computer)) {
+			return false;
+		}
+		Computer other = (Computer) obj;
+		return Objects.equals(brand, other.brand) && Objects.equals(company, other.company)
+				&& Objects.equals(companyId, other.companyId) && Objects.equals(discontinued, other.discontinued)
+				&& id == other.id && Objects.equals(introduced, other.introduced) && Objects.equals(name, other.name);
 	}
 }

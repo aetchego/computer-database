@@ -1,5 +1,7 @@
 package fr.excilys.model;
 
+import java.util.Objects;
+
 public final class Company {
 
 	private int id;
@@ -24,5 +26,25 @@ public final class Company {
 	@Override
 	public String toString() {
 		return "Company [id=" + id + ", name=" + name + "]";
+	}
+
+	@Override
+	public int hashCode() {
+		return Objects.hash(id, name);
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj) {
+			return true;
+		}
+		if (obj == null) {
+			return false;
+		}
+		if (!(obj instanceof Company)) {
+			return false;
+		}
+		Company other = (Company) obj;
+		return id == other.id && Objects.equals(name, other.name);
 	}
 }

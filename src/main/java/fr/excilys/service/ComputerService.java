@@ -3,7 +3,6 @@ package fr.excilys.service;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 import fr.excilys.client.UserException;
 import fr.excilys.dao.ComputerDao;
