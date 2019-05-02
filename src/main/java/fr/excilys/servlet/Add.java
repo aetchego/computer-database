@@ -2,7 +2,6 @@ package fr.excilys.servlet;
 
 import java.io.IOException;
 
-import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -25,9 +24,6 @@ public class Add extends HttpServlet {
 		} catch (Exception e) {
 			req.setAttribute("error", 1);
 		}
-		// System.out.println(name + inDate + outDate + brand);
 		res.sendRedirect("/cdb_project/dashboard");
-		//RequestDispatcher rd = req.getRequestDispatcher("/dashboard");
-		//rd.forward(req, res);
 	}
 }
