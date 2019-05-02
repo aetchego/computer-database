@@ -20,9 +20,14 @@ public class Add extends HttpServlet {
 		String inDate = req.getParameter("inDate");
 		String outDate = req.getParameter("outDate");
 		String brand = req.getParameter("brand");
-		controller.createComputer(name, inDate, outDate, brand);
+		try {
+			controller.createComputer(name, inDate, outDate, brand);
+		} catch (Exception e) {
+			req.setAttribute("error", 1);
+		}
 		// System.out.println(name + inDate + outDate + brand);
-		RequestDispatcher rd = req.getRequestDispatcher("/dashboard");
-		rd.forward(req, res);
+		res.sendRedirect("/cdb_project/dashboard");
+		//RequestDispatcher rd = req.getRequestDispatcher("/dashboard");
+		//rd.forward(req, res);
 	}
 }

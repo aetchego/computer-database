@@ -27,18 +27,8 @@ public class ListComputer extends HttpServlet {
 	public void doGet(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
 	
 		try {
-			if (req.getParameter("pageAt") != null)
-				pageAt = Integer.parseInt(req.getParameter("pageAt")) - 1;
-			if (req.getParameter("previous") != null)
-				if (req.getParameter("previous").equals("true"))
-					if (pageAt > 0)
-						pageAt--;
-			if (req.getParameter("next") != null)
-				if (req.getParameter("next").equals("true"))
-					if (pageAt + 1 < pageNumber)
-						pageAt++;
-			if (req.getParameter("size") != null)
-				limit = Integer.parseInt(req.getParameter("size"));
+			this.checkPage(req);
+			this.checkSize(req);
 			numberComputers = controller.countComputers();
 			List<Computer> computers = controller.listComputers(pageAt * limit, limit);
 			req.setAttribute("computerNumber", numberComputers);
@@ -53,5 +43,23 @@ public class ListComputer extends HttpServlet {
 
 		RequestDispatcher rd = req.getRequestDispatcher("/WEB-INF/views/dashboard.jsp");
 		rd.forward(req, res);
+	}
+	
+	private void checkPage(HttpServletRequest req) {
+		if (req.getParameter("pageAt") != null)
+			pageAt = Integer.parseInt(req.getParameter("pageAt")) - 1;
+		if (req.getParameter("previous") != null)
+			if (req.getParameter("previous").equals("true"))
+				if (pageAt > 0)
+					pageAt--;
+		if (req.getParameter("next") != null)
+			if (req.getParameter("next").equals("true"))
+				if (pageAt + 1 < pageNumber)
+					pageAt++;
+	}
+	
+	private void checkSize(HttpServletRequest req) {
+		if (req.getParameter("size") != null)
+			limit = Integer.parseInt(req.getParameter("size"));
 	}
 }

@@ -98,7 +98,7 @@ public class UserInterface {
 				break;
 			case 4:
 				this.askDetails();
-				computerController.createComputer(this.name, this.inDate, this.outDate, this.brand);
+				//computerController.createComputer(this.name, this.inDate, this.outDate, this.brand);
 				break;
 			case 5:
 				this.askId();

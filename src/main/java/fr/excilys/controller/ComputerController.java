@@ -38,18 +38,18 @@ public class ComputerController {
 			dateOut = new java.sql.Date(new SimpleDateFormat("dd/MM/yyyy").parse(outDate).getTime());
 	}
 
-	public void createComputer(String name, String inDate, String outDate, String brand) {
-		try {
+	public void createComputer(String name, String inDate, String outDate, String brand) throws Exception, ParseException, UserException {
+	//	try {
 			this.checkDetails(name, inDate, outDate);
 			computerService.createComputer(name, dateIn, dateOut, brand);
-		} catch (UserException e) {
+		/*} catch (UserException e) {
 			System.out.println("[ERROR] You must specify computer's name.");
 			System.out.println("[ERROR] Introduced date cannot be after discontinued date.");
 		} catch (ParseException e) {
 			System.out.println("[ERROR] This is not a valid date.");
 		} catch (Exception e) {
 			System.out.println("[ERROR] ID must be a number.");
-		}
+		}*/
 	}
 
 	public void showDetails(int id) throws UserException {
