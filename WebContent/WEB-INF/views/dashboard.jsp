@@ -87,7 +87,7 @@
                             <input type="checkbox" name="cb" class="cb" value=${s.id}>
                         </td>
                         <td>
-                            <a href="editComputer.html" onclick="">${s.name}</a>
+                            <a href="${pageContext.request.contextPath}/edit?id=${s.id}&name=${s.name}&in=${s.introduced}&out=${s.discontinued}&company=${s.brand}">${s.name}</a>
                         </td>
                         <td>${s.introduced}</td>
                         <td>${s.discontinued}</td>
