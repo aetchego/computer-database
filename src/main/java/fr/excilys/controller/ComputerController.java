@@ -3,6 +3,9 @@ package fr.excilys.controller;
 import java.sql.SQLException;
 import java.util.List;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import fr.excilys.client.UserException;
 import fr.excilys.mapper.ComputerMapper;
 import fr.excilys.model.Computer;
@@ -14,6 +17,7 @@ public class ComputerController {
 	private ComputerService computerService = ComputerService.getInstance();
 	private Validator validator = Validator.getInstance();
 	private ComputerMapper computerMapper = ComputerMapper.getInstance();
+	private Logger logger = LoggerFactory.getLogger(ComputerController.class);
 
 	private ComputerController() {
 	}
@@ -34,7 +38,7 @@ public class ComputerController {
 			validator.check(name, inDate, outDate);
 			computerService.createComputer(computerMapper.toBean(name, inDate, outDate), brand);
 		} catch (UserException | SQLException e ) {
-			System.out.println(e);
+			logger.info(e.getMessage());
 		}
 	}
 
@@ -51,7 +55,8 @@ public class ComputerController {
 			validator.check(name, inDate, outDate);
 			computerService.updateComputer(computerMapper.toBean(name, inDate, outDate), brand, id);
 		} catch (UserException | SQLException e) {
-			System.out.println(e);
+			Logger logger = LoggerFactory.getLogger(ComputerController.class);
+			logger.info(e.getMessage());
 		}
 	}
 	

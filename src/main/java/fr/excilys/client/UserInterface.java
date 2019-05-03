@@ -2,9 +2,6 @@ package fr.excilys.client;
 
 import java.util.Scanner;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import fr.excilys.controller.CompanyController;
 import fr.excilys.controller.ComputerController;
 
@@ -119,8 +116,8 @@ public class UserInterface {
 				System.exit(1);
 			}
 		} catch (UserException e) {
-			Logger logger = LoggerFactory.getLogger(UserInterface.class);
-			logger.info(e.getMsg());
+			//Logger logger = LoggerFactory.getLogger(UserInterface.class);
+			//logger.info(e.getMsg());
 		}
 	}
 }

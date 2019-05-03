@@ -36,13 +36,13 @@
                     </form>
                 </div>
                 <div class="pull-right">
-                    <a class="btn btn-success" id="addComputer" href="/cdb_project/addComputer">Add Computer</a> 
+                    <a class="btn btn-success" id="addComputer" href="${pageContext.request.contextPath}/addComputer">Add Computer</a> 
                     <a class="btn btn-default" id="editComputer" href="#" onclick="$.fn.toggleEditMode();">Edit</a>
                 </div>
             </div>
         </div>
 
-        <form id="deleteForm" action="#" method="POST">
+        <form id="deleteForm" action="${pageContext.request.contextPath}/delete" method="POST">
             <input type="hidden" name="selection" value="">
         </form>
 
@@ -84,7 +84,7 @@
                 <c:forEach items="${computers}" var="s">
                     <tr>
                         <td class="editMode">
-                            <input type="checkbox" name="cb" class="cb" value="0">
+                            <input type="checkbox" name="cb" class="cb" value=${s.id}>
                         </td>
                         <td>
                             <a href="editComputer.html" onclick="">${s.name}</a>

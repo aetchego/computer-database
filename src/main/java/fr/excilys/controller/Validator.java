@@ -1,7 +1,6 @@
 package fr.excilys.controller;
 
 import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
 import java.util.Optional;
 
@@ -22,12 +21,12 @@ public class Validator {
 	}
 	
 	private void checkName(String name) throws UserException {
-		if (name.isBlank())
+		if (name.trim().isEmpty())
 			throw new UserException("[ERROR] Name cannot be empty.");
 	}
 	
 	private Optional<LocalDate> checkDateParsing(String date) throws UserException {
-		if (date.isBlank())
+		if (date.trim().isEmpty())
 			return Optional.empty() ;
 		try {
 			LocalDate parsed = LocalDate.parse(date);

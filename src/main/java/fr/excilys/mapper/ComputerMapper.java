@@ -4,12 +4,7 @@ import java.sql.Date;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
 
-import fr.excilys.dao.ComputerDao;
-import fr.excilys.dao.DaoException;
-import fr.excilys.dao.DaoFactory;
-import fr.excilys.model.Companies;
 import fr.excilys.model.Computer;
 
 public class ComputerMapper {
@@ -28,9 +23,9 @@ public class ComputerMapper {
 
 	public Computer toBean(String name, String inDate, String outDate) throws SQLException {
 		Computer computer = new Computer();
-		if (!inDate.isBlank())
+		if (!inDate.isEmpty())
 			computer.setIntroduced( Date.valueOf(LocalDate.parse(inDate)));
-		if (!outDate.isBlank())
+		if (!outDate.isEmpty())
 			computer.setDiscontinued(Date.valueOf(LocalDate.parse(outDate)));
 		computer.setName(name);
 		return (computer);

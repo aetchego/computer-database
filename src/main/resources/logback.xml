@@ -28,7 +28,7 @@
     </appender>
  
 
-    <logger name="fr.excilys.client" level="INFO" additivity="false">
+    <logger name="fr.excilys.controller" level="INFO" additivity="false">
             <appender-ref ref="STDOUT" />
             <appender-ref ref="FILE" />
     </logger>
@@ -36,6 +36,7 @@
     <!-- By default, the level of the root level is set to DEBUG -->
     <root level="INFO">
         <appender-ref ref="STDOUT" />
+        <appender-ref ref="FILE" />
     </root>
 
 </configuration>
