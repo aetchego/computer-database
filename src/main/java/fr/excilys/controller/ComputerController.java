@@ -1,6 +1,7 @@
 package fr.excilys.controller;
 
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 
 import org.slf4j.Logger;
@@ -31,6 +32,21 @@ public class ComputerController {
 	public List<Computer> listComputers(int offset, int limit) throws UserException {
 		return (computerService.listComputers(offset, limit));
 	}
+	
+	public List<Computer> search(String name, String filter) {
+		List<Computer> computers = new ArrayList<>();
+		try {
+			computers = computerService.search(name, filter);
+		} catch (UserException e) {
+			logger.info(e.getMessage());
+		}
+		return computers;
+	}
+	
+	public List<Computer> searchByCompany(String name) {
+		List<Computer> computers = new ArrayList<>();
+		return computers;
+	}
 
 	public void createComputer(String name, String inDate, String outDate, String brand) {
 		
@@ -55,7 +71,6 @@ public class ComputerController {
 			validator.check(name, inDate, outDate);
 			computerService.updateComputer(computerMapper.toBean(name, inDate, outDate), brand, id);
 		} catch (UserException | SQLException e) {
-			Logger logger = LoggerFactory.getLogger(ComputerController.class);
 			logger.info(e.getMessage());
 		}
 	}

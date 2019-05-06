@@ -36,6 +36,18 @@ public class ComputerService {
 		}
 		return computers;
 	}
+	
+	public List<Computer> search(String name, String filter) throws UserException {
+		List<Computer> computers = new ArrayList<>();
+		try {
+			System.out.println(filter);
+			computers = cd.search(name, filter);
+		} catch (DaoException | SQLException e) {
+			e.printStackTrace();
+			throw new UserException("[ERROR] Ooops, something went wrong !");
+		}
+		return computers;
+	}
 
 	public void createComputer(Computer computer, String brand) throws UserException {
 		try {

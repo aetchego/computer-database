@@ -23,12 +23,13 @@ function checkDate(introduced, discontinued) {
 }
 
 $("#submit").click(function() {
-	/*var name = $("#computerName").val();
+	console.log("here");
+	var name = $("#computerName").val();
 	var introduced = $("#introduced").val();
 	var discontinued = $("#discontinued").val();
 
 	if (!checkName(name))
 		return false;
 	if (!checkDate(introduced, discontinued))
-		return false;*/
+		return false;
 });

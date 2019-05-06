@@ -28,14 +28,14 @@ public class UserInterface {
 				System.out.println("Press 4 to add a computer");
 				System.out.println("Press 5 to update computer information");
 				System.out.println("Press 6 to delete a computer");
-				System.out.println("Press 7 to exit");
+				System.out.println("Press 8 to exit");
 				sc = new Scanner(System.in);
 				try {
 					choice = Integer.parseInt(sc.nextLine());
 				} catch (Exception e) {
 					System.out.println("[ERROR] This is not a valid choice.");
 				}
-			} while (choice < 1 || choice > 7);
+			} while (choice < 1 || choice > 8);
 			this.operations(choice);
 		}
 	}
@@ -110,7 +110,7 @@ public class UserInterface {
 					computerController.deleteComputer(this.id);
 				}
 				break;
-			case 7:
+			case 8:
 				System.out.println("Bye !");
 				sc.close();
 				System.exit(1);

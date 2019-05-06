@@ -28,11 +28,11 @@
             </h1>
             <div id="actions" class="form-horizontal">
                 <div class="pull-left">
-                    <form id="searchForm" action="#" method="GET" class="form-inline">
+                    <form id="searchForm" action="search" method="GET" class="form-inline">
 
-                        <input type="search" id="searchbox" name="search" class="form-control" placeholder="Search name" />
-                        <input type="submit" id="searchsubmit" value="Filter by name"
-                        class="btn btn-primary" />
+                        <input type="search" id="searchbox" name="name" class="form-control" placeholder="Search name" />
+                        <input type="submit" id="searchsubmit" name="searchComputer" value="Filter by computer" class="btn btn-primary" />
+                        <input type="submit" id="searchsubmit" name="searchCompany" value="Filter by company" class="btn btn-primary" />
                     </form>
                 </div>
                 <div class="pull-right">
@@ -87,7 +87,7 @@
                             <input type="checkbox" name="cb" class="cb" value=${s.id}>
                         </td>
                         <td>
-                            <a href="${pageContext.request.contextPath}/edit?id=${s.id}&name=${s.name}&in=${s.introduced}&out=${s.discontinued}&company=${s.brand}">${s.name}</a>
+                            <a href="${pageContext.request.contextPath}/editComputer?id=${s.id}&name=${s.name}&in=${s.introduced}&out=${s.discontinued}&company=${s.brand}">${s.name}</a>
                         </td>
                         <td>${s.introduced}</td>
                         <td>${s.discontinued}</td>

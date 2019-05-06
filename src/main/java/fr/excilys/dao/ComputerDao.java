@@ -21,6 +21,7 @@ public class ComputerDao {
 			+ "ON `computer-database-db`.company.id = `computer-database-db`.computer.company_id";
 	private final String DELETE = "DELETE FROM `computer-database-db`.computer where(id) LIKE ?";
 	private final String DETAILS = SELECT + " WHERE(`computer-database-db`.computer.id) LIKE ?";
+	private final String SEARCH_BY = SELECT + " WHERE(`computer-database-db`.";
 	private final String COUNT = "SELECT COUNT(*) AS rowcount FROM `computer-database-db`.computer";
 	private static ComputerDao instance = null;
 	private ComputerMapper computerMapper = ComputerMapper.getInstance();
@@ -53,6 +54,24 @@ public class ComputerDao {
 		try {
 			DaoUtilitaries.databaseAccess(sql, SELECT + " LIMIT ? OFFSET ?", this.factory, 0, limit, offset);
 			while (((ResultSet) sql.get(0)).next()) {
+				computer = computerMapper.toBean((ResultSet) sql.get(0));
+				computers.add(computer);
+			}
+		} finally {
+			DaoUtilitaries.closeConnexions((ResultSet) sql.get(0), (PreparedStatement) sql.get(1),
+					(Connection) sql.get(2));
+		}
+		return computers;
+	}
+	
+	public List<Computer> search(String name, String filter) throws DaoException, SQLException {
+		Computer computer;
+		ArrayList<Computer> computers = new ArrayList<>();
+		ArrayList<Object> sql = new ArrayList<>();
+		try {
+			DaoUtilitaries.databaseAccess(sql, SEARCH_BY  + filter + ") LIKE ?", this.factory, 0, name);
+			while (((ResultSet) sql.get(0)).next()) {
+				System.out.println("boucle");
 				computer = computerMapper.toBean((ResultSet) sql.get(0));
 				computers.add(computer);
 			}

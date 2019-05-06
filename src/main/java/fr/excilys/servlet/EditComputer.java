@@ -16,7 +16,7 @@ import fr.excilys.controller.CompanyController;
 import fr.excilys.controller.ComputerController;
 import fr.excilys.model.Companies;
 
-@WebServlet(urlPatterns = "/edit")
+@WebServlet(urlPatterns = "/editComputer")
 public class EditComputer extends HttpServlet {
 
 	private static final long serialVersionUID = 1L;

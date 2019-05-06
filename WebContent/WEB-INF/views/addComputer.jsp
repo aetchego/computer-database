@@ -14,7 +14,6 @@
 <link href="css/font-awesome.css" rel="stylesheet" media="screen">
 <link href="css/main.css" rel="stylesheet" media="screen">
 <style type='text/css'>
-/* CSS Document */
 #error {display:none;}
 </style>
 </head>
@@ -32,7 +31,7 @@
                 <div class="alert alert-danger" role="alert" id="error"></div>
                 <c:out value="${error}"/>
                     <h1>Add Computer</h1>
-                    <form action="add" method="GET">
+                    <form action="add" method="POST">
                         <fieldset>
                             <div class="form-group">
                                 <label for="computerName">Computer name</label>
