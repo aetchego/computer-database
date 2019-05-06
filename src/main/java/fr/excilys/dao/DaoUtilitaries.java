@@ -12,7 +12,6 @@ public class DaoUtilitaries {
 	public static PreparedStatement initPreparedRequest(Connection co, String sql, Object... objects)
 			throws SQLException {
 		PreparedStatement st = co.prepareStatement(sql);
-		System.out.println(objects.length);
 		for (int i = 0; i < objects.length; i++) {
 			st.setObject(i + 1, objects[i]);
 		}

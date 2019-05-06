@@ -72,7 +72,6 @@ public class ComputerDao {
 		try {
 			DaoUtilitaries.databaseAccess(sql, SEARCH_BY  + filter + ") LIKE ?", this.factory, 0, name);
 			while (((ResultSet) sql.get(0)).next()) {
-				System.out.println("boucle");
 				computer = computerMapper.toBean((ResultSet) sql.get(0));
 				computers.add(computer);
 			}

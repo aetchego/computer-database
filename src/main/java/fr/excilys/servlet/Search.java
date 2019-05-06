@@ -19,7 +19,6 @@ public class Search extends HttpServlet {
 	public void doGet(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
 		ComputerController controller = ComputerController.getInstance();
 		String name = req.getParameter("name");
-		System.out.println(name);
 		List<Computer> computers = req.getParameter("searchComputer") != null ? controller.search(name, "computer.name") : controller.search(name, "company.name");
 		
 		req.setAttribute("computers", computers);

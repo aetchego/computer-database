@@ -69,9 +69,7 @@ public class Computer {
 	public void searchCompany(String name, Companies companies) {
 		List<Company> comp = companies.getCompanies();
 		for (Company e : comp) {
-			System.out.println(e.getName() + " " + name);
 			if (e.getName().equals(name)) {
-				System.out.println("similaire");
 				this.company = e;
 				this.companyId = e.getId();
 			}

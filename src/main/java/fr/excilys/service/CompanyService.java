@@ -42,7 +42,6 @@ public class CompanyService {
 			dc.read();
 			dc.deleteCompany(id);
 		} catch (DaoException | SQLException e) {
-			System.out.println(e.getMessage());
 			throw new UserException("[ERROR] Ooops, something went wrong !");
 		}
 	}

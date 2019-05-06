@@ -23,7 +23,6 @@ public class EditComputer extends HttpServlet {
 	private ComputerController controller = ComputerController.getInstance();
 
 	public void doGet(HttpServletRequest req, HttpServletResponse res) throws IOException, ServletException {
-		System.out.println("here");
 		CompanyController controller = CompanyController.getInstance();
 		try {
 			Companies companies = controller.listCompanies();
