@@ -3,6 +3,7 @@ package fr.excilys.model;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.Optional;
 
 public final class Companies {
 
@@ -14,6 +15,11 @@ public final class Companies {
 
 	public void addCompany(Company company) {
 		this.companies.add(company);
+	}
+	
+	public void remove(Optional<Company> company) {
+		if (company.isPresent()) 
+			this.companies.remove(company.get());
 	}
 
 	@Override

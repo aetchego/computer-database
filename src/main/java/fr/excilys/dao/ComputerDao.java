@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+import fr.excilys.client.UserException;
 import fr.excilys.mapper.ComputerMapper;
 import fr.excilys.model.Computer;
 
@@ -95,12 +96,12 @@ public class ComputerDao {
 		}
 	}
 
-	public void delete(int id) throws DaoException, SQLException {
+	public void delete(int id) throws DaoException, SQLException, UserException {
 		ArrayList<Object> sql = new ArrayList<>();
 		try {
 			DaoUtilitaries.databaseAccess(sql, DELETE, this.factory, 1, id);
 			if ((Integer) sql.get(3) == 0)
-				throw new DaoException();
+				throw new UserException("[ERROR] ID does not exist.");
 		} finally {
 			DaoUtilitaries.closeConnexions((ResultSet) sql.get(0), (PreparedStatement) sql.get(1),
 					(Connection) sql.get(2));

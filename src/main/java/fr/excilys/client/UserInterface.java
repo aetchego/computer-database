@@ -2,6 +2,9 @@ package fr.excilys.client;
 
 import java.util.Scanner;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import fr.excilys.controller.CompanyController;
 import fr.excilys.controller.ComputerController;
 
@@ -20,7 +23,7 @@ public class UserInterface {
 
 	public void displayChoices() {
 		int choice = 0;
-		while (choice != 7) {
+		while (choice != 8) {
 			do {
 				System.out.println("\nPress 1 to list computers");
 				System.out.println("Press 2 to list companies");
@@ -28,6 +31,7 @@ public class UserInterface {
 				System.out.println("Press 4 to add a computer");
 				System.out.println("Press 5 to update computer information");
 				System.out.println("Press 6 to delete a computer");
+				System.out.println("Press 7 to delete a company");
 				System.out.println("Press 8 to exit");
 				sc = new Scanner(System.in);
 				try {
@@ -110,14 +114,19 @@ public class UserInterface {
 					computerController.deleteComputer(this.id);
 				}
 				break;
+			case 7:
+				this.askId();
+				if (this.id > 0)
+					companyController.deleteCompany(this.id);
+				break;
 			case 8:
 				System.out.println("Bye !");
 				sc.close();
 				System.exit(1);
 			}
 		} catch (UserException e) {
-			//Logger logger = LoggerFactory.getLogger(UserInterface.class);
-			//logger.info(e.getMsg());
+			Logger logger = LoggerFactory.getLogger(UserInterface.class);
+			logger.info(e.getMessage());
 		}
 	}
 }

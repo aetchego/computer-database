@@ -30,10 +30,20 @@ public class CompanyService {
 		Companies companies;
 		try {
 			companies = dc.read();
-			// display.displayFull(optional.get().getCompanies());
+			System.out.println(companies.getCompanies());
 		} catch (DaoException | SQLException e) {
 			throw new UserException("[ERROR] Ooops, something went wrong !");
 		}
 		return companies;
+	}
+	
+	public void deleteCompany(int id) throws UserException {
+		try {
+			dc.read();
+			dc.deleteCompany(id);
+		} catch (DaoException | SQLException e) {
+			System.out.println(e.getMessage());
+			throw new UserException("[ERROR] Ooops, something went wrong !");
+		}
 	}
 }
