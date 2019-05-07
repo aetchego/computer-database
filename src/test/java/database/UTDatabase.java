@@ -6,11 +6,12 @@ import java.sql.Connection;
 import java.sql.Date;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 import java.util.StringTokenizer;
+import java.util.TimeZone;
+import java.util.stream.Collectors;
 
 import fr.excilys.dao.DaoFactory;
 import fr.excilys.mapper.CompanyMapper;
@@ -29,12 +30,9 @@ public class UTDatabase {
     private CompanyMapper companyMapper = CompanyMapper.getInstance();
     
 	private UTDatabase() {
-		this.addComputers();
 		this.addCompanies();
-		for (Company e : companies)
-			System.out.println(e.toString());
-		for (Computer e : computers)
-			System.out.println(e.toString());
+		this.addComputers();
+		this.addCompanyToComputer();
 	}
 	
 	public static UTDatabase getInstance() {
@@ -44,11 +42,12 @@ public class UTDatabase {
 	}
 	
 	private void addComputers() {
+		TimeZone.setDefault(TimeZone.getTimeZone("UTC"));
 		computers.add(computerMapper.toBean(1, "MacBook Pro 15.4 inch", null, null, 1));
 		computers.add(computerMapper.toBean(2, "CM-2a", null, null, 2));
 		computers.add(computerMapper.toBean(3, "CM-200", null, null, 2));
 		computers.add(computerMapper.toBean(4, "CM-5e", null, null, 2));
-		computers.add(computerMapper.toBean(6, "MacBook Pro", Date.valueOf("1984-4-1"), null, 1));
+		computers.add(computerMapper.toBean(5, "CM-5", Date.valueOf("1991-1-1"), null, 2));
 		computers.add(computerMapper.toBean(6, "MacBook Pro",  Date.valueOf("2006-1-10"), null, 1));
 		computers.add(computerMapper.toBean(7, "Apple IIe", null, null, null));
 		computers.add(computerMapper.toBean(8, "Apple IIc", null, null, null));
@@ -80,6 +79,15 @@ public class UTDatabase {
 		
 	}
 	
+	private void addCompanyToComputer() {
+		for (Computer e : computers) {
+			/*System.out.println(e.getCompanyId() - 1);
+			System.out.println(this.companies.get((e.getCompanyId() - 1)).getName());*/
+			if (e.getCompanyId() != null)
+				e.setBrand(this.companies.get((e.getCompanyId() - 1)).getName());
+		}
+	}
+	
 	private static void executeScript(String filename) throws SQLException, IOException {
         try (final Connection connection = DaoFactory.getInstance().getConnection();
              final Statement statement = connection.createStatement();
@@ -104,4 +112,20 @@ public class UTDatabase {
         executeScript(SCHEMA_SQL);
         executeScript(ENTRIES_SQL);
     }
+	
+	public List<Company> readCompanies() {
+		return this.companies;
+	}
+	
+	public List<Computer> readComputers() {
+		return this.computers;
+	}
+	
+	public List<Computer> readComputers(int offset, int limit) {
+		return this.readComputers().stream().skip(offset).limit(limit).collect(Collectors.toList());
+	}
+	
+	public void deleteComputer(int id) {
+		this.computers.remove(id + 1);
+	}
 }

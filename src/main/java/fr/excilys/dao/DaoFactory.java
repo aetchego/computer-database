@@ -2,6 +2,7 @@ package fr.excilys.dao;
 
 import java.sql.Connection;
 import java.sql.SQLException;
+import java.util.TimeZone;
 
 import com.zaxxer.hikari.HikariConfig;
 import com.zaxxer.hikari.HikariDataSource;
@@ -20,8 +21,10 @@ public class DaoFactory {
 	}
 
 	public static DaoFactory getInstance() throws DaoConfigException {
-		if (instance == null)
+		if (instance == null) {
+			TimeZone.setDefault(TimeZone.getTimeZone("UTC"));
 			instance = new DaoFactory();
+		}
 		return instance;
 	}
 	public Connection getConnection() throws SQLException {

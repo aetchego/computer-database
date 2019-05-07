@@ -78,8 +78,8 @@ public class Computer {
 
 	@Override
 	public String toString() {
-		return "[" + id + "] [ name = " + name + " ] [ introduced = " + introduced + " ] [ discontinued = "
-				+ discontinued + " ] [ brand = " + brand + " ]";
+		return "Computer [id=" + id + ", name=" + name + ", introduced=" + introduced + ", discontinued=" + discontinued
+				+ ", brand=" + brand + ", companyId=" + companyId + ", company=" + company + "]";
 	}
 
 	public String toLittleString() {

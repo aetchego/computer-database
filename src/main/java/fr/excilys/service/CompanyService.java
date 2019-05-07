@@ -14,7 +14,6 @@ public class CompanyService {
 
 	private DaoFactory df = DaoFactory.getInstance();
 	private CompanyDao dc = df.getCompany();
-	private Display<Company> display = new Display<>();
 	private static CompanyService instance = null;
 
 	private CompanyService() {

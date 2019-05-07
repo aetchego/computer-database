@@ -36,7 +36,10 @@ public class ComputerMapper {
 		computer.setId(rs.getInt("id"));
 		computer.setName(rs.getString("name"));
 		computer.setBrand(rs.getString("company_name"));
-		computer.setCompanyId(rs.getInt("company_id"));
+		if (rs.getInt("company_id") == 0)
+			computer.setCompanyId(null);
+		else
+			computer.setCompanyId(rs.getInt("company_id"));
 		computer.setIntroduced(rs.getDate("introduced"));
 		computer.setDiscontinued(rs.getDate("discontinued"));
 		return computer;
@@ -46,7 +49,6 @@ public class ComputerMapper {
 		Computer computer = new Computer();
 		computer.setId(id);
 		computer.setName(name);
-		System.out.println("entrée");
 		computer.setIntroduced(introduced);
 		computer.setDiscontinued(discontinued);
 		computer.setCompanyId(companyId);

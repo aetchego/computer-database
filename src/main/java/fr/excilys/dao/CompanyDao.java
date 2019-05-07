@@ -19,7 +19,7 @@ public class CompanyDao {
 	private Companies companies = null;
 	private static CompanyDao company = null;
 	private CompanyMapper companyMapper = CompanyMapper.getInstance();
-	private final String SELECT = "SELECT * FROM `computer-database-db`.company";
+	private final String SELECT = "SELECT * FROM company";
 	private final String DELETE = "DELETE FROM `computer-database-db`.company where(id) LIKE ?";
 	private final String DELETE_COMPUTERS = "DELETE FROM `computer-database-db`.computer where(company_id) = ?";
 
