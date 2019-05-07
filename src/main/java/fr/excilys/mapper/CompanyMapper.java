@@ -26,4 +26,11 @@ public class CompanyMapper {
 		company.setName(rs.getString("name"));
 		companies.addCompany(company);
 	}
+	
+	public Company toBean(int id, String name) {
+		Company company = new Company();
+		company.setId(id);
+		company.setName(name);
+		return company;
+	}
 }

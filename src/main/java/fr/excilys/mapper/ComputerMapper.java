@@ -41,4 +41,15 @@ public class ComputerMapper {
 		computer.setDiscontinued(rs.getDate("discontinued"));
 		return computer;
 	}
+	
+	public Computer toBean(int id, String name, Date introduced, Date discontinued, Integer companyId) {
+		Computer computer = new Computer();
+		computer.setId(id);
+		computer.setName(name);
+		System.out.println("entrée");
+		computer.setIntroduced(introduced);
+		computer.setDiscontinued(discontinued);
+		computer.setCompanyId(companyId);
+		return computer;
+	}
 }
