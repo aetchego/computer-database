@@ -54,6 +54,7 @@ public class ComputerService {
 			computer.searchCompany(brand, companies);
 			cd.create(computer);
 		} catch (DaoException | SQLException e) {
+			System.out.println(e.getStackTrace());
 			throw new UserException("[ERROR] Company does not exist.");
 		}
 	}

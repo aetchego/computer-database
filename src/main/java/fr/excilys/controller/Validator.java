@@ -21,15 +21,19 @@ public class Validator {
 	}
 	
 	private void checkName(String name) throws UserException {
-		if (name.trim().isEmpty())
+		if (name == null || name.trim().isEmpty())
 			throw new UserException("[ERROR] Name cannot be empty.");
 	}
 	
 	private Optional<LocalDate> checkDateParsing(String date) throws UserException {
-		if (date.trim().isEmpty())
+		if (date == null || date.trim().isEmpty())
 			return Optional.empty() ;
 		try {
 			LocalDate parsed = LocalDate.parse(date);
+			if (parsed.isAfter(LocalDate.now()))
+				throw new UserException("[ERROR] Date cannot be after today.");
+			if (parsed.isBefore(LocalDate.parse("1970-01-01")))
+				throw new UserException("[ERROR] Date cannot be before 01/01/1970.");
 			return Optional.of(parsed);
 		} catch (DateTimeParseException e) {
 			throw new UserException("[ERROR] Date parsing exception.");

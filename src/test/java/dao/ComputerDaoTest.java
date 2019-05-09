@@ -23,7 +23,7 @@ import fr.excilys.model.Computer;
 import junitparams.JUnitParamsRunner;
 
 @RunWith(JUnitParamsRunner.class)
-public class ComputerDao {
+public class ComputerDaoTest {
 
 	@Before
 	public void loadDatabase() throws IOException, SQLException {
