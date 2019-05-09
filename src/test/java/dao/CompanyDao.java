@@ -18,7 +18,7 @@ import fr.excilys.model.Company;
 import junitparams.JUnitParamsRunner;
 
 @RunWith(JUnitParamsRunner.class)
-public class DaoCompany {
+public class CompanyDao {
 
 	@Before
 	public void loadDatabase() throws IOException, SQLException {

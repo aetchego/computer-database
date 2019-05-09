@@ -14,16 +14,16 @@ import fr.excilys.model.Computer;
 
 public class ComputerDao {
 
-	private final String UPDATE = "UPDATE `computer-database-db`.computer SET name = ?, introduced = ?, discontinued = ?, company_id = ? WHERE id = ?";
+	private final String UPDATE = "UPDATE computer SET name = ?, introduced = ?, discontinued = ?, company_id = ? WHERE id = ?";
 	private DaoFactory factory;
-	private final String INSERT = "INSERT into `computer-database-db`.computer(name, introduced, discontinued, company_id) values (?, ?, ?, ?)";
+	private final String INSERT = "INSERT into computer(name, introduced, discontinued, company_id) values (?, ?, ?, ?)";
 	private final String SELECT = "SELECT computer.id, computer.name, computer.introduced, computer.discontinued, company.name AS company_name, computer.company_id\n"
 			+ "from company\n" + "RIGHT JOIN computer\n"
 			+ "ON company.id = computer.company_id";
 	private final String DELETE = "DELETE FROM computer where(id) LIKE ?";
-	private final String DETAILS = SELECT + " WHERE(`computer-database-db`.computer.id) LIKE ?";
+	private final String DETAILS = SELECT + " WHERE(computer.id) LIKE ?";
 	private final String SEARCH_BY = SELECT + " WHERE(`computer-database-db`.";
-	private final String COUNT = "SELECT COUNT(*) AS rowcount FROM `computer-database-db`.computer";
+	private final String COUNT = "SELECT COUNT(*) AS rowcount FROM computer";
 	private static ComputerDao instance = null;
 	private ComputerMapper computerMapper = ComputerMapper.getInstance();
 

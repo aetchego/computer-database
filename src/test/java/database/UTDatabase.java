@@ -8,6 +8,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import java.util.Scanner;
 import java.util.StringTokenizer;
 import java.util.TimeZone;
@@ -81,8 +82,6 @@ public class UTDatabase {
 	
 	private void addCompanyToComputer() {
 		for (Computer e : computers) {
-			/*System.out.println(e.getCompanyId() - 1);
-			System.out.println(this.companies.get((e.getCompanyId() - 1)).getName());*/
 			if (e.getCompanyId() != null)
 				e.setBrand(this.companies.get((e.getCompanyId() - 1)).getName());
 		}
@@ -126,6 +125,29 @@ public class UTDatabase {
 	}
 	
 	public void deleteComputer(int id) {
-		this.computers.remove(id + 1);
+		this.computers.remove(id - 1);
+	}
+	
+	public Optional<Computer> selectComputerById(int id) {
+		Computer computer = null;
+		id--;
+		if (id < computers.size())
+			computer = computers.get(id);
+		return Optional.ofNullable(computer);
+	}
+	
+	public int countComputers() {
+		return computers.size();
+	}
+	
+	public void createComputer(Computer computer) {
+		computers.add(computer);
+	}
+	
+	public void updateComputer(Computer computer, int id) {
+		id--;
+		this.computers.remove(id);
+		this.computers.add(id, computer);
+		this.addCompanyToComputer();
 	}
 }
