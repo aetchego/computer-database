@@ -10,17 +10,7 @@ public class Computer {
 	private String name;
 	private Date introduced;
 	private Date discontinued;
-	private String brand;
-	private Integer companyId;
 	private Company company;
-
-	public String getBrand() {
-		return brand;
-	}
-
-	public void setBrand(String companyName) {
-		this.brand = companyName;
-	}
 
 	public int getId() {
 		return id;
@@ -54,41 +44,22 @@ public class Computer {
 		this.discontinued = date;
 	}
 
-	public Integer getCompanyId() {
-		return companyId;
-	}
-
 	public Company getCompany() {
 		return company;
 	}
 
-	public void setCompanyId(Integer companyId) {
-		this.companyId = companyId;
-	}
-
-	public void searchCompany(String name, Companies companies) {
+	public void setCompany(String name, Companies companies) {
 		List<Company> comp = companies.getCompanies();
 		for (Company e : comp) {
 			if (e.getName().equals(name)) {
 				this.company = e;
-				this.companyId = e.getId();
 			}
 		}
 	}
 
 	@Override
-	public String toString() {
-		return "Computer [id=" + id + ", name=" + name + ", introduced=" + introduced + ", discontinued=" + discontinued
-				+ ", brand=" + brand + ", companyId=" + companyId + ", company=" + company + "]";
-	}
-
-	public String toLittleString() {
-		return "[" + id + "] [ name = " + name + " ] [ brand = " + brand + " ]";
-	}
-
-	@Override
 	public int hashCode() {
-		return Objects.hash(brand, company, companyId, discontinued, id, introduced, name);
+		return Objects.hash(company, discontinued, id, introduced, name);
 	}
 
 	@Override
@@ -103,8 +74,7 @@ public class Computer {
 			return false;
 		}
 		Computer other = (Computer) obj;
-		return Objects.equals(brand, other.brand) && Objects.equals(company, other.company)
-				&& Objects.equals(companyId, other.companyId) && Objects.equals(discontinued, other.discontinued)
+		return Objects.equals(company, other.company) && Objects.equals(discontinued, other.discontinued)
 				&& id == other.id && Objects.equals(introduced, other.introduced) && Objects.equals(name, other.name);
 	}
 }

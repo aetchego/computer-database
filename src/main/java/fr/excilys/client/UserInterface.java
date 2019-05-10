@@ -105,7 +105,7 @@ public class UserInterface {
 				this.askId();
 				if (this.id != 0) {
 					this.askDetails();
-					computerController.updateComputer(this.name, this.inDate, this.outDate, this.brand, this.id);
+					//computerController.updateComputer(this.name, this.inDate, this.outDate, this.brand, this.id);
 				}
 				break;
 			case 6:

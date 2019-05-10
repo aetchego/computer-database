@@ -97,7 +97,7 @@ public class ComputerDaoTest {
 		computer.setDiscontinued(Date.valueOf("2006-1-10"));
 		computer.setId(computerCopy.getId());
 		computer.setCompanyId(5);
-		DaoFactory.getInstance().getComputer().update(computer, 5);
+		DaoFactory.getInstance().getComputer().update(5, computer);
 		UTDatabase.getInstance().updateComputer(computer, 5);
 		assertEquals(DaoFactory.getInstance().getComputer().showDetails(5), 
 		UTDatabase.getInstance().selectComputerById(5));

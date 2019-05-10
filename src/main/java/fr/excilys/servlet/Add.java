@@ -9,18 +9,18 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import fr.excilys.controller.ComputerController;
+import fr.excilys.mapper.ComputerMapper;
 
 @WebServlet(urlPatterns = "/add")
 public class Add extends HttpServlet {
 
+	private ComputerMapper mapper = ComputerMapper.getInstance();
+	private ComputerController controller = ComputerController.getInstance();
+	
 	public void doPost(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
-		ComputerController controller = ComputerController.getInstance();
-		String name = req.getParameter("name");
-		String inDate = req.getParameter("inDate");
-		String outDate = req.getParameter("outDate");
-		String brand = req.getParameter("brand");
 		try {
-			controller.createComputer(name, inDate, outDate, brand);
+			controller.createComputer(mapper.StringsToDTO(req.getParameter("name"), req.getParameter("inDate"),
+			req.getParameter("outDate"), req.getParameter("brand")));
 		} catch (Exception e) {
 			req.setAttribute("error", 1);
 		}

@@ -48,14 +48,11 @@ public class ComputerService {
 		return computers;
 	}
 
-	public void createComputer(Computer computer, String brand) throws UserException {
+	public void createComputer(Computer computer) throws UserException {
 		try {
-			Companies companies = factory.getCompany().read();
-			computer.searchCompany(brand, companies);
 			cd.create(computer);
 		} catch (DaoException | SQLException e) {
-			System.out.println(e.getStackTrace());
-			throw new UserException("[ERROR] Company does not exist.");
+			throw new UserException("[ERROR] Ooops, something went wrong !");
 		}
 	}
 
@@ -76,11 +73,9 @@ public class ComputerService {
 		}
 	}
 
-	public void updateComputer(Computer computer, String brand, int id) throws UserException {
+	public void updateComputer(int id, Computer computer) throws UserException {
 		try {
-			Companies companies = factory.getCompany().read();
-			computer.searchCompany(brand, companies);
-			cd.update(computer, id);	
+			cd.update(id, computer);
 		} catch (DaoException | SQLException e) {
 			throw new UserException("[ERROR] ID does not exist.");
 		}

@@ -8,6 +8,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import fr.excilys.client.UserException;
+import fr.excilys.dto.ComputerDTO;
 import fr.excilys.mapper.ComputerMapper;
 import fr.excilys.model.Computer;
 import fr.excilys.service.ComputerService;
@@ -29,8 +30,12 @@ public class ComputerController {
 		return instance;
 	}
 
-	public List<Computer> listComputers(int offset, int limit) throws UserException {
-		return (computerService.listComputers(offset, limit));
+	public List<ComputerDTO> listComputers(int offset, int limit) throws UserException {
+		List<ComputerDTO> computersDTO = new ArrayList<>();
+		List<Computer> computers = computerService.listComputers(offset, limit);
+		for (Computer e : computers)
+			computersDTO.add(computerMapper.BeanToDTO(e));
+		return computersDTO;
 	}
 	
 	public List<Computer> search(String name, String filter) {
@@ -42,17 +47,12 @@ public class ComputerController {
 		}
 		return computers;
 	}
-	
-	public List<Computer> searchByCompany(String name) {
-		List<Computer> computers = new ArrayList<>();
-		return computers;
-	}
 
-	public void createComputer(String name, String inDate, String outDate, String brand) {
+	public void createComputer(ComputerDTO computer) {
 		
 		try {
-			validator.check(name, inDate, outDate);
-			computerService.createComputer(computerMapper.toBean(name, inDate, outDate), brand);
+			validator.check(computer);
+			computerService.createComputer(computerMapper.DTOtoBean(computer));
 		} catch (UserException | SQLException e ) {
 			logger.info(e.getMessage());
 		}
@@ -66,10 +66,10 @@ public class ComputerController {
 		computerService.deleteComputer(id);
 	}
 
-	public void updateComputer(String name, String inDate, String outDate, String brand, int id) {
+	public void updateComputer(ComputerDTO computer, int id) {
 		try {
-			validator.check(name, inDate, outDate);
-			computerService.updateComputer(computerMapper.toBean(name, inDate, outDate), brand, id);
+			validator.check(computer);
+			computerService.updateComputer(id, computerMapper.DTOtoBean(computer));
 		} catch (UserException | SQLException e) {
 			logger.info(e.getMessage());
 		}

@@ -41,7 +41,7 @@ public class ComputerDao {
 		ArrayList<Object> sql = new ArrayList<>();
 		try {
 			DaoUtilitaries.databaseAccess(sql, INSERT, this.factory, 1, computer.getName(), computer.getIntroduced(),
-					computer.getDiscontinued(), computer.getCompanyId());
+					computer.getDiscontinued(), computer.getCompany().getId());
 		} finally {
 			DaoUtilitaries.closeConnexions((ResultSet) sql.get(0), (PreparedStatement) sql.get(1),
 					(Connection) sql.get(2));
@@ -55,7 +55,7 @@ public class ComputerDao {
 		try {
 			DaoUtilitaries.databaseAccess(sql, SELECT + " LIMIT ? OFFSET ?", this.factory, 0, limit, offset);
 			while (((ResultSet) sql.get(0)).next()) {
-				computer = computerMapper.toBean((ResultSet) sql.get(0));
+				computer = computerMapper.DBtoBean((ResultSet) sql.get(0));
 				computers.add(computer);
 			}
 		} finally {
@@ -72,7 +72,7 @@ public class ComputerDao {
 		try {
 			DaoUtilitaries.databaseAccess(sql, SEARCH_BY  + filter + ") LIKE ?", this.factory, 0, name);
 			while (((ResultSet) sql.get(0)).next()) {
-				computer = computerMapper.toBean((ResultSet) sql.get(0));
+				computer = computerMapper.DBtoBean((ResultSet) sql.get(0));
 				computers.add(computer);
 			}
 		} finally {
@@ -82,11 +82,11 @@ public class ComputerDao {
 		return computers;
 	}
 
-	public void update(Computer computer, Integer id) throws DaoException, SQLException {
+	public void update(Integer id, Computer computer) throws DaoException, SQLException {
 		ArrayList<Object> sql = new ArrayList<>();
 		try {
 			DaoUtilitaries.databaseAccess(sql, UPDATE, this.factory, 1, computer.getName(), computer.getIntroduced(),
-					computer.getDiscontinued(), computer.getCompanyId(), id);
+					computer.getDiscontinued(), computer.getCompany().getId(), id);
 			if ((Integer) sql.get(3) == 0)
 				throw new DaoException();
 		} finally {
@@ -115,7 +115,7 @@ public class ComputerDao {
 			DaoUtilitaries.databaseAccess(sql, DETAILS, this.factory, 0, id);
 			if (!((ResultSet) sql.get(0)).next())
 				throw new DaoException();
-			computer = computerMapper.toBean((ResultSet) sql.get(0));
+			computer = computerMapper.DBtoBean((ResultSet) sql.get(0));
 		} finally {
 			DaoUtilitaries.closeConnexions((ResultSet) sql.get(0), (PreparedStatement) sql.get(1),
 					(Connection) sql.get(2));

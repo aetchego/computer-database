@@ -1,10 +1,17 @@
 package fr.excilys.controller;
 
+import java.sql.SQLException;
 import java.time.LocalDate;
 import java.time.format.DateTimeParseException;
+import java.util.List;
 import java.util.Optional;
 
 import fr.excilys.client.UserException;
+import fr.excilys.dao.DaoConfigException;
+import fr.excilys.dao.DaoException;
+import fr.excilys.dao.DaoFactory;
+import fr.excilys.dto.ComputerDTO;
+import fr.excilys.model.Company;
 
 public class Validator {
 
@@ -27,7 +34,7 @@ public class Validator {
 	
 	private Optional<LocalDate> checkDateParsing(String date) throws UserException {
 		if (date == null || date.trim().isEmpty())
-			return Optional.empty() ;
+			return Optional.empty();
 		try {
 			LocalDate parsed = LocalDate.parse(date);
 			if (parsed.isAfter(LocalDate.now()))
@@ -40,16 +47,26 @@ public class Validator {
 		}
 	}
 	
+	private void checkCompanyName(String brand) throws DaoException, DaoConfigException, SQLException, UserException {
+		if (brand == null || brand.trim().isEmpty())
+			return ;
+		List<Company> comp = DaoFactory.getInstance().getCompany().read().getCompanies();
+		for (Company e : comp)
+			if (e.getName().equals(brand))
+				return ;
+		throw new UserException("[ERROR] Company name does not exist.");
+	}
+	
 	private void compareDates(Optional<LocalDate> inDate, Optional<LocalDate> outDate) throws UserException {
 		if (inDate.isPresent() && outDate.isPresent() && inDate.get().isAfter(outDate.get()))
 			throw new UserException("[ERROR] Introduced date cannot be after discontinued date.");
 	}
 	
-	public void check(String name, String inDate, String outDate) throws UserException {
-		this.checkName(name);
-		Optional<LocalDate> introduced = this.checkDateParsing(inDate);
-		Optional<LocalDate> discontinued = this.checkDateParsing(outDate);
+	public void check(ComputerDTO computer) throws UserException, DaoException, DaoConfigException, SQLException {
+		this.checkName(computer.getName());
+		Optional<LocalDate> introduced = this.checkDateParsing(computer.getIntroduced());
+		Optional<LocalDate> discontinued = this.checkDateParsing(computer.getDiscontinued());
 		this.compareDates(introduced, discontinued);
-		
+		this.checkCompanyName(computer.getBrand());
 	}
 }
