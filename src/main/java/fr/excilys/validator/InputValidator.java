@@ -1,4 +1,4 @@
-package fr.excilys.controller;
+package fr.excilys.validator;
 
 import java.sql.SQLException;
 import java.time.LocalDate;
@@ -13,17 +13,17 @@ import fr.excilys.dao.DaoFactory;
 import fr.excilys.dto.ComputerDTO;
 import fr.excilys.model.Company;
 
-public class Validator {
+public class InputValidator {
 
-	private static Validator instance = null;
+	private static InputValidator instance = null;
 	
-	private Validator() {
+	private InputValidator() {
 		
 	}
 	
-	public static Validator getInstance() {
+	public static InputValidator getInstance() {
 		if (instance == null)
-			instance = new Validator();
+			instance = new InputValidator();
 		return instance;
 	}
 	

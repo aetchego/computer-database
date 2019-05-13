@@ -12,12 +12,13 @@ import fr.excilys.client.UserException;
 import fr.excilys.dto.ComputerDTO;
 import fr.excilys.mapper.ComputerMapper;
 import fr.excilys.service.ComputerService;
+import fr.excilys.validator.InputValidator;
 
 public class ComputerController {
 
 	private static ComputerController instance = null;
 	private ComputerService computerService = ComputerService.getInstance();
-	private Validator validator = Validator.getInstance();
+	private InputValidator validator = InputValidator.getInstance();
 	private ComputerMapper computerMapper = ComputerMapper.getInstance();
 	private Logger logger = LoggerFactory.getLogger(ComputerController.class);
 

@@ -8,10 +8,10 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 
 import fr.excilys.client.UserException;
-import fr.excilys.controller.Validator;
 import fr.excilys.dao.DaoConfigException;
 import fr.excilys.dao.DaoException;
 import fr.excilys.mapper.ComputerMapper;
+import fr.excilys.validator.InputValidator;
 import junitparams.JUnitParamsRunner;
 
 @RunWith(JUnitParamsRunner.class)
@@ -19,7 +19,7 @@ public class ValidatorTest {
 	
 	private ComputerMapper mapper = ComputerMapper.getInstance();
 	
-	Validator validator = Validator.getInstance();
+	InputValidator validator = InputValidator.getInstance();
 	
 	@Test
 	public void checkValid() throws UserException, DaoException, DaoConfigException, SQLException {
