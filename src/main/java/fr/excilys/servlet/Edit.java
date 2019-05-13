@@ -19,9 +19,8 @@ public class Edit extends HttpServlet {
 	
 	public void doPost(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
 		try {
-			int id = Integer.parseInt(req.getParameter("id"));
-			controller.updateComputer(mapper.StringsToDTO(req.getParameter("name"), req.getParameter("introduced"),
-			req.getParameter("discontinued"), req.getParameter("brand")), id);
+			controller.updateComputer(Integer.parseInt(req.getParameter("id")), mapper.StringsToDTO(req.getParameter("name"), req.getParameter("introduced"),
+			req.getParameter("discontinued"), req.getParameter("brand")));
 		} catch (Exception e) {
 			req.setAttribute("error", 1);
 		}

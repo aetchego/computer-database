@@ -26,15 +26,12 @@ public class ListComputer extends HttpServlet {
 	private ComputerController controller = ComputerController.getInstance();
 
 	public void doGet(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
-	
+		System.out.println("coucou");
 		try {
 			this.checkPage(req);
 			this.checkSize(req);
 			numberComputers = controller.countComputers();
 			List<ComputerDTO> computers = controller.listComputers(pageAt * limit, limit);
-			//System.out.println(computers.get(0).getName());
-			for (ComputerDTO e : computers)
-				System.out.println(e.getName() + " " + e.getIntroduced() + " " + e.getDiscontinued() + " " + e.getBrand());
 			req.setAttribute("computerNumber", numberComputers);
 			req.setAttribute("computers", computers);
 			req.setAttribute("offset", offset);
@@ -46,7 +43,6 @@ public class ListComputer extends HttpServlet {
 		}
 
 		RequestDispatcher rd = req.getRequestDispatcher("/WEB-INF/views/dashboard.jsp");
-		System.out.println("ok");
 		rd.forward(req, res);
 	}
 	

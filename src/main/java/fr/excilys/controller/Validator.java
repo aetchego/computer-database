@@ -48,7 +48,7 @@ public class Validator {
 	}
 	
 	private void checkCompanyName(String brand) throws DaoException, DaoConfigException, SQLException, UserException {
-		if (brand == null || brand.trim().isEmpty())
+		if (brand == null || brand.trim().isEmpty() || brand.equals("---"))
 			return ;
 		List<Company> comp = DaoFactory.getInstance().getCompany().read().getCompanies();
 		for (Company e : comp)

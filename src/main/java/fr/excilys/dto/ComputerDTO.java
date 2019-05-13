@@ -38,4 +38,9 @@ public class ComputerDTO {
 	public void setBrand(String brand) {
 		this.brand = brand;
 	}
+	@Override
+	public String toString() {
+		return "ComputerDTO [id=" + id + ", name=" + name + ", introduced=" + introduced + ", discontinued="
+				+ discontinued + ", brand=" + brand + "]";
+	}
 }

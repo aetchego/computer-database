@@ -6,7 +6,7 @@ import java.util.Objects;
 
 public class Computer {
 
-	private int id;
+	private Integer id;
 	private String name;
 	private Date introduced;
 	private Date discontinued;
@@ -76,5 +76,11 @@ public class Computer {
 		Computer other = (Computer) obj;
 		return Objects.equals(company, other.company) && Objects.equals(discontinued, other.discontinued)
 				&& id == other.id && Objects.equals(introduced, other.introduced) && Objects.equals(name, other.name);
+	}
+
+	@Override
+	public String toString() {
+		return "Computer [id=" + id + ", name=" + name + ", introduced=" + introduced + ", discontinued=" + discontinued
+				+ ", company=" + company + "]";
 	}
 }

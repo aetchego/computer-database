@@ -2,7 +2,10 @@ package fr.excilys.controller;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
+import java.util.Optional;
+import java.util.stream.Collectors;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -31,25 +34,19 @@ public class ComputerController {
 	}
 
 	public List<ComputerDTO> listComputers(int offset, int limit) throws UserException {
-		List<ComputerDTO> computersDTO = new ArrayList<>();
-		List<Computer> computers = computerService.listComputers(offset, limit);
-		for (Computer e : computers)
-			computersDTO.add(computerMapper.BeanToDTO(e));
-		return computersDTO;
+		return computerService.listComputers(offset, limit).stream().map(computerMapper::BeanToDTO).collect(Collectors.toList());
 	}
 	
-	public List<Computer> search(String name, String filter) {
-		List<Computer> computers = new ArrayList<>();
+	public List<ComputerDTO> search(String name, String filter) {
 		try {
-			computers = computerService.search(name, filter);
+			return computerService.search(name, filter).stream().map(computerMapper::BeanToDTO).collect(Collectors.toList());
 		} catch (UserException e) {
 			logger.info(e.getMessage());
 		}
-		return computers;
+		return Collections.emptyList();
 	}
 
 	public void createComputer(ComputerDTO computer) {
-		
 		try {
 			validator.check(computer);
 			computerService.createComputer(computerMapper.DTOtoBean(computer));
@@ -58,15 +55,15 @@ public class ComputerController {
 		}
 	}
 
-	public void showDetails(int id) throws UserException {
-		computerService.showDetails(id);
+	public ComputerDTO showDetails(int id) throws UserException {
+		return computerMapper.BeanToDTO(computerService.showDetails(id));
 	}
 
 	public void deleteComputer(int id) throws UserException {
 		computerService.deleteComputer(id);
 	}
 
-	public void updateComputer(ComputerDTO computer, int id) {
+	public void updateComputer(int id, ComputerDTO computer) {
 		try {
 			validator.check(computer);
 			computerService.updateComputer(id, computerMapper.DTOtoBean(computer));

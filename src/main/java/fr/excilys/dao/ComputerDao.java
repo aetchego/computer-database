@@ -6,6 +6,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 
 import fr.excilys.client.UserException;
@@ -40,8 +41,9 @@ public class ComputerDao {
 	public void create(Computer computer) throws DaoException, SQLException {
 		ArrayList<Object> sql = new ArrayList<>();
 		try {
+			Integer companyId = Objects.isNull(computer.getCompany()) ? null : computer.getCompany().getId();
 			DaoUtilitaries.databaseAccess(sql, INSERT, this.factory, 1, computer.getName(), computer.getIntroduced(),
-					computer.getDiscontinued(), computer.getCompany().getId());
+					computer.getDiscontinued(), companyId);
 		} finally {
 			DaoUtilitaries.closeConnexions((ResultSet) sql.get(0), (PreparedStatement) sql.get(1),
 					(Connection) sql.get(2));
@@ -85,8 +87,9 @@ public class ComputerDao {
 	public void update(Integer id, Computer computer) throws DaoException, SQLException {
 		ArrayList<Object> sql = new ArrayList<>();
 		try {
+			Integer companyId = Objects.isNull(computer.getCompany()) ? null : computer.getCompany().getId();
 			DaoUtilitaries.databaseAccess(sql, UPDATE, this.factory, 1, computer.getName(), computer.getIntroduced(),
-					computer.getDiscontinued(), computer.getCompany().getId(), id);
+					computer.getDiscontinued(), companyId, id);
 			if ((Integer) sql.get(3) == 0)
 				throw new DaoException();
 		} finally {
@@ -110,7 +113,6 @@ public class ComputerDao {
 	public Optional<Computer> showDetails(int id) throws DaoException, SQLException {
 		ArrayList<Object> sql = new ArrayList<>();
 		Computer computer;
-
 		try {
 			DaoUtilitaries.databaseAccess(sql, DETAILS, this.factory, 0, id);
 			if (!((ResultSet) sql.get(0)).next())

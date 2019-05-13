@@ -65,9 +65,9 @@ public class ComputerService {
 		}
 	}
 
-	public void showDetails(int id) throws UserException {
+	public Computer showDetails(int id) throws UserException {
 		try {
-			cd.showDetails(id);
+			return cd.showDetails(id).get();
 		} catch (DaoException | SQLException e) {
 			throw new UserException("[ERROR] ID does not exist.");
 		}

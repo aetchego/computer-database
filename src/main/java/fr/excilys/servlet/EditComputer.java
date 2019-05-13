@@ -20,12 +20,12 @@ import fr.excilys.model.Companies;
 public class EditComputer extends HttpServlet {
 
 	private static final long serialVersionUID = 1L;
-	private ComputerController controller = ComputerController.getInstance();
 
 	public void doGet(HttpServletRequest req, HttpServletResponse res) throws IOException, ServletException {
 		CompanyController controller = CompanyController.getInstance();
 		try {
 			Companies companies = controller.listCompanies();
+			System.out.println("name =" + req.getParameter("name"));
 			req.setAttribute("companies", companies.getCompanies());
 			req.setAttribute("id", req.getParameter("id"));
 			req.setAttribute("name", req.getParameter("name"));
