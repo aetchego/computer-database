@@ -14,8 +14,8 @@ import fr.excilys.mapper.ComputerMapper;
 @WebServlet(urlPatterns = "/edit")
 public class Edit extends HttpServlet {
 
-	private ComputerMapper mapper = ComputerMapper.getInstance();
-	private ComputerController controller = ComputerController.getInstance();
+	private final ComputerMapper mapper = ComputerMapper.getInstance();
+	private final ComputerController controller = ComputerController.getInstance();
 	
 	public void doPost(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
 		try {

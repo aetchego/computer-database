@@ -27,7 +27,6 @@ public class CompanyService {
 		Companies companies;
 		try {
 			companies = dc.read();
-			System.out.println(companies.getCompanies());
 		} catch (DaoException | SQLException e) {
 			throw new UserException("[ERROR] Ooops, something went wrong !");
 		}

@@ -59,14 +59,10 @@ public class CompanyDao {
 	public void deleteCompany(int id) throws UserException, SQLException {
 		ArrayList<Object> sql = new ArrayList<>();
 		try {
-			//this.factory.getConnection().setAutoCommit(false);
 			DaoUtilitaries.databaseAccess(sql, DELETE_COMPUTERS, this.factory, 1, id);
 			DaoUtilitaries.databaseAccess(sql, DELETE, this.factory, 1, id);
-			//this.factory.getConnection().commit();
 			companies.remove(searchCompany(companies.getCompanies(), id));
-		} /*catch (SQLException e) {
-			this.factory.getConnection().rollback();
-		}*/
+		}
 		finally {
 			DaoUtilitaries.closeConnexions((ResultSet) sql.get(0), (PreparedStatement) sql.get(1),
 					(Connection) sql.get(2));

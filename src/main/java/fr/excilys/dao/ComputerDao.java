@@ -91,7 +91,7 @@ public class ComputerDao {
 			DaoUtilitaries.databaseAccess(sql, UPDATE, this.factory, 1, computer.getName(), computer.getIntroduced(),
 					computer.getDiscontinued(), companyId, id);
 			if ((Integer) sql.get(3) == 0)
-				throw new DaoException();
+				throw new DaoException("[ERROR] No results have been found.");
 		} finally {
 			DaoUtilitaries.closeConnexions((ResultSet) sql.get(0), (PreparedStatement) sql.get(1),
 					(Connection) sql.get(2));
@@ -110,19 +110,19 @@ public class ComputerDao {
 		}
 	}
 
-	public Optional<Computer> showDetails(int id) throws DaoException, SQLException {
+	public Computer showDetails(int id) throws DaoException, SQLException {
 		ArrayList<Object> sql = new ArrayList<>();
 		Computer computer;
 		try {
 			DaoUtilitaries.databaseAccess(sql, DETAILS, this.factory, 0, id);
 			if (!((ResultSet) sql.get(0)).next())
-				throw new DaoException();
+				throw new DaoException("[ERROR] No results have been found.");
 			computer = computerMapper.DBtoBean((ResultSet) sql.get(0));
 		} finally {
 			DaoUtilitaries.closeConnexions((ResultSet) sql.get(0), (PreparedStatement) sql.get(1),
 					(Connection) sql.get(2));
 		}
-		return Optional.ofNullable(computer);
+		return computer;
 	}
 	
 	public int countComputers() throws DaoException, SQLException {

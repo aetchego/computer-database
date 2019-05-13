@@ -26,7 +26,6 @@ public class ListComputer extends HttpServlet {
 	private ComputerController controller = ComputerController.getInstance();
 
 	public void doGet(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
-		System.out.println("coucou");
 		try {
 			this.checkPage(req);
 			this.checkSize(req);

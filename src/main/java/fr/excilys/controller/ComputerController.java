@@ -1,10 +1,8 @@
 package fr.excilys.controller;
 
 import java.sql.SQLException;
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
 import org.slf4j.Logger;
@@ -13,7 +11,6 @@ import org.slf4j.LoggerFactory;
 import fr.excilys.client.UserException;
 import fr.excilys.dto.ComputerDTO;
 import fr.excilys.mapper.ComputerMapper;
-import fr.excilys.model.Computer;
 import fr.excilys.service.ComputerService;
 
 public class ComputerController {

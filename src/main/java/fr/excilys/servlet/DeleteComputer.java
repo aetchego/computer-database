@@ -18,7 +18,7 @@ import fr.excilys.controller.ComputerController;
 public class DeleteComputer extends HttpServlet {
 
 	private static final long serialVersionUID = 1L;
-	private ComputerController controller = ComputerController.getInstance();
+	private final ComputerController controller = ComputerController.getInstance();
 
 	public void doPost(HttpServletRequest req, HttpServletResponse res) throws IOException, ServletException {
 		List<String> list = Arrays.asList(req.getParameter("selection").split(","));

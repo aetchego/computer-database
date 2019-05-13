@@ -16,6 +16,8 @@ public class ComputerService {
 	private static ComputerService instance = null;
 	private DaoFactory factory = DaoFactory.getInstance();
 	private ComputerDao cd = factory.getComputer();
+	private final static String DATABASE_ERROR = "[ERROR] Ooops, something went wrong !";
+	private final static String ID_ERROR = "[ERROR] ID does not exist.";
 
 	private ComputerService() {
 
@@ -32,8 +34,7 @@ public class ComputerService {
 		try {
 			computers = cd.read(offset, limit);
 		} catch (DaoException | SQLException e) {
-			throw new UserException("[ERROR] Ooops, something went wrong !");
-		}
+			throw new UserException(DATABASE_ERROR); }
 		return computers;
 	}
 	
@@ -43,7 +44,7 @@ public class ComputerService {
 			computers = cd.search(name, filter);
 		} catch (DaoException | SQLException e) {
 			e.printStackTrace();
-			throw new UserException("[ERROR] Ooops, something went wrong !");
+			throw new UserException(DATABASE_ERROR);
 		}
 		return computers;
 	}
@@ -52,7 +53,7 @@ public class ComputerService {
 		try {
 			cd.create(computer);
 		} catch (DaoException | SQLException e) {
-			throw new UserException("[ERROR] Ooops, something went wrong !");
+			throw new UserException(DATABASE_ERROR);
 		}
 	}
 
@@ -61,15 +62,15 @@ public class ComputerService {
 			cd.delete(id);
 			
 		} catch (DaoException | SQLException e) {
-			throw new UserException("[ERROR] ID does not exist.");
+			throw new UserException(ID_ERROR);
 		}
 	}
 
 	public Computer showDetails(int id) throws UserException {
 		try {
-			return cd.showDetails(id).get();
+			return cd.showDetails(id);
 		} catch (DaoException | SQLException e) {
-			throw new UserException("[ERROR] ID does not exist.");
+			throw new UserException(ID_ERROR);
 		}
 	}
 
@@ -77,7 +78,7 @@ public class ComputerService {
 		try {
 			cd.update(id, computer);
 		} catch (DaoException | SQLException e) {
-			throw new UserException("[ERROR] ID does not exist.");
+			throw new UserException(ID_ERROR);
 		}
 	}
 	
@@ -86,7 +87,7 @@ public class ComputerService {
 		try {
 			res = cd.countComputers();
 		} catch (DaoException | SQLException e) {
-			throw new UserException("[ERROR] Ooops, something went wrong !");
+			throw new UserException(DATABASE_ERROR);
 		}
 		return res;
 	}
