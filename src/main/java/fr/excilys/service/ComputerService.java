@@ -8,7 +8,6 @@ import fr.excilys.client.UserException;
 import fr.excilys.dao.ComputerDao;
 import fr.excilys.dao.DaoException;
 import fr.excilys.dao.DaoFactory;
-import fr.excilys.model.Companies;
 import fr.excilys.model.Computer;
 
 public class ComputerService {
@@ -16,8 +15,8 @@ public class ComputerService {
 	private static ComputerService instance = null;
 	private DaoFactory factory = DaoFactory.getInstance();
 	private ComputerDao cd = factory.getComputer();
-	private final static String DATABASE_ERROR = "[ERROR] Ooops, something went wrong !";
-	private final static String ID_ERROR = "[ERROR] ID does not exist.";
+	private static final String DATABASE_ERROR = "[ERROR] Ooops, something went wrong !";
+	private static final String ID_ERROR = "[ERROR] ID does not exist.";
 
 	private ComputerService() {
 

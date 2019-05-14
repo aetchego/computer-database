@@ -3,28 +3,32 @@ package fr.excilys.servlet;
 import java.io.IOException;
 import java.util.List;
 
-import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import fr.excilys.controller.ComputerController;
 import fr.excilys.dto.ComputerDTO;
-import fr.excilys.model.Computer;
 
 @WebServlet(urlPatterns = "/search")
 public class Search extends HttpServlet {
 	
-	public void doGet(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
-		ComputerController controller = ComputerController.getInstance();
-		String name = req.getParameter("name");
-		List<ComputerDTO> computers = req.getParameter("searchComputer") != null ? controller.search(name, "computer.name") : controller.search(name, "company.name");
-		System.out.println(computers);
-		req.setAttribute("computers", computers);
-		System.out.println("ok");
-		RequestDispatcher rd = req.getRequestDispatcher("/WEB-INF/views/dashboard.jsp");
-		rd.forward(req, res);
+	private static final long serialVersionUID = -1304806379012931426L;
+	private Logger logger = LoggerFactory.getLogger(ListComputer.class);
+	private final ComputerController controller = ComputerController.getInstance();
+	
+	public void doGet(HttpServletRequest req, HttpServletResponse res) {
+		try {
+			List<ComputerDTO> computers = req.getParameter("searchComputer") != null ? controller.search(req.getParameter("name"), "computer.name") : controller.search(req.getParameter("name"), "company.name");
+			req.setAttribute("computers", computers);
+			req.getRequestDispatcher("/WEB-INF/views/dashboard.jsp").forward(req, res);	
+		} catch (ServletException | IOException e) {
+			logger.info(e.getMessage());
+		}
 	}
 }

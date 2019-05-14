@@ -4,10 +4,8 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.fail;
 
 import java.io.IOException;
-import java.sql.Date;
 import java.sql.SQLException;
 import java.util.List;
-import java.util.Optional;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -21,7 +19,6 @@ import fr.excilys.dao.DaoException;
 import fr.excilys.dao.DaoFactory;
 import fr.excilys.dto.ComputerDTO;
 import fr.excilys.mapper.ComputerMapper;
-import fr.excilys.model.Computer;
 import junitparams.JUnitParamsRunner;
 
 @RunWith(JUnitParamsRunner.class)

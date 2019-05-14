@@ -7,7 +7,6 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 import java.util.Scanner;
 import java.util.StringTokenizer;
 import java.util.TimeZone;
@@ -18,7 +17,6 @@ import fr.excilys.dto.ComputerDTO;
 import fr.excilys.mapper.CompanyMapper;
 import fr.excilys.mapper.ComputerMapper;
 import fr.excilys.model.Company;
-import fr.excilys.model.Computer;
 
 public class UTDatabase {
 

@@ -28,6 +28,7 @@
     <h2.version>1.4.199</h2.version>
     <servlet.version>4.0.1</servlet.version>
     <JUnitParams.version>1.1.1</JUnitParams.version>
+    <Spring-context.version>5.1.7.RELEASE</Spring-context.version>
     
   </properties>
 
@@ -101,6 +102,13 @@
 	    <scope>test</scope>
 	</dependency>
 
+<!--     Spring -->
+    <dependency>
+	    <groupId>org.springframework</groupId>
+	    <artifactId>spring-context</artifactId>
+	    <version>5.1.7.RELEASE</version>
+	</dependency>
+    
     
   </dependencies>
 

@@ -2,12 +2,14 @@ package fr.excilys.servlet;
 
 import java.io.IOException;
 
-import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import fr.excilys.client.UserException;
 import fr.excilys.controller.CompanyController;
@@ -15,17 +17,18 @@ import fr.excilys.model.Companies;
 
 @WebServlet(urlPatterns = "/addComputer")
 public class AddComputer extends HttpServlet {
+	
+	private static final long serialVersionUID = 3884356107883326043L;
+	private final Logger logger = LoggerFactory.getLogger(AddComputer.class);
+	private final CompanyController controller = CompanyController.getInstance();
 
-	public void doGet(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
-
-		CompanyController controller = CompanyController.getInstance();
+	public void doGet(HttpServletRequest req, HttpServletResponse res) {
 		try {
 			Companies companies = controller.listCompanies();
 			req.setAttribute("companies", companies.getCompanies());
-		} catch (UserException e) {
-			e.printStackTrace();
+			req.getRequestDispatcher("/WEB-INF/views/addComputer.jsp").forward(req, res);
+		} catch (UserException | ServletException | IOException e) {
+			logger.info(e.getMessage());
 		}
-		RequestDispatcher rd = req.getRequestDispatcher("/WEB-INF/views/addComputer.jsp");
-		rd.forward(req, res);
 	}
 }

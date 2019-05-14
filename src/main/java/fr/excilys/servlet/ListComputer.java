@@ -10,14 +10,18 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import fr.excilys.client.UserException;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import fr.excilys.controller.ComputerController;
 import fr.excilys.dto.ComputerDTO;
 
 @WebServlet(urlPatterns = "/dashboard")
 public class ListComputer extends HttpServlet {
 
+	private static final long serialVersionUID = -4657214759745320317L;
 	private ComputerController controller = ComputerController.getInstance();
+	private final Logger logger = LoggerFactory.getLogger(ListComputer.class);
 
 	public void doGet(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
 		try {
@@ -33,10 +37,10 @@ public class ListComputer extends HttpServlet {
 			req.setAttribute("offset", pagination.getOffset());
 			req.setAttribute("limit", pagination.getLimit());
 			req.setAttribute("pageNumber", pagination.getNumber());
-		} catch (UserException e) {
-			System.out.println(e.getMessage());
+			req.getRequestDispatcher("/WEB-INF/views/dashboard.jsp").forward(req, res);
+		} catch (Exception e) {
+			logger.info(e.getMessage());
 		}
-		req.getRequestDispatcher("/WEB-INF/views/dashboard.jsp").forward(req, res);
 	}
 
 }
