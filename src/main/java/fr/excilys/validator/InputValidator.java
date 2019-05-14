@@ -7,7 +7,6 @@ import java.util.List;
 import java.util.Optional;
 
 import fr.excilys.client.UserException;
-import fr.excilys.dao.DaoConfigException;
 import fr.excilys.dao.DaoException;
 import fr.excilys.dao.DaoFactory;
 import fr.excilys.dto.ComputerDTO;
@@ -47,7 +46,7 @@ public class InputValidator {
 		}
 	}
 	
-	private void checkCompanyName(String brand) throws DaoException, SQLException, UserException {
+	private void checkCompanyName(String brand) throws SQLException, UserException {
 		if (brand == null || brand.trim().isEmpty() || brand.equals("---"))
 			return ;
 		List<Company> comp = DaoFactory.getInstance().getCompany().read().getCompanies();
