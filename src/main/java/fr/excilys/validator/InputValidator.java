@@ -47,7 +47,7 @@ public class InputValidator {
 		}
 	}
 	
-	private void checkCompanyName(String brand) throws DaoException, DaoConfigException, SQLException, UserException {
+	private void checkCompanyName(String brand) throws DaoException, SQLException, UserException {
 		if (brand == null || brand.trim().isEmpty() || brand.equals("---"))
 			return ;
 		List<Company> comp = DaoFactory.getInstance().getCompany().read().getCompanies();
@@ -62,7 +62,7 @@ public class InputValidator {
 			throw new UserException("[ERROR] Introduced date cannot be after discontinued date.");
 	}
 	
-	public void check(ComputerDTO computer) throws UserException, DaoException, DaoConfigException, SQLException {
+	public void check(ComputerDTO computer) throws UserException, DaoException, SQLException {
 		this.checkName(computer.getName());
 		Optional<LocalDate> introduced = this.checkDateParsing(computer.getIntroduced());
 		Optional<LocalDate> discontinued = this.checkDateParsing(computer.getDiscontinued());
