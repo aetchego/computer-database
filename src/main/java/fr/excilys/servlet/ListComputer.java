@@ -20,9 +20,10 @@ import fr.excilys.dto.ComputerDTO;
 public class ListComputer extends HttpServlet {
 
 	private static final long serialVersionUID = -4657214759745320317L;
-	private ComputerController controller = ComputerController.getInstance();
+	private final ComputerController controller = ComputerController.getInstance();
 	private final Logger logger = LoggerFactory.getLogger(ListComputer.class);
 
+	@Override
 	public void doGet(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
 		try {
 			int numberComputers = controller.countComputers();

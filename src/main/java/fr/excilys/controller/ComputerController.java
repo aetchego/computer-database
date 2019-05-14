@@ -9,6 +9,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import fr.excilys.client.UserException;
+import fr.excilys.dao.DaoConfigException;
+import fr.excilys.dao.DaoException;
 import fr.excilys.dto.ComputerDTO;
 import fr.excilys.mapper.ComputerMapper;
 import fr.excilys.service.ComputerService;
@@ -48,7 +50,7 @@ public class ComputerController {
 		try {
 			validator.check(computer);
 			computerService.createComputer(computerMapper.DTOtoBean(computer));
-		} catch (UserException | SQLException e ) {
+		} catch (UserException | SQLException | DaoConfigException | DaoException e ) {
 			logger.info(e.getMessage());
 		}
 	}
@@ -65,7 +67,7 @@ public class ComputerController {
 		try {
 			validator.check(computer);
 			computerService.updateComputer(id, computerMapper.DTOtoBean(computer));
-		} catch (UserException | SQLException e) {
+		} catch (UserException | SQLException | DaoConfigException | DaoException e) {
 			logger.info(e.getMessage());
 		}
 	}

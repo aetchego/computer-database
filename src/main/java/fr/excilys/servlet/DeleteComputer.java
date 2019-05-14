@@ -22,13 +22,14 @@ public class DeleteComputer extends HttpServlet {
 	private final ComputerController controller = ComputerController.getInstance();
 	private final Logger logger = LoggerFactory.getLogger(DeleteComputer.class);
 
+	@Override
 	public void doPost(HttpServletRequest req, HttpServletResponse res) {
 		List<String> list = Arrays.asList(req.getParameter("selection").split(","));
 		for (String e : list) {
 			try {
 				controller.deleteComputer(Integer.parseInt(e));
 			} catch (NumberFormatException | UserException e1) {
-				e1.printStackTrace();
+				logger.info(e1.getMessage());
 			}
 		} try {
 			res.sendRedirect("/cdb_project/dashboard");

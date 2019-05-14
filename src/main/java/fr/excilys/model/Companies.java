@@ -7,29 +7,29 @@ import java.util.Optional;
 
 public final class Companies {
 
-	private List<Company> companies = new ArrayList<>();
+	private List<Company> companiesList = new ArrayList<>();
 
 	public List<Company> getCompanies() {
-		return companies;
+		return companiesList;
 	}
 
 	public void addCompany(Company company) {
-		this.companies.add(company);
+		this.companiesList.add(company);
 	}
 	
-	public void remove(Optional<Company> company) {
+	public void removeCompany(Optional<Company> company) {
 		if (company.isPresent()) 
-			this.companies.remove(company.get());
+			this.companiesList.remove(company.get());
 	}
 
 	@Override
 	public String toString() {
-		return "Companies [companies=" + companies + "\n ]";
+		return "Companies [companies=" + companiesList + "\n ]";
 	}
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(companies);
+		return Objects.hash(companiesList);
 	}
 
 	@Override
@@ -44,6 +44,6 @@ public final class Companies {
 			return false;
 		}
 		Companies other = (Companies) obj;
-		return Objects.equals(companies, other.companies);
+		return Objects.equals(companiesList, other.companiesList);
 	}
 }

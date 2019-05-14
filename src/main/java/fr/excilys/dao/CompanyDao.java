@@ -18,10 +18,10 @@ public class CompanyDao {
 	private DaoFactory factory;
 	private Companies companies = null;
 	private static CompanyDao company = null;
-	private CompanyMapper companyMapper = CompanyMapper.getInstance();
-	private final String SELECT = "SELECT * FROM company";
-	private final String DELETE = "DELETE FROM `computer-database-db`.company where(id) LIKE ?";
-	private final String DELETE_COMPUTERS = "DELETE FROM `computer-database-db`.computer where(company_id) = ?";
+	private final CompanyMapper companyMapper = CompanyMapper.getInstance();
+	private final static String SELECT = "SELECT * FROM company";
+	private final static String DELETE = "DELETE FROM `computer-database-db`.company where(id) LIKE ?";
+	private final static String DELETE_COMPUTERS = "DELETE FROM `computer-database-db`.computer where(company_id) = ?";
 
 	private CompanyDao(DaoFactory factory) {
 		this.factory = factory;
@@ -61,7 +61,7 @@ public class CompanyDao {
 		try {
 			DaoUtilitaries.databaseAccess(sql, DELETE_COMPUTERS, this.factory, 1, id);
 			DaoUtilitaries.databaseAccess(sql, DELETE, this.factory, 1, id);
-			companies.remove(searchCompany(companies.getCompanies(), id));
+			companies.removeCompany(searchCompany(companies.getCompanies(), id));
 		}
 		finally {
 			DaoUtilitaries.closeConnexions((ResultSet) sql.get(0), (PreparedStatement) sql.get(1),

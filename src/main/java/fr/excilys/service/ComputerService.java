@@ -42,7 +42,6 @@ public class ComputerService {
 		try {
 			computers = cd.search(name, filter);
 		} catch (DaoException | SQLException e) {
-			e.printStackTrace();
 			throw new UserException(DATABASE_ERROR);
 		}
 		return computers;

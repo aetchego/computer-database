@@ -19,14 +19,15 @@ public class Edit extends HttpServlet {
 	private static final long serialVersionUID = -3458370544877737983L;
 	private final ComputerMapper mapper = ComputerMapper.getInstance();
 	private final ComputerController controller = ComputerController.getInstance();
-	private Logger logger = LoggerFactory.getLogger(Edit.class);
+	private final Logger logger = LoggerFactory.getLogger(Edit.class);
 	
+	@Override
 	public void doPost(HttpServletRequest req, HttpServletResponse res) {
 		try {
 			controller.updateComputer(Integer.parseInt(req.getParameter("id")), mapper.StringsToDTO(req.getParameter("name"), req.getParameter("introduced"),
 			req.getParameter("discontinued"), req.getParameter("brand")));
 			res.sendRedirect("/cdb_project/dashboard");
-		} catch (IOException e) {
+		} catch (IOException | NumberFormatException e) {
 			logger.info(e.getMessage());
 		}
 	}

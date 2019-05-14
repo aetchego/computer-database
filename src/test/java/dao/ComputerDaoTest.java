@@ -24,8 +24,8 @@ import junitparams.JUnitParamsRunner;
 @RunWith(JUnitParamsRunner.class)
 public class ComputerDaoTest {
 
-	private ComputerController controller = ComputerController.getInstance();
-	private ComputerMapper mapper = ComputerMapper.getInstance();
+	private final ComputerController controller = ComputerController.getInstance();
+	private final ComputerMapper mapper = ComputerMapper.getInstance();
 	
 	@Before
 	public void loadDatabase() throws IOException, SQLException {
@@ -64,7 +64,7 @@ public class ComputerDaoTest {
 			assertEquals(expected, actual);
 			expected = controller.showDetails(-10);
 			fail("DaoException should have been thrown");
-		} catch (DaoException | UserException e) {
+		} catch (UserException e) {
 			assert(true);
 		}
 	}

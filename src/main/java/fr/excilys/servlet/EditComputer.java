@@ -19,9 +19,10 @@ import fr.excilys.model.Companies;
 public class EditComputer extends HttpServlet {
 
 	private static final long serialVersionUID = 1L;
-	private Logger logger = LoggerFactory.getLogger(EditComputer.class);
+	private final Logger logger = LoggerFactory.getLogger(EditComputer.class);
 	private final CompanyController controller = CompanyController.getInstance();
 
+	@Override
 	public void doGet(HttpServletRequest req, HttpServletResponse res) {
 		try {
 			Companies companies = controller.listCompanies();

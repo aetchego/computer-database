@@ -19,9 +19,10 @@ import fr.excilys.dto.ComputerDTO;
 public class Search extends HttpServlet {
 	
 	private static final long serialVersionUID = -1304806379012931426L;
-	private Logger logger = LoggerFactory.getLogger(ListComputer.class);
+	private final Logger logger = LoggerFactory.getLogger(ListComputer.class);
 	private final ComputerController controller = ComputerController.getInstance();
 	
+	@Override
 	public void doGet(HttpServletRequest req, HttpServletResponse res) {
 		try {
 			List<ComputerDTO> computers = req.getParameter("searchComputer") != null ? controller.search(req.getParameter("name"), "computer.name") : controller.search(req.getParameter("name"), "company.name");

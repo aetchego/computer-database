@@ -22,6 +22,7 @@ public class Add extends HttpServlet {
 	private final ComputerController controller = ComputerController.getInstance();
 	private final Logger logger = LoggerFactory.getLogger(Add.class);
 	
+	@Override
 	public void doPost(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
 		try {
 			controller.createComputer(mapper.StringsToDTO(req.getParameter("name"), req.getParameter("inDate"),

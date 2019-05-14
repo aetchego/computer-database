@@ -5,6 +5,8 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.time.LocalDate;
 
+import fr.excilys.dao.DaoConfigException;
+import fr.excilys.dao.DaoException;
 import fr.excilys.dao.DaoFactory;
 import fr.excilys.dto.ComputerDTO;
 import fr.excilys.model.Computer;
@@ -32,7 +34,7 @@ public class ComputerMapper {
 		return computer;
 	}
 
-	public Computer DTOtoBean(ComputerDTO computerDto) throws SQLException {
+	public Computer DTOtoBean(ComputerDTO computerDto) throws SQLException, DaoConfigException, DaoException {
 		Computer computer = new Computer();
 		if (!computerDto.getIntroduced().isEmpty())
 			computer.setIntroduced( Date.valueOf(LocalDate.parse(computerDto.getIntroduced())));
@@ -55,7 +57,7 @@ public class ComputerMapper {
 		return computerDTO;
 	}
 	
-	public Computer DBtoBean(ResultSet rs) throws SQLException {
+	public Computer DBtoBean(ResultSet rs) throws SQLException, DaoConfigException, DaoException {
 		Computer computer = new Computer();
 		computer.setId(rs.getInt("id"));
 		computer.setName(rs.getString("name"));

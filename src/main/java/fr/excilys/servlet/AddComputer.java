@@ -22,6 +22,7 @@ public class AddComputer extends HttpServlet {
 	private final Logger logger = LoggerFactory.getLogger(AddComputer.class);
 	private final CompanyController controller = CompanyController.getInstance();
 
+	@Override
 	public void doGet(HttpServletRequest req, HttpServletResponse res) {
 		try {
 			Companies companies = controller.listCompanies();
