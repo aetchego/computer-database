@@ -37,7 +37,7 @@ public class ComputerDao {
 		return instance;
 	}
 
-	public void create(Computer computer) throws DaoException, SQLException {
+	public void create(Computer computer) throws SQLException {
 		ArrayList<Object> sql = new ArrayList<>();
 		try {
 			Integer companyId = Objects.isNull(computer.getCompany()) ? null : computer.getCompany().getId();
@@ -49,14 +49,14 @@ public class ComputerDao {
 		}
 	}
 
-	public List<Computer> read(int offset, int limit) throws DaoException, SQLException {
+	public List<Computer> read(int offset, int limit) throws DaoException, SQLException, DaoConfigException {
 		Computer computer;
 		ArrayList<Computer> computers = new ArrayList<>();
 		ArrayList<Object> sql = new ArrayList<>();
 		try {
 			DaoUtilitaries.databaseAccess(sql, SELECT + " LIMIT ? OFFSET ?", this.factory, 0, limit, offset);
 			while (((ResultSet) sql.get(0)).next()) {
-				computer = computerMapper.DBtoBean((ResultSet) sql.get(0));
+				computer = computerMapper.dbToBean((ResultSet) sql.get(0));
 				computers.add(computer);
 			}
 		} finally {
@@ -66,14 +66,14 @@ public class ComputerDao {
 		return computers;
 	}
 	
-	public List<Computer> search(String name, String filter) throws DaoException, SQLException {
+	public List<Computer> search(String name, String filter) throws DaoException, SQLException, DaoConfigException {
 		Computer computer;
 		ArrayList<Computer> computers = new ArrayList<>();
 		ArrayList<Object> sql = new ArrayList<>();
 		try {
 			DaoUtilitaries.databaseAccess(sql, SEARCH_BY  + filter + ") LIKE ?", this.factory, 0, name);
 			while (((ResultSet) sql.get(0)).next()) {
-				computer = computerMapper.DBtoBean((ResultSet) sql.get(0));
+				computer = computerMapper.dbToBean((ResultSet) sql.get(0));
 				computers.add(computer);
 			}
 		} finally {
@@ -97,7 +97,7 @@ public class ComputerDao {
 		}
 	}
 
-	public void delete(int id) throws DaoException, SQLException, UserException {
+	public void delete(int id) throws SQLException, UserException {
 		ArrayList<Object> sql = new ArrayList<>();
 		try {
 			DaoUtilitaries.databaseAccess(sql, DELETE, this.factory, 1, id);
@@ -109,14 +109,14 @@ public class ComputerDao {
 		}
 	}
 
-	public Computer showDetails(int id) throws DaoException, SQLException {
+	public Computer showDetails(int id) throws DaoException, SQLException, DaoConfigException {
 		ArrayList<Object> sql = new ArrayList<>();
 		Computer computer;
 		try {
 			DaoUtilitaries.databaseAccess(sql, DETAILS, this.factory, 0, id);
 			if (!((ResultSet) sql.get(0)).next())
 				throw new DaoException("[ERROR] No results have been found.");
-			computer = computerMapper.DBtoBean((ResultSet) sql.get(0));
+			computer = computerMapper.dbToBean((ResultSet) sql.get(0));
 		} finally {
 			DaoUtilitaries.closeConnexions((ResultSet) sql.get(0), (PreparedStatement) sql.get(1),
 					(Connection) sql.get(2));
@@ -124,7 +124,7 @@ public class ComputerDao {
 		return computer;
 	}
 	
-	public int countComputers() throws DaoException, SQLException {
+	public int countComputers() throws SQLException {
 		int res = 0;
 		ArrayList<Object> sql = new ArrayList<>();
 		try {

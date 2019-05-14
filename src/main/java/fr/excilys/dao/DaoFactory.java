@@ -20,7 +20,7 @@ public class DaoFactory {
 	        dataSource = new HikariDataSource(cfg);
 	}
 
-	public static DaoFactory getInstance() throws DaoConfigException {
+	public static DaoFactory getInstance() {
 		if (instance == null) {
 			TimeZone.setDefault(TimeZone.getTimeZone("UTC"));
 			instance = new DaoFactory();

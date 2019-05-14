@@ -19,9 +19,9 @@ public class CompanyDao {
 	private Companies companies = null;
 	private static CompanyDao company = null;
 	private final CompanyMapper companyMapper = CompanyMapper.getInstance();
-	private final static String SELECT = "SELECT * FROM company";
-	private final static String DELETE = "DELETE FROM `computer-database-db`.company where(id) LIKE ?";
-	private final static String DELETE_COMPUTERS = "DELETE FROM `computer-database-db`.computer where(company_id) = ?";
+	private static final String SELECT = "SELECT * FROM company";
+	private static final String DELETE = "DELETE FROM `computer-database-db`.company where(id) LIKE ?";
+	private static final String DELETE_COMPUTERS = "DELETE FROM `computer-database-db`.computer where(company_id) = ?";
 
 	private CompanyDao(DaoFactory factory) {
 		this.factory = factory;
@@ -33,7 +33,7 @@ public class CompanyDao {
 		return company;
 	}
 
-	public Companies read() throws DaoException, SQLException {
+	public Companies read() throws SQLException {
 		ArrayList<Object> sql = new ArrayList<>();
 		if (this.companies == null) {
 			try {

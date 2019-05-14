@@ -25,7 +25,7 @@ public class Add extends HttpServlet {
 	@Override
 	public void doPost(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
 		try {
-			controller.createComputer(mapper.StringsToDTO(req.getParameter("name"), req.getParameter("inDate"),
+			controller.createComputer(mapper.stringsToDto(req.getParameter("name"), req.getParameter("inDate"),
 			req.getParameter("outDate"), req.getParameter("brand")));
 			res.sendRedirect("/cdb_project/dashboard");
 		} catch (IOException e) {

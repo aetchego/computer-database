@@ -34,12 +34,12 @@ public class ComputerController {
 	}
 
 	public List<ComputerDTO> listComputers(int offset, int limit) throws UserException {
-		return computerService.listComputers(offset, limit).stream().map(computerMapper::BeanToDTO).collect(Collectors.toList());
+		return computerService.listComputers(offset, limit).stream().map(computerMapper::beanToDto).collect(Collectors.toList());
 	}
 	
 	public List<ComputerDTO> search(String name, String filter) {
 		try {
-			return computerService.search(name, filter).stream().map(computerMapper::BeanToDTO).collect(Collectors.toList());
+			return computerService.search(name, filter).stream().map(computerMapper::beanToDto).collect(Collectors.toList());
 		} catch (UserException e) {
 			logger.info(e.getMessage());
 		}
@@ -49,14 +49,14 @@ public class ComputerController {
 	public void createComputer(ComputerDTO computer) {
 		try {
 			validator.check(computer);
-			computerService.createComputer(computerMapper.DTOtoBean(computer));
+			computerService.createComputer(computerMapper.dtoToBean(computer));
 		} catch (UserException | SQLException | DaoConfigException | DaoException e ) {
 			logger.info(e.getMessage());
 		}
 	}
 
 	public ComputerDTO showDetails(int id) throws UserException {
-		return computerMapper.BeanToDTO(computerService.showDetails(id));
+		return computerMapper.beanToDto(computerService.showDetails(id));
 	}
 
 	public void deleteComputer(int id) throws UserException {
@@ -66,7 +66,7 @@ public class ComputerController {
 	public void updateComputer(int id, ComputerDTO computer) {
 		try {
 			validator.check(computer);
-			computerService.updateComputer(id, computerMapper.DTOtoBean(computer));
+			computerService.updateComputer(id, computerMapper.dtoToBean(computer));
 		} catch (UserException | SQLException | DaoConfigException | DaoException e) {
 			logger.info(e.getMessage());
 		}

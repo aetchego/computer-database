@@ -25,7 +25,7 @@ public class ComputerMapper {
 		return instance;
 	}
 	
-	public ComputerDTO StringsToDTO(String name, String introduced, String discontinued, String brand) {
+	public ComputerDTO stringsToDto(String name, String introduced, String discontinued, String brand) {
 		ComputerDTO computer = new ComputerDTO();
 		computer.setName(name);
 		computer.setIntroduced(introduced);
@@ -34,7 +34,7 @@ public class ComputerMapper {
 		return computer;
 	}
 
-	public Computer DTOtoBean(ComputerDTO computerDto) throws SQLException, DaoConfigException, DaoException {
+	public Computer dtoToBean(ComputerDTO computerDto) throws SQLException, DaoConfigException, DaoException {
 		Computer computer = new Computer();
 		if (!computerDto.getIntroduced().isEmpty())
 			computer.setIntroduced( Date.valueOf(LocalDate.parse(computerDto.getIntroduced())));
@@ -46,7 +46,7 @@ public class ComputerMapper {
 		return computer;
 	}
 	
-	public ComputerDTO BeanToDTO(Computer computer) {
+	public ComputerDTO beanToDto(Computer computer) {
 		ComputerDTO computerDTO = new ComputerDTO();
 		computerDTO.setName(computer.getName());
 		computerDTO.setIntroduced(String.valueOf(computer.getIntroduced()));
@@ -57,7 +57,7 @@ public class ComputerMapper {
 		return computerDTO;
 	}
 	
-	public Computer DBtoBean(ResultSet rs) throws SQLException, DaoConfigException, DaoException {
+	public Computer dbToBean(ResultSet rs) throws SQLException, DaoConfigException, DaoException {
 		Computer computer = new Computer();
 		computer.setId(rs.getInt("id"));
 		computer.setName(rs.getString("name"));

@@ -78,7 +78,7 @@ public class ComputerDaoTest {
 	
 	@Test
 	public void create() throws DaoException, DaoConfigException, SQLException, UserException {
-		ComputerDTO computer = mapper.StringsToDTO("Test", "2006-1-9", "2006-1-10", "Apple Inc.");
+		ComputerDTO computer = mapper.stringsToDto("Test", "2006-1-9", "2006-1-10", "Apple Inc.");
 		UTDatabase.getInstance().createComputer(computer);
 		controller.createComputer(computer);
 		assertEquals(controller.showDetails(controller.countComputers() - 1),
@@ -88,7 +88,7 @@ public class ComputerDaoTest {
 	
 	@Test
 	public void update() throws DaoException, DaoConfigException, SQLException {
-		ComputerDTO computer = mapper.StringsToDTO("Test", "2006-1-9", "2006-1-10", "Apple Inc.");
+		ComputerDTO computer = mapper.stringsToDto("Test", "2006-1-9", "2006-1-10", "Apple Inc.");
 		ComputerDTO computerCopy = UTDatabase.getInstance().selectComputerById(5);
 		controller.updateComputer(5, computer);
 		UTDatabase.getInstance().updateComputer(computer, 5);

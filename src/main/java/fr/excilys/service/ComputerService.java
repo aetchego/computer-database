@@ -50,7 +50,7 @@ public class ComputerService {
 	public void createComputer(Computer computer) throws UserException {
 		try {
 			cd.create(computer);
-		} catch (DaoException | SQLException e) {
+		} catch (SQLException e) {
 			throw new UserException(DATABASE_ERROR);
 		}
 	}
@@ -59,7 +59,7 @@ public class ComputerService {
 		try {
 			cd.delete(id);
 			
-		} catch (DaoException | SQLException e) {
+		} catch (SQLException e) {
 			throw new UserException(ID_ERROR);
 		}
 	}
@@ -84,7 +84,7 @@ public class ComputerService {
 		int res = 0;
 		try {
 			res = cd.countComputers();
-		} catch (DaoException | SQLException e) {
+		} catch (SQLException e) {
 			throw new UserException(DATABASE_ERROR);
 		}
 		return res;

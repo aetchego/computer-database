@@ -23,19 +23,19 @@ public class ValidatorTest {
 	
 	@Test
 	public void checkValid() throws UserException, DaoException, DaoConfigException, SQLException {
-		validator.check(mapper.StringsToDTO("Test", "1994-11-03", "1995-11-03", "Apple Inc."));
-		validator.check(mapper.StringsToDTO("Test", "1994-11-03", "", ""));
-		validator.check(mapper.StringsToDTO("Test", "1994-11-03", null, null));
-		validator.check(mapper.StringsToDTO("Test", "   ", "1995-11-03", "RCA"));
-		validator.check(mapper.StringsToDTO("Test", null, "1995-11-03", "     "));
-		validator.check(mapper.StringsToDTO("Test", "", "1995-11-03", "RCA"));
+		validator.check(mapper.stringsToDto("Test", "1994-11-03", "1995-11-03", "Apple Inc."));
+		validator.check(mapper.stringsToDto("Test", "1994-11-03", "", ""));
+		validator.check(mapper.stringsToDto("Test", "1994-11-03", null, null));
+		validator.check(mapper.stringsToDto("Test", "   ", "1995-11-03", "RCA"));
+		validator.check(mapper.stringsToDto("Test", null, "1995-11-03", "     "));
+		validator.check(mapper.stringsToDto("Test", "", "1995-11-03", "RCA"));
 		assert(true);
 	}
 	
 	@Test
 	public void checkEmptyName() throws UserException, DaoException, DaoConfigException, SQLException {
 		try {
-			validator.check(mapper.StringsToDTO("", null, null, null));
+			validator.check(mapper.stringsToDto("", null, null, null));
 			fail("Should have thrown UserException.");
 		}
 		catch (UserException e) {assert(true);}
@@ -44,7 +44,7 @@ public class ValidatorTest {
 	@Test
 	public void checkEmptySpaceName() throws UserException, DaoException, DaoConfigException, SQLException {
 		try {
-			validator.check(mapper.StringsToDTO("      ", null, null, null));
+			validator.check(mapper.stringsToDto("      ", null, null, null));
 			fail("Should have thrown UserException.");
 		}
 		catch (UserException e) {assert(true);}
@@ -53,7 +53,7 @@ public class ValidatorTest {
 	@Test
 	public void checkNullName() throws UserException, DaoException, DaoConfigException, SQLException {
 		try {
-			validator.check(mapper.StringsToDTO(null, null, null, null));
+			validator.check(mapper.stringsToDto(null, null, null, null));
 			fail("Should have thrown UserException.");
 		}
 		catch (UserException e) {assert(true);}
@@ -62,7 +62,7 @@ public class ValidatorTest {
 	@Test
 	public void checkDiscontinuedBeforeIntroduced() throws UserException, DaoException, DaoConfigException, SQLException {
 		try {
-			validator.check(mapper.StringsToDTO("Test", "1996-11-03", "1995-11-03", null));
+			validator.check(mapper.stringsToDto("Test", "1996-11-03", "1995-11-03", null));
 			fail("Should have thrown UserException.");
 		}
 		catch (UserException e) {assert(true);}
@@ -71,7 +71,7 @@ public class ValidatorTest {
 	@Test
 	public void checkDateInFuture() throws UserException, DaoException, DaoConfigException, SQLException {
 		try {
-			validator.check(mapper.StringsToDTO("Test", "2220-11-03", null, null));
+			validator.check(mapper.stringsToDto("Test", "2220-11-03", null, null));
 			fail("Should have thrown UserException.");
 		}
 		catch (UserException e) {assert(true);}
@@ -80,7 +80,7 @@ public class ValidatorTest {
 	@Test
 	public void checkDateBefore1970() throws UserException, DaoException, DaoConfigException, SQLException {
 		try {
-			validator.check(mapper.StringsToDTO("Test", "1960-11-03", null, null));
+			validator.check(mapper.stringsToDto("Test", "1960-11-03", null, null));
 			fail("Should have thrown UserException.");
 		} catch (UserException e) {assert(true);}
 	}
@@ -88,7 +88,7 @@ public class ValidatorTest {
 	@Test
 	public void checkDateErrorParsing() throws DaoException, DaoConfigException, SQLException {
 		try {
-			validator.check(mapper.StringsToDTO("Test", "2000/11/03", null, null));
+			validator.check(mapper.stringsToDto("Test", "2000/11/03", null, null));
 			fail("Should have thrown UserException.");
 		}
 		catch (UserException e) {assert(true);}
@@ -97,7 +97,7 @@ public class ValidatorTest {
 	@Test
 	public void checkIfBrandExists() throws DaoException, DaoConfigException, SQLException {
 		try {
-			validator.check(mapper.StringsToDTO("Test", null, null, "Unknown"));
+			validator.check(mapper.stringsToDto("Test", null, null, "Unknown"));
 			fail("Should have thrown UserException.");
 		}
 		catch (UserException e) {assert(true);}

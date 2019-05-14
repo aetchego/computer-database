@@ -42,26 +42,26 @@ public class UTDatabase {
 	
 	private void addComputers() {
 		TimeZone.setDefault(TimeZone.getTimeZone("UTC"));
-		computers.add(computerMapper.StringsToDTO("MacBook Pro 15.4 inch", null, null, null));
-		computers.add(computerMapper.StringsToDTO("CM-2a", null, null, ""));
-		computers.add(computerMapper.StringsToDTO("CM-200", null, null, "   "));
-		computers.add(computerMapper.StringsToDTO("CM-5e", null, null, "RCA"));
-		computers.add(computerMapper.StringsToDTO("CM-5", "1991-1-1", null, "Tandy Corporation"));
-		computers.add(computerMapper.StringsToDTO("MacBook Pro", "2006-1-10", null, "IMS Associates, Inc."));
-		computers.add(computerMapper.StringsToDTO("Apple IIe", null, null, null));
-		computers.add(computerMapper.StringsToDTO("Apple IIc", null, null, null));
-		computers.add(computerMapper.StringsToDTO("Apple IIGS", null, null, null));
-		computers.add(computerMapper.StringsToDTO("Apple IIc Plus", null, null, ""));
-		computers.add(computerMapper.StringsToDTO("Apple II Plus", null, null, "     "));
-		computers.add(computerMapper.StringsToDTO("Apple III", "1980-5-1", "1984-4-1", "MOS Technology"));
-		computers.add(computerMapper.StringsToDTO("Apple Lisa", null, null, "Micro Instrumentation and Telemetry Systems"));
-		computers.add(computerMapper.StringsToDTO("CM-2", null, null, " "));
-		computers.add(computerMapper.StringsToDTO("Connection Machine", "1987-1-1", null, "Micro Instrumentation and Telemetry Systems"));
-		computers.add(computerMapper.StringsToDTO("Apple II", "1977-4-1", "1993-10-1", null));
-		computers.add(computerMapper.StringsToDTO("Apple III Plus", "1983-12-1", "1984-4-1", "MOS Technology"));
-		computers.add(computerMapper.StringsToDTO("COSMAC ELF", null, null, null));
-		computers.add(computerMapper.StringsToDTO("COSMAC VIP", "1977-1-1", null, "    "));
-		computers.add(computerMapper.StringsToDTO("ELF II", "1977-1-1", null, null));
+		computers.add(computerMapper.stringsToDto("MacBook Pro 15.4 inch", null, null, null));
+		computers.add(computerMapper.stringsToDto("CM-2a", null, null, ""));
+		computers.add(computerMapper.stringsToDto("CM-200", null, null, "   "));
+		computers.add(computerMapper.stringsToDto("CM-5e", null, null, "RCA"));
+		computers.add(computerMapper.stringsToDto("CM-5", "1991-1-1", null, "Tandy Corporation"));
+		computers.add(computerMapper.stringsToDto("MacBook Pro", "2006-1-10", null, "IMS Associates, Inc."));
+		computers.add(computerMapper.stringsToDto("Apple IIe", null, null, null));
+		computers.add(computerMapper.stringsToDto("Apple IIc", null, null, null));
+		computers.add(computerMapper.stringsToDto("Apple IIGS", null, null, null));
+		computers.add(computerMapper.stringsToDto("Apple IIc Plus", null, null, ""));
+		computers.add(computerMapper.stringsToDto("Apple II Plus", null, null, "     "));
+		computers.add(computerMapper.stringsToDto("Apple III", "1980-5-1", "1984-4-1", "MOS Technology"));
+		computers.add(computerMapper.stringsToDto("Apple Lisa", null, null, "Micro Instrumentation and Telemetry Systems"));
+		computers.add(computerMapper.stringsToDto("CM-2", null, null, " "));
+		computers.add(computerMapper.stringsToDto("Connection Machine", "1987-1-1", null, "Micro Instrumentation and Telemetry Systems"));
+		computers.add(computerMapper.stringsToDto("Apple II", "1977-4-1", "1993-10-1", null));
+		computers.add(computerMapper.stringsToDto("Apple III Plus", "1983-12-1", "1984-4-1", "MOS Technology"));
+		computers.add(computerMapper.stringsToDto("COSMAC ELF", null, null, null));
+		computers.add(computerMapper.stringsToDto("COSMAC VIP", "1977-1-1", null, "    "));
+		computers.add(computerMapper.stringsToDto("ELF II", "1977-1-1", null, null));
 	}
 	
 	private void addCompanies() {

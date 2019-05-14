@@ -24,7 +24,7 @@ public class Edit extends HttpServlet {
 	@Override
 	public void doPost(HttpServletRequest req, HttpServletResponse res) {
 		try {
-			controller.updateComputer(Integer.parseInt(req.getParameter("id")), mapper.StringsToDTO(req.getParameter("name"), req.getParameter("introduced"),
+			controller.updateComputer(Integer.parseInt(req.getParameter("id")), mapper.stringsToDto(req.getParameter("name"), req.getParameter("introduced"),
 			req.getParameter("discontinued"), req.getParameter("brand")));
 			res.sendRedirect("/cdb_project/dashboard");
 		} catch (IOException | NumberFormatException e) {
