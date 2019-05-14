@@ -32,7 +32,7 @@ public class ComputerService {
 		List<Computer> computers = new ArrayList<>();
 		try {
 			computers = cd.read(offset, limit);
-		} catch (DaoException | SQLException e) {
+		} catch (SQLException e) {
 			throw new UserException(DATABASE_ERROR); }
 		return computers;
 	}
@@ -41,7 +41,7 @@ public class ComputerService {
 		List<Computer> computers = new ArrayList<>();
 		try {
 			computers = cd.search(name, filter);
-		} catch (DaoException | SQLException e) {
+		} catch (SQLException e) {
 			throw new UserException(DATABASE_ERROR);
 		}
 		return computers;

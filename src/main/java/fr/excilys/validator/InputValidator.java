@@ -7,7 +7,6 @@ import java.util.List;
 import java.util.Optional;
 
 import fr.excilys.client.UserException;
-import fr.excilys.dao.DaoException;
 import fr.excilys.dao.DaoFactory;
 import fr.excilys.dto.ComputerDTO;
 import fr.excilys.model.Company;
@@ -61,7 +60,7 @@ public class InputValidator {
 			throw new UserException("[ERROR] Introduced date cannot be after discontinued date.");
 	}
 	
-	public void check(ComputerDTO computer) throws UserException, DaoException, SQLException {
+	public void check(ComputerDTO computer) throws UserException, SQLException {
 		this.checkName(computer.getName());
 		Optional<LocalDate> introduced = this.checkDateParsing(computer.getIntroduced());
 		Optional<LocalDate> discontinued = this.checkDateParsing(computer.getDiscontinued());

@@ -49,7 +49,7 @@ public class ComputerDao {
 		}
 	}
 
-	public List<Computer> read(int offset, int limit) throws DaoException, SQLException {
+	public List<Computer> read(int offset, int limit) throws SQLException {
 		Computer computer;
 		ArrayList<Computer> computers = new ArrayList<>();
 		ArrayList<Object> sql = new ArrayList<>();
@@ -66,7 +66,7 @@ public class ComputerDao {
 		return computers;
 	}
 	
-	public List<Computer> search(String name, String filter) throws DaoException, SQLException {
+	public List<Computer> search(String name, String filter) throws SQLException {
 		Computer computer;
 		ArrayList<Computer> computers = new ArrayList<>();
 		ArrayList<Object> sql = new ArrayList<>();
