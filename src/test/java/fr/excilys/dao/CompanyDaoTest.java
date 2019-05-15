@@ -14,9 +14,6 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import fr.excilys.config.AppConfig;
-import fr.excilys.dao.CompanyDao;
-import fr.excilys.dao.DaoConfigException;
-import fr.excilys.dao.DaoException;
 import fr.excilys.database.UTDatabase;
 import fr.excilys.model.Company;
 
@@ -27,16 +24,16 @@ public class CompanyDaoTest {
 	@Autowired
 	private CompanyDao companyDao;
 	@Autowired
-	private UTDatabase utDatabase;
+	private UTDatabase database;
 
 	@Before
 	public void loadDatabase() throws IOException, SQLException {
-		utDatabase.reload();
+		database.reload();
 	}
 
 	@Test
 	public void read() throws DaoException, DaoConfigException, SQLException {
-		final List<Company> actual = utDatabase.readCompanies();
+		final List<Company> actual = database.readCompanies();
 		final List<Company> expected = companyDao.read().getCompanies();
 		assertEquals(expected, actual);
 	}

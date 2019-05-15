@@ -39,7 +39,7 @@ public class ComputerMapper {
 		computer.setName(rs.getString("name"));
 		computer.setIntroduced(rs.getDate("introduced"));
 		computer.setDiscontinued(rs.getDate("discontinued"));
-		computer.setCompany(rs.getString("company_name"), companyService.listCompanies());
+		companyService.findByName(rs.getString("company_name")).ifPresent(computer::setCompany);
 		return computer;
 	}
 
@@ -49,8 +49,7 @@ public class ComputerMapper {
 			computer.setIntroduced(Date.valueOf(LocalDate.parse(computerDto.getIntroduced())));
 		if (!computerDto.getDiscontinued().isEmpty())
 			computer.setDiscontinued(Date.valueOf(LocalDate.parse(computerDto.getDiscontinued())));
-		if (!computerDto.getBrand().isEmpty())
-			computer.setCompany(computerDto.getBrand(), companyService.listCompanies());
+		companyService.findByName(computerDto.getBrand()).ifPresent(computer::setCompany);
 		computer.setName(computerDto.getName());
 		return computer;
 	}

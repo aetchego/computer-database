@@ -1,7 +1,6 @@
 package fr.excilys.model;
 
 import java.sql.Date;
-import java.util.List;
 import java.util.Objects;
 
 public class Computer {
@@ -53,17 +52,12 @@ public class Computer {
 		return Objects.hash(company, discontinued, id, introduced, name);
 	}
 
-	public void setCompany(String name, Companies companies) {
-		List<Company> comp = companies.getCompanies();
-		for (Company e : comp) {
-			if (e.getName().equals(name)) {
-				this.company = e;
-			}
-		}
+	public void setCompany(Company company) {
+		this.company = company;
 	}
 
-	public void setDiscontinued(Date date) {
-		this.discontinued = date;
+	public void setDiscontinued(Date discontinued) {
+		this.discontinued = discontinued;
 	}
 
 	public void setId(int id) {

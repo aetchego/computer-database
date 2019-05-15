@@ -68,4 +68,8 @@ public class CompanyDao {
 				return Optional.of(e);
 		throw new UserException("[ERROR] Company ID does not exist.");
 	}
+
+	public Optional<Company> findByName(String name) throws SQLException {
+		return this.read().getCompanies().stream().filter(c -> c.getName().equals(name)).findFirst();
+	}
 }
