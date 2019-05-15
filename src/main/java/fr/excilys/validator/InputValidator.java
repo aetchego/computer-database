@@ -1,6 +1,5 @@
 package fr.excilys.validator;
 
-import java.sql.SQLException;
 import java.time.LocalDate;
 import java.time.format.DateTimeParseException;
 import java.util.List;
@@ -23,7 +22,7 @@ public class InputValidator {
 		this.companyService = companyService;
 	}
 
-	public void check(ComputerDTO computer) throws UserException, SQLException {
+	public void check(ComputerDTO computer) throws UserException {
 		this.checkName(computer.getName());
 		Optional<LocalDate> introduced = this.checkDateParsing(computer.getIntroduced());
 		Optional<LocalDate> discontinued = this.checkDateParsing(computer.getDiscontinued());

@@ -1,4 +1,4 @@
-package validator;
+package fr.excilys.validator;
 
 import static org.junit.Assert.fail;
 

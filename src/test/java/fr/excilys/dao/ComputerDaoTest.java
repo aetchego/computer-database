@@ -1,4 +1,4 @@
-package dao;
+package fr.excilys.dao;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.fail;
@@ -11,12 +11,12 @@ import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
-import database.UTDatabase;
 import fr.excilys.client.UserException;
 import fr.excilys.controller.ComputerController;
 import fr.excilys.dao.DaoConfigException;
 import fr.excilys.dao.DaoException;
 import fr.excilys.dao.DaoFactory;
+import fr.excilys.database.UTDatabase;
 import fr.excilys.dto.ComputerDTO;
 import fr.excilys.mapper.ComputerMapper;
 import junitparams.JUnitParamsRunner;

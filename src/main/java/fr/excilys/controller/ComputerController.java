@@ -1,6 +1,5 @@
 package fr.excilys.controller;
 
-import java.sql.SQLException;
 import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -42,7 +41,7 @@ public class ComputerController {
 		try {
 			validator.check(computer);
 			computerService.createComputer(computerMapper.dtoToBean(computer));
-		} catch (UserException | SQLException | DaoConfigException e) {
+		} catch (UserException | DaoConfigException e) {
 			logger.info(e.getMessage());
 		}
 	}
@@ -74,7 +73,7 @@ public class ComputerController {
 		try {
 			validator.check(computer);
 			computerService.updateComputer(id, computerMapper.dtoToBean(computer));
-		} catch (UserException | SQLException | DaoConfigException e) {
+		} catch (UserException | DaoConfigException e) {
 			logger.info(e.getMessage());
 		}
 	}
