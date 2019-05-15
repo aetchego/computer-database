@@ -16,14 +16,14 @@ import com.zaxxer.hikari.HikariDataSource;
 public class AppConfig {
 
 	@Bean
-	public HikariConfig hikariConfig() {
-		return new HikariConfig("/hikari.properties");
-	}
-
-	@Bean
 	public DataSource dataSource(HikariConfig config) {
 		TimeZone.setDefault(TimeZone.getTimeZone("UTC"));
 		return new HikariDataSource(config);
+	}
+
+	@Bean
+	public HikariConfig hikariConfig() {
+		return new HikariConfig("/hikari.properties");
 	}
 
 }

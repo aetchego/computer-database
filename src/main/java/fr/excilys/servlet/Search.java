@@ -16,29 +16,30 @@ import org.springframework.web.context.support.WebApplicationContextUtils;
 
 import fr.excilys.controller.ComputerController;
 import fr.excilys.dto.ComputerDTO;
-import fr.excilys.mapper.ComputerMapper;
 
 @WebServlet(urlPatterns = "/search")
 public class Search extends HttpServlet {
-	
+
 	private static final long serialVersionUID = -1304806379012931426L;
 	private final Logger logger = LoggerFactory.getLogger(ListComputer.class);
 	private ComputerController controller;
-	
+
+	@Override
+	public void doGet(HttpServletRequest req, HttpServletResponse res) {
+		try {
+			List<ComputerDTO> computers = req.getParameter("searchComputer") != null
+					? controller.search(req.getParameter("name"), "computer.name")
+					: controller.search(req.getParameter("name"), "company.name");
+			req.setAttribute("computers", computers);
+			req.getRequestDispatcher("/WEB-INF/views/dashboard.jsp").forward(req, res);
+		} catch (ServletException | IOException e) {
+			logger.info(e.getMessage());
+		}
+	}
+
 	@Override
 	public void init() throws ServletException {
 		WebApplicationContext wac = WebApplicationContextUtils.getRequiredWebApplicationContext(getServletContext());
 		controller = wac.getBean(ComputerController.class);
-	}
-	
-	@Override
-	public void doGet(HttpServletRequest req, HttpServletResponse res) {
-		try {
-			List<ComputerDTO> computers = req.getParameter("searchComputer") != null ? controller.search(req.getParameter("name"), "computer.name") : controller.search(req.getParameter("name"), "company.name");
-			req.setAttribute("computers", computers);
-			req.getRequestDispatcher("/WEB-INF/views/dashboard.jsp").forward(req, res);	
-		} catch (ServletException | IOException e) {
-			logger.info(e.getMessage());
-		}
 	}
 }

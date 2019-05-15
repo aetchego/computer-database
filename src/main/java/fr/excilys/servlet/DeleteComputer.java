@@ -17,7 +17,6 @@ import org.springframework.web.context.support.WebApplicationContextUtils;
 
 import fr.excilys.client.UserException;
 import fr.excilys.controller.ComputerController;
-import fr.excilys.mapper.ComputerMapper;
 
 @WebServlet(urlPatterns = "/delete")
 public class DeleteComputer extends HttpServlet {
@@ -27,12 +26,6 @@ public class DeleteComputer extends HttpServlet {
 	private final Logger logger = LoggerFactory.getLogger(DeleteComputer.class);
 
 	@Override
-	public void init() throws ServletException {
-		WebApplicationContext wac = WebApplicationContextUtils.getRequiredWebApplicationContext(getServletContext());
-		controller = wac.getBean(ComputerController.class);
-	}
-	
-	@Override
 	public void doPost(HttpServletRequest req, HttpServletResponse res) {
 		List<String> list = Arrays.asList(req.getParameter("selection").split(","));
 		for (String e : list) {
@@ -41,10 +34,17 @@ public class DeleteComputer extends HttpServlet {
 			} catch (NumberFormatException | UserException e1) {
 				logger.info(e1.getMessage());
 			}
-		} try {
+		}
+		try {
 			res.sendRedirect("/cdb_project/dashboard");
 		} catch (IOException e) {
 			logger.info(e.getMessage());
 		}
+	}
+
+	@Override
+	public void init() throws ServletException {
+		WebApplicationContext wac = WebApplicationContextUtils.getRequiredWebApplicationContext(getServletContext());
+		controller = wac.getBean(ComputerController.class);
 	}
 }

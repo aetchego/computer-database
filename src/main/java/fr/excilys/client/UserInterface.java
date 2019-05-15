@@ -7,7 +7,6 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 
 import fr.excilys.controller.CompanyController;
-import fr.excilys.controller.ComputerController;
 
 @Component
 public class UserInterface {
@@ -19,6 +18,16 @@ public class UserInterface {
 	public UserInterface(CompanyController companyController) {
 		super();
 		this.companyController = companyController;
+	}
+
+	public void askId() throws UserException {
+		this.id = 0;
+		System.out.println("\nPlease give the computer's ID you wishes to apply operations on :");
+		try {
+			this.id = Integer.parseInt(sc.nextLine());
+		} catch (Exception e) {
+			throw new UserException("[ERROR] This is not a valid ID.");
+		}
 	}
 
 	public void displayChoices() {
@@ -35,16 +44,6 @@ public class UserInterface {
 				}
 			} while (choice < 1 || choice > 2);
 			this.operations(choice);
-		}
-	}
-
-	public void askId() throws UserException {
-		this.id = 0;
-		System.out.println("\nPlease give the computer's ID you wishes to apply operations on :");
-		try {
-			this.id = Integer.parseInt(sc.nextLine());
-		} catch (Exception e) {
-			throw new UserException("[ERROR] This is not a valid ID.");
 		}
 	}
 

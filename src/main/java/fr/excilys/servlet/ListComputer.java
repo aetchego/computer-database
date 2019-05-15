@@ -26,19 +26,13 @@ public class ListComputer extends HttpServlet {
 	private final Logger logger = LoggerFactory.getLogger(ListComputer.class);
 
 	@Override
-	public void init() throws ServletException {
-		WebApplicationContext wac = WebApplicationContextUtils.getRequiredWebApplicationContext(getServletContext());
-		controller = wac.getBean(ComputerController.class);
-	}
-
-	@Override
 	public void doGet(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
 		try {
 			int numberComputers = controller.countComputers();
-			Page pagination = (Page)req.getSession().getAttribute("page");
+			Page pagination = (Page) req.getSession().getAttribute("page");
 			pagination = Objects.nonNull(pagination) ? pagination : new Page();
 			pagination.setCurrent(numberComputers, req.getParameter("pageAt"), req.getParameter("size"),
-			req.getParameter("previous"), req.getParameter("next"));
+					req.getParameter("previous"), req.getParameter("next"));
 			req.getSession().setAttribute("page", pagination);
 			List<ComputerDTO> computers = controller.listComputers(pagination.getOffset(), pagination.getLimit());
 			req.setAttribute("computers", computers);
@@ -50,6 +44,12 @@ public class ListComputer extends HttpServlet {
 		} catch (Exception e) {
 			logger.info(e.getMessage());
 		}
+	}
+
+	@Override
+	public void init() throws ServletException {
+		WebApplicationContext wac = WebApplicationContextUtils.getRequiredWebApplicationContext(getServletContext());
+		controller = wac.getBean(ComputerController.class);
 	}
 
 }

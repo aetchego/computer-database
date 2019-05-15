@@ -16,11 +16,11 @@ public class CompanyController {
 		this.companyService = companyService;
 	}
 
-	public Companies listCompanies() throws UserException {
-		return (companyService.listCompanies());
-	}
-
 	public void deleteCompany(int id) throws UserException {
 		companyService.deleteCompany(id);
+	}
+
+	public Companies listCompanies() throws UserException {
+		return (companyService.listCompanies());
 	}
 }

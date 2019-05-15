@@ -15,8 +15,6 @@ import org.springframework.web.context.support.WebApplicationContextUtils;
 
 import fr.excilys.client.UserException;
 import fr.excilys.controller.CompanyController;
-import fr.excilys.controller.ComputerController;
-import fr.excilys.mapper.ComputerMapper;
 import fr.excilys.model.Companies;
 
 @WebServlet(urlPatterns = "/editComputer")
@@ -26,12 +24,6 @@ public class EditComputer extends HttpServlet {
 	private final Logger logger = LoggerFactory.getLogger(EditComputer.class);
 	private CompanyController controller;
 
-	@Override
-	public void init() throws ServletException {
-		WebApplicationContext wac = WebApplicationContextUtils.getRequiredWebApplicationContext(getServletContext());
-		controller = wac.getBean(CompanyController.class);
-	}
-	
 	@Override
 	public void doGet(HttpServletRequest req, HttpServletResponse res) {
 		try {
@@ -47,5 +39,10 @@ public class EditComputer extends HttpServlet {
 			logger.info(e.getMessage());
 		}
 	}
-}
 
+	@Override
+	public void init() throws ServletException {
+		WebApplicationContext wac = WebApplicationContextUtils.getRequiredWebApplicationContext(getServletContext());
+		controller = wac.getBean(CompanyController.class);
+	}
+}

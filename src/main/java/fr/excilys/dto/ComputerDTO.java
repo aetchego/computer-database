@@ -7,37 +7,47 @@ public class ComputerDTO {
 	private String introduced;
 	private String discontinued;
 	private String brand;
-	
-	public int getId() {
-		return id;
-	}
-	public void setId(int id) {
-		this.id = id;
-	}
-	public String getName() {
-		return name;
-	}
-	public void setName(String name) {
-		this.name = name;
-	}
-	public String getIntroduced() {
-		return introduced;
-	}
-	public void setIntroduced(String introduced) {
-		this.introduced = introduced;
-	}
-	public String getDiscontinued() {
-		return discontinued;
-	}
-	public void setDiscontinued(String discontinued) {
-		this.discontinued = discontinued;
-	}
+
 	public String getBrand() {
 		return brand;
 	}
+
+	public String getDiscontinued() {
+		return discontinued;
+	}
+
+	public int getId() {
+		return id;
+	}
+
+	public String getIntroduced() {
+		return introduced;
+	}
+
+	public String getName() {
+		return name;
+	}
+
 	public void setBrand(String brand) {
 		this.brand = brand;
 	}
+
+	public void setDiscontinued(String discontinued) {
+		this.discontinued = discontinued;
+	}
+
+	public void setId(int id) {
+		this.id = id;
+	}
+
+	public void setIntroduced(String introduced) {
+		this.introduced = introduced;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
 	@Override
 	public String toString() {
 		return "ComputerDTO [id=" + id + ", name=" + name + ", introduced=" + introduced + ", discontinued="

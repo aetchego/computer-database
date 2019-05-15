@@ -23,9 +23,22 @@ public class InputValidator {
 		this.companyService = companyService;
 	}
 
-	private void checkName(String name) throws UserException {
-		if (name == null || name.trim().isEmpty())
-			throw new UserException("[ERROR] Name cannot be empty.");
+	public void check(ComputerDTO computer) throws UserException, SQLException {
+		this.checkName(computer.getName());
+		Optional<LocalDate> introduced = this.checkDateParsing(computer.getIntroduced());
+		Optional<LocalDate> discontinued = this.checkDateParsing(computer.getDiscontinued());
+		this.compareDates(introduced, discontinued);
+		this.checkCompanyName(computer.getBrand());
+	}
+
+	private void checkCompanyName(String brand) throws UserException {
+		if (brand == null || brand.trim().isEmpty() || brand.equals("---"))
+			return;
+		List<Company> comp = companyService.listCompanies().getCompanies();
+		for (Company e : comp)
+			if (e.getName().equals(brand))
+				return;
+		throw new UserException("[ERROR] Company name does not exist.");
 	}
 
 	private Optional<LocalDate> checkDateParsing(String date) throws UserException {
@@ -43,26 +56,13 @@ public class InputValidator {
 		}
 	}
 
-	private void checkCompanyName(String brand) throws SQLException, UserException {
-		if (brand == null || brand.trim().isEmpty() || brand.equals("---"))
-			return;
-		List<Company> comp = companyService.listCompanies().getCompanies();
-		for (Company e : comp)
-			if (e.getName().equals(brand))
-				return;
-		throw new UserException("[ERROR] Company name does not exist.");
+	private void checkName(String name) throws UserException {
+		if (name == null || name.trim().isEmpty())
+			throw new UserException("[ERROR] Name cannot be empty.");
 	}
 
 	private void compareDates(Optional<LocalDate> inDate, Optional<LocalDate> outDate) throws UserException {
 		if (inDate.isPresent() && outDate.isPresent() && inDate.get().isAfter(outDate.get()))
 			throw new UserException("[ERROR] Introduced date cannot be after discontinued date.");
-	}
-
-	public void check(ComputerDTO computer) throws UserException, SQLException {
-		this.checkName(computer.getName());
-		Optional<LocalDate> introduced = this.checkDateParsing(computer.getIntroduced());
-		Optional<LocalDate> discontinued = this.checkDateParsing(computer.getDiscontinued());
-		this.compareDates(introduced, discontinued);
-		this.checkCompanyName(computer.getBrand());
 	}
 }

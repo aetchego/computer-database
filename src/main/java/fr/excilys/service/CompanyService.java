@@ -18,6 +18,14 @@ public class CompanyService {
 		this.companyDao = companyDao;
 	}
 
+	public void deleteCompany(int id) throws UserException {
+		try {
+			companyDao.deleteCompany(id);
+		} catch (SQLException e) {
+			throw new UserException("[ERROR] Ooops, something went wrong !");
+		}
+	}
+
 	public Companies listCompanies() throws UserException {
 		Companies companies;
 		try {
@@ -26,14 +34,6 @@ public class CompanyService {
 			throw new UserException("[ERROR] Ooops, something went wrong !");
 		}
 		return companies;
-	}
-
-	public void deleteCompany(int id) throws UserException {
-		try {
-			companyDao.deleteCompany(id);
-		} catch (SQLException e) {
-			throw new UserException("[ERROR] Ooops, something went wrong !");
-		}
 	}
 
 }

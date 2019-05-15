@@ -12,56 +12,6 @@ public class Computer {
 	private Date discontinued;
 	private Company company;
 
-	public int getId() {
-		return id;
-	}
-
-	public void setId(int id) {
-		this.id = id;
-	}
-
-	public String getName() {
-		return name;
-	}
-
-	public void setName(String name) {
-		this.name = name;
-	}
-
-	public Date getIntroduced() {
-		return introduced;
-	}
-
-	public void setIntroduced(Date introduced) {
-		this.introduced = introduced;
-	}
-
-	public Date getDiscontinued() {
-		return discontinued;
-	}
-
-	public void setDiscontinued(Date date) {
-		this.discontinued = date;
-	}
-
-	public Company getCompany() {
-		return company;
-	}
-
-	public void setCompany(String name, Companies companies) {
-		List<Company> comp = companies.getCompanies();
-		for (Company e : comp) {
-			if (e.getName().equals(name)) {
-				this.company = e;
-			}
-		}
-	}
-
-	@Override
-	public int hashCode() {
-		return Objects.hash(company, discontinued, id, introduced, name);
-	}
-
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj) {
@@ -76,6 +26,56 @@ public class Computer {
 		Computer other = (Computer) obj;
 		return Objects.equals(company, other.company) && Objects.equals(discontinued, other.discontinued)
 				&& id == other.id && Objects.equals(introduced, other.introduced) && Objects.equals(name, other.name);
+	}
+
+	public Company getCompany() {
+		return company;
+	}
+
+	public Date getDiscontinued() {
+		return discontinued;
+	}
+
+	public int getId() {
+		return id;
+	}
+
+	public Date getIntroduced() {
+		return introduced;
+	}
+
+	public String getName() {
+		return name;
+	}
+
+	@Override
+	public int hashCode() {
+		return Objects.hash(company, discontinued, id, introduced, name);
+	}
+
+	public void setCompany(String name, Companies companies) {
+		List<Company> comp = companies.getCompanies();
+		for (Company e : comp) {
+			if (e.getName().equals(name)) {
+				this.company = e;
+			}
+		}
+	}
+
+	public void setDiscontinued(Date date) {
+		this.discontinued = date;
+	}
+
+	public void setId(int id) {
+		this.id = id;
+	}
+
+	public void setIntroduced(Date introduced) {
+		this.introduced = introduced;
+	}
+
+	public void setName(String name) {
+		this.name = name;
 	}
 
 	@Override

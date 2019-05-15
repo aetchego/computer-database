@@ -9,27 +9,8 @@ public final class Companies {
 
 	private List<Company> companiesList = new ArrayList<>();
 
-	public List<Company> getCompanies() {
-		return companiesList;
-	}
-
 	public void addCompany(Company company) {
 		this.companiesList.add(company);
-	}
-	
-	public void removeCompany(Optional<Company> company) {
-		if (company.isPresent()) 
-			this.companiesList.remove(company.get());
-	}
-
-	@Override
-	public String toString() {
-		return "Companies [companies=" + companiesList + "\n ]";
-	}
-
-	@Override
-	public int hashCode() {
-		return Objects.hash(companiesList);
 	}
 
 	@Override
@@ -45,5 +26,24 @@ public final class Companies {
 		}
 		Companies other = (Companies) obj;
 		return Objects.equals(companiesList, other.companiesList);
+	}
+
+	public List<Company> getCompanies() {
+		return companiesList;
+	}
+
+	@Override
+	public int hashCode() {
+		return Objects.hash(companiesList);
+	}
+
+	public void removeCompany(Optional<Company> company) {
+		if (company.isPresent())
+			this.companiesList.remove(company.get());
+	}
+
+	@Override
+	public String toString() {
+		return "Companies [companies=" + companiesList + "\n ]";
 	}
 }

@@ -23,42 +23,51 @@ public class ComputerController {
 	private final InputValidator validator;
 	private final ComputerMapper computerMapper;
 	private final Logger logger = LoggerFactory.getLogger(ComputerController.class);
-	
-	public ComputerController(ComputerService computerService, InputValidator validator, ComputerMapper computerMapper) {
+
+	public ComputerController(ComputerService computerService, InputValidator validator,
+			ComputerMapper computerMapper) {
 		super();
 		this.computerService = computerService;
 		this.validator = validator;
 		this.computerMapper = computerMapper;
 	}
 
-	public List<ComputerDTO> listComputers(int offset, int limit) throws UserException {
-		return computerService.listComputers(offset, limit).stream().map(computerMapper::beanToDto).collect(Collectors.toList());
-	}
-	
-	public List<ComputerDTO> search(String name, String filter) {
-		try {
-			return computerService.search(name, filter).stream().map(computerMapper::beanToDto).collect(Collectors.toList());
-		} catch (UserException e) {
-			logger.info(e.getMessage());
-		}
-		return Collections.emptyList();
+	public int countComputers() throws UserException {
+		int res = 0;
+		res = computerService.countComputers();
+		return res;
 	}
 
 	public void createComputer(ComputerDTO computer) {
 		try {
 			validator.check(computer);
 			computerService.createComputer(computerMapper.dtoToBean(computer));
-		} catch (UserException | SQLException | DaoConfigException e ) {
+		} catch (UserException | SQLException | DaoConfigException e) {
 			logger.info(e.getMessage());
 		}
 	}
 
-	public ComputerDTO showDetails(int id) throws UserException {
-		return computerMapper.beanToDto(computerService.showDetails(id));
-	}
-
 	public void deleteComputer(int id) throws UserException {
 		computerService.deleteComputer(id);
+	}
+
+	public List<ComputerDTO> listComputers(int offset, int limit) throws UserException {
+		return computerService.listComputers(offset, limit).stream().map(computerMapper::beanToDto)
+				.collect(Collectors.toList());
+	}
+
+	public List<ComputerDTO> search(String name, String filter) {
+		try {
+			return computerService.search(name, filter).stream().map(computerMapper::beanToDto)
+					.collect(Collectors.toList());
+		} catch (UserException e) {
+			logger.info(e.getMessage());
+		}
+		return Collections.emptyList();
+	}
+
+	public ComputerDTO showDetails(int id) throws UserException {
+		return computerMapper.beanToDto(computerService.showDetails(id));
 	}
 
 	public void updateComputer(int id, ComputerDTO computer) {
@@ -68,12 +77,6 @@ public class ComputerController {
 		} catch (UserException | SQLException | DaoConfigException e) {
 			logger.info(e.getMessage());
 		}
-	}
-	
-	public int countComputers() throws UserException {
-		int res = 0;
-		res = computerService.countComputers();
-		return res;
 	}
 
 }

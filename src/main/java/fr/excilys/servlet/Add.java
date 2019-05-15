@@ -23,22 +23,22 @@ public class Add extends HttpServlet {
 	private ComputerMapper mapper;
 	private ComputerController controller;
 	private final Logger logger = LoggerFactory.getLogger(Add.class);
-	
+
+	@Override
+	public void doPost(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
+		try {
+			controller.createComputer(mapper.stringsToDto(req.getParameter("name"), req.getParameter("inDate"),
+					req.getParameter("outDate"), req.getParameter("brand")));
+			res.sendRedirect("/cdb_project/dashboard");
+		} catch (IOException e) {
+			logger.info(e.getMessage());
+		}
+	}
+
 	@Override
 	public void init() throws ServletException {
 		WebApplicationContext wac = WebApplicationContextUtils.getRequiredWebApplicationContext(getServletContext());
 		controller = wac.getBean(ComputerController.class);
 		mapper = wac.getBean(ComputerMapper.class);
-	}
-	
-	@Override
-	public void doPost(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
-		try {
-			controller.createComputer(mapper.stringsToDto(req.getParameter("name"), req.getParameter("inDate"),
-			req.getParameter("outDate"), req.getParameter("brand")));
-			res.sendRedirect("/cdb_project/dashboard");
-		} catch (IOException e) {
-			logger.info(e.getMessage());
-		}
 	}
 }

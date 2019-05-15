@@ -22,27 +22,6 @@ public class ComputerMapper {
 		this.companyService = companyService;
 	}
 
-	public ComputerDTO stringsToDto(String name, String introduced, String discontinued, String brand) {
-		ComputerDTO computer = new ComputerDTO();
-		computer.setName(name);
-		computer.setIntroduced(introduced);
-		computer.setDiscontinued(discontinued);
-		computer.setBrand(brand);
-		return computer;
-	}
-
-	public Computer dtoToBean(ComputerDTO computerDto) throws UserException {
-		Computer computer = new Computer();
-		if (!computerDto.getIntroduced().isEmpty())
-			computer.setIntroduced(Date.valueOf(LocalDate.parse(computerDto.getIntroduced())));
-		if (!computerDto.getDiscontinued().isEmpty())
-			computer.setDiscontinued(Date.valueOf(LocalDate.parse(computerDto.getDiscontinued())));
-		if (!computerDto.getBrand().isEmpty())
-			computer.setCompany(computerDto.getBrand(), companyService.listCompanies());
-		computer.setName(computerDto.getName());
-		return computer;
-	}
-
 	public ComputerDTO beanToDto(Computer computer) {
 		ComputerDTO computerDTO = new ComputerDTO();
 		computerDTO.setName(computer.getName());
@@ -61,6 +40,27 @@ public class ComputerMapper {
 		computer.setIntroduced(rs.getDate("introduced"));
 		computer.setDiscontinued(rs.getDate("discontinued"));
 		computer.setCompany(rs.getString("company_name"), companyService.listCompanies());
+		return computer;
+	}
+
+	public Computer dtoToBean(ComputerDTO computerDto) throws UserException {
+		Computer computer = new Computer();
+		if (!computerDto.getIntroduced().isEmpty())
+			computer.setIntroduced(Date.valueOf(LocalDate.parse(computerDto.getIntroduced())));
+		if (!computerDto.getDiscontinued().isEmpty())
+			computer.setDiscontinued(Date.valueOf(LocalDate.parse(computerDto.getDiscontinued())));
+		if (!computerDto.getBrand().isEmpty())
+			computer.setCompany(computerDto.getBrand(), companyService.listCompanies());
+		computer.setName(computerDto.getName());
+		return computer;
+	}
+
+	public ComputerDTO stringsToDto(String name, String introduced, String discontinued, String brand) {
+		ComputerDTO computer = new ComputerDTO();
+		computer.setName(name);
+		computer.setIntroduced(introduced);
+		computer.setDiscontinued(discontinued);
+		computer.setBrand(brand);
 		return computer;
 	}
 }

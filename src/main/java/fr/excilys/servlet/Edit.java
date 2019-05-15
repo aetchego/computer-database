@@ -23,22 +23,23 @@ public class Edit extends HttpServlet {
 	private ComputerMapper mapper;
 	private ComputerController controller;
 	private final Logger logger = LoggerFactory.getLogger(Edit.class);
-	
+
+	@Override
+	public void doPost(HttpServletRequest req, HttpServletResponse res) {
+		try {
+			controller.updateComputer(Integer.parseInt(req.getParameter("id")),
+					mapper.stringsToDto(req.getParameter("name"), req.getParameter("introduced"),
+							req.getParameter("discontinued"), req.getParameter("brand")));
+			res.sendRedirect("/cdb_project/dashboard");
+		} catch (IOException | NumberFormatException e) {
+			logger.info(e.getMessage());
+		}
+	}
+
 	@Override
 	public void init() throws ServletException {
 		WebApplicationContext wac = WebApplicationContextUtils.getRequiredWebApplicationContext(getServletContext());
 		controller = wac.getBean(ComputerController.class);
 		mapper = wac.getBean(ComputerMapper.class);
-	}
-	
-	@Override
-	public void doPost(HttpServletRequest req, HttpServletResponse res) {
-		try {
-			controller.updateComputer(Integer.parseInt(req.getParameter("id")), mapper.stringsToDto(req.getParameter("name"), req.getParameter("introduced"),
-			req.getParameter("discontinued"), req.getParameter("brand")));
-			res.sendRedirect("/cdb_project/dashboard");
-		} catch (IOException | NumberFormatException e) {
-			logger.info(e.getMessage());
-		}
 	}
 }

@@ -11,26 +11,6 @@ import javax.sql.DataSource;
 
 public class DaoUtilitaries {
 
-	private DaoUtilitaries() {
-
-	}
-
-	public static PreparedStatement initPreparedRequest(Connection co, String sql, Object... objects)
-			throws SQLException {
-		PreparedStatement st = co.prepareStatement(sql);
-		for (int i = 0; i < objects.length; i++) {
-			st.setObject(i + 1, objects[i]);
-		}
-		return st;
-	}
-
-	public static void closeConnexions(Statement st, Connection co) throws SQLException {
-		if (st != null)
-			st.close();
-		if (co != null)
-			co.close();
-	}
-
 	public static void closeConnexions(ResultSet rs) throws SQLException {
 		if (rs != null)
 			rs.close();
@@ -39,6 +19,13 @@ public class DaoUtilitaries {
 	public static void closeConnexions(ResultSet rs, Statement st, Connection co) throws SQLException {
 		DaoUtilitaries.closeConnexions(rs);
 		DaoUtilitaries.closeConnexions(st, co);
+	}
+
+	public static void closeConnexions(Statement st, Connection co) throws SQLException {
+		if (st != null)
+			st.close();
+		if (co != null)
+			co.close();
 	}
 
 	public static void databaseAccess(List<Object> infos, String sql, DataSource dataSource, int update,
@@ -61,5 +48,18 @@ public class DaoUtilitaries {
 			infos.add(co);
 			infos.add(count);
 		}
+	}
+
+	public static PreparedStatement initPreparedRequest(Connection co, String sql, Object... objects)
+			throws SQLException {
+		PreparedStatement st = co.prepareStatement(sql);
+		for (int i = 0; i < objects.length; i++) {
+			st.setObject(i + 1, objects[i]);
+		}
+		return st;
+	}
+
+	private DaoUtilitaries() {
+
 	}
 }
