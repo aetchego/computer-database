@@ -148,9 +148,8 @@ public class UTDatabase {
 	}
 
 	public void createComputer(Computer computer) {
-		int id = computers.keySet().stream().mapToInt(Integer::intValue).max().orElse(0) + 1;
-		computer.setId(id);
-		computers.put(id, computer);
+		computer.setId(computers.keySet().stream().mapToInt(Integer::intValue).max().orElse(0) + 1);
+		computers.put(computer.getId(), computer);
 	}
 
 	public void updateComputer(Computer computer, int id) {
