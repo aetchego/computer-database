@@ -6,30 +6,28 @@ import java.time.format.DateTimeParseException;
 import java.util.List;
 import java.util.Optional;
 
+import org.springframework.stereotype.Component;
+
 import fr.excilys.client.UserException;
-import fr.excilys.dao.DaoFactory;
 import fr.excilys.dto.ComputerDTO;
 import fr.excilys.model.Company;
+import fr.excilys.service.CompanyService;
 
+@Component
 public class InputValidator {
 
-	private static InputValidator instance = null;
-	
-	private InputValidator() {
-		
+	private final CompanyService companyService;
+
+	public InputValidator(CompanyService companyService) {
+		super();
+		this.companyService = companyService;
 	}
-	
-	public static InputValidator getInstance() {
-		if (instance == null)
-			instance = new InputValidator();
-		return instance;
-	}
-	
+
 	private void checkName(String name) throws UserException {
 		if (name == null || name.trim().isEmpty())
 			throw new UserException("[ERROR] Name cannot be empty.");
 	}
-	
+
 	private Optional<LocalDate> checkDateParsing(String date) throws UserException {
 		if (date == null || date.trim().isEmpty())
 			return Optional.empty();
@@ -44,22 +42,22 @@ public class InputValidator {
 			throw new UserException("[ERROR] Date parsing exception.");
 		}
 	}
-	
+
 	private void checkCompanyName(String brand) throws SQLException, UserException {
 		if (brand == null || brand.trim().isEmpty() || brand.equals("---"))
-			return ;
-		List<Company> comp = DaoFactory.getInstance().getCompany().read().getCompanies();
+			return;
+		List<Company> comp = companyService.listCompanies().getCompanies();
 		for (Company e : comp)
 			if (e.getName().equals(brand))
-				return ;
+				return;
 		throw new UserException("[ERROR] Company name does not exist.");
 	}
-	
+
 	private void compareDates(Optional<LocalDate> inDate, Optional<LocalDate> outDate) throws UserException {
 		if (inDate.isPresent() && outDate.isPresent() && inDate.get().isAfter(outDate.get()))
 			throw new UserException("[ERROR] Introduced date cannot be after discontinued date.");
 	}
-	
+
 	public void check(ComputerDTO computer) throws UserException, SQLException {
 		this.checkName(computer.getName());
 		Optional<LocalDate> introduced = this.checkDateParsing(computer.getIntroduced());

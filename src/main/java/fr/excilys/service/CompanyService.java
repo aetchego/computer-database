@@ -2,42 +2,38 @@ package fr.excilys.service;
 
 import java.sql.SQLException;
 
+import org.springframework.stereotype.Component;
+
 import fr.excilys.client.UserException;
 import fr.excilys.dao.CompanyDao;
-import fr.excilys.dao.DaoFactory;
 import fr.excilys.model.Companies;
 
+@Component
 public class CompanyService {
 
-	private DaoFactory df = DaoFactory.getInstance();
-	private CompanyDao dc = df.getCompany();
-	private static CompanyService instance = null;
+	private final CompanyDao companyDao;
 
-	private CompanyService() {
-	}
-
-	public static CompanyService getInstance() {
-		if (instance == null)
-			instance = new CompanyService();
-		return instance;
+	public CompanyService(CompanyDao companyDao) {
+		super();
+		this.companyDao = companyDao;
 	}
 
 	public Companies listCompanies() throws UserException {
 		Companies companies;
 		try {
-			companies = dc.read();
+			companies = companyDao.read();
 		} catch (SQLException e) {
 			throw new UserException("[ERROR] Ooops, something went wrong !");
 		}
 		return companies;
 	}
-	
+
 	public void deleteCompany(int id) throws UserException {
 		try {
-			dc.read();
-			dc.deleteCompany(id);
+			companyDao.deleteCompany(id);
 		} catch (SQLException e) {
 			throw new UserException("[ERROR] Ooops, something went wrong !");
 		}
 	}
+
 }

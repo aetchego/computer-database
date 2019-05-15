@@ -10,6 +10,8 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.web.context.WebApplicationContext;
+import org.springframework.web.context.support.WebApplicationContextUtils;
 
 import fr.excilys.controller.ComputerController;
 import fr.excilys.mapper.ComputerMapper;
@@ -18,9 +20,16 @@ import fr.excilys.mapper.ComputerMapper;
 public class Add extends HttpServlet {
 
 	private static final long serialVersionUID = -8271662913378846461L;
-	private final ComputerMapper mapper = ComputerMapper.getInstance();
-	private final ComputerController controller = ComputerController.getInstance();
+	private ComputerMapper mapper;
+	private ComputerController controller;
 	private final Logger logger = LoggerFactory.getLogger(Add.class);
+	
+	@Override
+	public void init() throws ServletException {
+		WebApplicationContext wac = WebApplicationContextUtils.getRequiredWebApplicationContext(getServletContext());
+		controller = wac.getBean(ComputerController.class);
+		mapper = wac.getBean(ComputerMapper.class);
+	}
 	
 	@Override
 	public void doPost(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {

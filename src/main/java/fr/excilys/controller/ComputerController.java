@@ -7,6 +7,7 @@ import java.util.stream.Collectors;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.stereotype.Component;
 
 import fr.excilys.client.UserException;
 import fr.excilys.dao.DaoConfigException;
@@ -15,21 +16,19 @@ import fr.excilys.mapper.ComputerMapper;
 import fr.excilys.service.ComputerService;
 import fr.excilys.validator.InputValidator;
 
+@Component
 public class ComputerController {
 
-	private static ComputerController instance = null;
-	private ComputerService computerService = ComputerService.getInstance();
-	private InputValidator validator = InputValidator.getInstance();
-	private ComputerMapper computerMapper = ComputerMapper.getInstance();
-	private Logger logger = LoggerFactory.getLogger(ComputerController.class);
-
-	private ComputerController() {
-	}
-
-	public static ComputerController getInstance() {
-		if (instance == null)
-			instance = new ComputerController();
-		return instance;
+	private final ComputerService computerService;
+	private final InputValidator validator;
+	private final ComputerMapper computerMapper;
+	private final Logger logger = LoggerFactory.getLogger(ComputerController.class);
+	
+	public ComputerController(ComputerService computerService, InputValidator validator, ComputerMapper computerMapper) {
+		super();
+		this.computerService = computerService;
+		this.validator = validator;
+		this.computerMapper = computerMapper;
 	}
 
 	public List<ComputerDTO> listComputers(int offset, int limit) throws UserException {

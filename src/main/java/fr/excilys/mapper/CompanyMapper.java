@@ -3,22 +3,13 @@ package fr.excilys.mapper;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+import org.springframework.stereotype.Component;
+
 import fr.excilys.model.Companies;
 import fr.excilys.model.Company;
 
+@Component
 public class CompanyMapper {
-
-	private static CompanyMapper instance = null;
-
-	private CompanyMapper() {
-
-	}
-
-	public static CompanyMapper getInstance() {
-		if (instance == null)
-			instance = new CompanyMapper();
-		return instance;
-	}
 
 	public void toBean(ResultSet rs, Companies companies) throws SQLException {
 		Company company = new Company();
@@ -26,7 +17,7 @@ public class CompanyMapper {
 		company.setName(rs.getString("name"));
 		companies.addCompany(company);
 	}
-	
+
 	public Company toBean(int id, String name) {
 		Company company = new Company();
 		company.setId(id);

@@ -10,9 +10,13 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.web.context.WebApplicationContext;
+import org.springframework.web.context.support.WebApplicationContextUtils;
 
 import fr.excilys.client.UserException;
 import fr.excilys.controller.CompanyController;
+import fr.excilys.controller.ComputerController;
+import fr.excilys.mapper.ComputerMapper;
 import fr.excilys.model.Companies;
 
 @WebServlet(urlPatterns = "/addComputer")
@@ -20,8 +24,14 @@ public class AddComputer extends HttpServlet {
 	
 	private static final long serialVersionUID = 3884356107883326043L;
 	private final Logger logger = LoggerFactory.getLogger(AddComputer.class);
-	private final CompanyController controller = CompanyController.getInstance();
+	private CompanyController controller;
 
+	@Override
+	public void init() throws ServletException {
+		WebApplicationContext wac = WebApplicationContextUtils.getRequiredWebApplicationContext(getServletContext());
+		controller = wac.getBean(CompanyController.class);
+	}
+	
 	@Override
 	public void doGet(HttpServletRequest req, HttpServletResponse res) {
 		try {

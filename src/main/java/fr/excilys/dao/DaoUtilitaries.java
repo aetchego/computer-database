@@ -7,12 +7,14 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.List;
 
+import javax.sql.DataSource;
+
 public class DaoUtilitaries {
 
 	private DaoUtilitaries() {
-		
+
 	}
-	
+
 	public static PreparedStatement initPreparedRequest(Connection co, String sql, Object... objects)
 			throws SQLException {
 		PreparedStatement st = co.prepareStatement(sql);
@@ -39,7 +41,7 @@ public class DaoUtilitaries {
 		DaoUtilitaries.closeConnexions(st, co);
 	}
 
-	public static void databaseAccess(List<Object> infos, String sql, DaoFactory factory, int update,
+	public static void databaseAccess(List<Object> infos, String sql, DataSource dataSource, int update,
 			Object... objects) throws SQLException {
 		Connection co = null;
 		PreparedStatement st = null;
@@ -47,7 +49,7 @@ public class DaoUtilitaries {
 		int count = 0;
 
 		try {
-			co = factory.getConnection();
+			co = dataSource.getConnection();
 			st = DaoUtilitaries.initPreparedRequest(co, sql, objects);
 			if (update == 0)
 				rs = st.executeQuery();

@@ -40,6 +40,24 @@
                     <a class="btn btn-default" id="editComputer" href="#" onclick="$.fn.toggleEditMode();">Edit</a>
                 </div>
             </div>
+<!--            <div class="btn-group" role="group" aria-label="Button group with nested dropdown"> -->
+<!--   <button type="button" class="btn btn-secondary">1</button> -->
+<!--   <button type="button" class="btn btn-secondary">2</button> -->
+
+<!--   <div class="btn-group" role="group"> -->
+<!--     <button id="btnGroupDrop1" type="button" class="btn btn-secondary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> -->
+<!--       Dropdown -->
+<!--     </button> -->
+<!--     <div class="dropdown-menu" aria-labelledby="btnGroupDrop1" color=red> -->
+<!--       <a class="dropdown-item" href="#">Dropdown link</a> -->
+<!--       <a class="dropdown-item" href="#">Dropdown link</a> -->
+<!--     </div> -->
+<!--   </div> -->
+<!-- </div> -->
+            
+            
+            
+            
         </div>
 
         <form id="deleteForm" action="${pageContext.request.contextPath}/delete" method="POST">
@@ -59,8 +77,10 @@
                                  -  <a href="#" id="deleteSelected" onclick="$.fn.deleteSelected();">
                                         <i class="fa fa-trash-o fa-lg"></i>
                                     </a>
-                            </span>
+                            </span> 
                         </th>
+                        
+
                         <th>
                             Computer name
                         </th>

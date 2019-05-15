@@ -4,16 +4,22 @@ import java.util.Scanner;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.stereotype.Component;
 
 import fr.excilys.controller.CompanyController;
 import fr.excilys.controller.ComputerController;
 
+@Component
 public class UserInterface {
 
 	private Scanner sc;
 	private int id;
-	CompanyController companyController = CompanyController.getInstance();
-	ComputerController computerController = ComputerController.getInstance();
+	private final CompanyController companyController;
+
+	public UserInterface(CompanyController companyController) {
+		super();
+		this.companyController = companyController;
+	}
 
 	public void displayChoices() {
 		int choice = 0;

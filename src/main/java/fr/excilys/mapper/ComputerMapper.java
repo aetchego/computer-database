@@ -5,24 +5,23 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.time.LocalDate;
 
-import fr.excilys.dao.DaoFactory;
+import org.springframework.stereotype.Component;
+
+import fr.excilys.client.UserException;
 import fr.excilys.dto.ComputerDTO;
 import fr.excilys.model.Computer;
+import fr.excilys.service.CompanyService;
 
+@Component
 public class ComputerMapper {
 
-	private static ComputerMapper instance = null;
+	private final CompanyService companyService;
 
-	private ComputerMapper() {
-
+	public ComputerMapper(CompanyService companyService) {
+		super();
+		this.companyService = companyService;
 	}
 
-	public static ComputerMapper getInstance() {
-		if (instance == null)
-			instance = new ComputerMapper();
-		return instance;
-	}
-	
 	public ComputerDTO stringsToDto(String name, String introduced, String discontinued, String brand) {
 		ComputerDTO computer = new ComputerDTO();
 		computer.setName(name);
@@ -32,18 +31,18 @@ public class ComputerMapper {
 		return computer;
 	}
 
-	public Computer dtoToBean(ComputerDTO computerDto) throws SQLException {
+	public Computer dtoToBean(ComputerDTO computerDto) throws UserException {
 		Computer computer = new Computer();
 		if (!computerDto.getIntroduced().isEmpty())
-			computer.setIntroduced( Date.valueOf(LocalDate.parse(computerDto.getIntroduced())));
+			computer.setIntroduced(Date.valueOf(LocalDate.parse(computerDto.getIntroduced())));
 		if (!computerDto.getDiscontinued().isEmpty())
 			computer.setDiscontinued(Date.valueOf(LocalDate.parse(computerDto.getDiscontinued())));
 		if (!computerDto.getBrand().isEmpty())
-			computer.setCompany(computerDto.getBrand(), DaoFactory.getInstance().getCompany().read());
+			computer.setCompany(computerDto.getBrand(), companyService.listCompanies());
 		computer.setName(computerDto.getName());
 		return computer;
 	}
-	
+
 	public ComputerDTO beanToDto(Computer computer) {
 		ComputerDTO computerDTO = new ComputerDTO();
 		computerDTO.setName(computer.getName());
@@ -54,14 +53,14 @@ public class ComputerMapper {
 			computerDTO.setBrand(computer.getCompany().getName());
 		return computerDTO;
 	}
-	
-	public Computer dbToBean(ResultSet rs) throws SQLException {
+
+	public Computer dbToBean(ResultSet rs) throws SQLException, UserException {
 		Computer computer = new Computer();
 		computer.setId(rs.getInt("id"));
 		computer.setName(rs.getString("name"));
 		computer.setIntroduced(rs.getDate("introduced"));
 		computer.setDiscontinued(rs.getDate("discontinued"));
-		computer.setCompany(rs.getString("company_name"), DaoFactory.getInstance().getCompany().read());
+		computer.setCompany(rs.getString("company_name"), companyService.listCompanies());
 		return computer;
 	}
 }

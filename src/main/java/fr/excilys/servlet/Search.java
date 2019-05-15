@@ -11,16 +11,25 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.web.context.WebApplicationContext;
+import org.springframework.web.context.support.WebApplicationContextUtils;
 
 import fr.excilys.controller.ComputerController;
 import fr.excilys.dto.ComputerDTO;
+import fr.excilys.mapper.ComputerMapper;
 
 @WebServlet(urlPatterns = "/search")
 public class Search extends HttpServlet {
 	
 	private static final long serialVersionUID = -1304806379012931426L;
 	private final Logger logger = LoggerFactory.getLogger(ListComputer.class);
-	private final ComputerController controller = ComputerController.getInstance();
+	private ComputerController controller;
+	
+	@Override
+	public void init() throws ServletException {
+		WebApplicationContext wac = WebApplicationContextUtils.getRequiredWebApplicationContext(getServletContext());
+		controller = wac.getBean(ComputerController.class);
+	}
 	
 	@Override
 	public void doGet(HttpServletRequest req, HttpServletResponse res) {

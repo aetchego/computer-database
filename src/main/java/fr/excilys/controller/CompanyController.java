@@ -1,27 +1,25 @@
 package fr.excilys.controller;
 
+import org.springframework.stereotype.Component;
+
 import fr.excilys.client.UserException;
 import fr.excilys.model.Companies;
 import fr.excilys.service.CompanyService;
 
+@Component
 public class CompanyController {
 
-	private static CompanyController instance = null;
-	private static CompanyService companyService = CompanyService.getInstance();
+	private final CompanyService companyService;
 
-	private CompanyController() {
-	}
-
-	public static CompanyController getInstance() {
-		if (instance == null)
-			instance = new CompanyController();
-		return instance;
+	public CompanyController(CompanyService companyService) {
+		super();
+		this.companyService = companyService;
 	}
 
 	public Companies listCompanies() throws UserException {
 		return (companyService.listCompanies());
 	}
-	
+
 	public void deleteCompany(int id) throws UserException {
 		companyService.deleteCompany(id);
 	}
