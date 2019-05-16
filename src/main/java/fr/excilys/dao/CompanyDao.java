@@ -24,8 +24,8 @@ public class CompanyDao {
 	private static final String DELETE = "DELETE FROM `computer-database-db`.company where(id) LIKE ?";
 	private static final String DELETE_COMPUTERS = "DELETE FROM `computer-database-db`.computer where(company_id) = ?";
 	private final DataSource dataSource;
-	private Companies companies = null;
 	private final CompanyMapper companyMapper;
+	private Companies companies = null;
 
 	public CompanyDao(DataSource dataSource, CompanyMapper companyMapper) {
 		super();

@@ -23,10 +23,10 @@ public class ComputerService {
 		this.computerDao = computerDao;
 	}
 
-	public int countComputers() throws UserException {
+	public int countComputers(String name) throws UserException {
 		int res = 0;
 		try {
-			res = computerDao.countComputers();
+			res = computerDao.countComputers(name);
 		} catch (SQLException e) {
 			throw new UserException(DATABASE_ERROR);
 		}
@@ -60,10 +60,10 @@ public class ComputerService {
 		return computers;
 	}
 
-	public List<Computer> search(String name, String filter) throws UserException {
+	public List<Computer> search(String name, int offset, int limit) throws UserException {
 		List<Computer> computers = new ArrayList<>();
 		try {
-			computers = computerDao.search(name, filter);
+			computers = computerDao.search(name, offset, limit);
 		} catch (SQLException e) {
 			throw new UserException(DATABASE_ERROR);
 		}

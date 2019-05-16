@@ -9,6 +9,16 @@ public class Page implements Serializable {
 	private int limit = 20;
 	private int number;
 	private int offset;
+	private String name;
+
+	public void setName(String name) {
+		if (name != null)
+			this.name = name;
+	}
+
+	public String getName() {
+		return this.name;
+	}
 
 	public int getCurrent() {
 		return current;

@@ -28,22 +28,39 @@ public class ListComputer extends HttpServlet {
 	@Override
 	public void doGet(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
 		try {
-			int numberComputers = controller.countComputers();
-			Page pagination = (Page) req.getSession().getAttribute("page");
-			pagination = Objects.nonNull(pagination) ? pagination : new Page();
-			pagination.setCurrent(numberComputers, req.getParameter("pageAt"), req.getParameter("size"),
+			Page page = this.getPage(req);
+			page.setName(req.getParameter("name"));
+			int numberComputers = controller.countComputers(page.getName());
+			page.setCurrent(numberComputers, req.getParameter("pageAt"), req.getParameter("size"),
 					req.getParameter("previous"), req.getParameter("next"));
-			req.getSession().setAttribute("page", pagination);
-			List<ComputerDTO> computers = controller.listComputers(pagination.getOffset(), pagination.getLimit());
-			req.setAttribute("computers", computers);
-			req.setAttribute("computerNumber", numberComputers);
-			req.setAttribute("offset", pagination.getOffset());
-			req.setAttribute("limit", pagination.getLimit());
-			req.setAttribute("pageNumber", pagination.getNumber());
+			List<ComputerDTO> computers = Objects.isNull(page.getName())
+					? controller.listComputers(page.getOffset(), page.getLimit())
+					: controller.search(page.getName(), page.getOffset(), page.getLimit());
+			this.setAttributes(req, computers, numberComputers, page);
+
 			req.getRequestDispatcher("/WEB-INF/views/dashboard.jsp").forward(req, res);
 		} catch (Exception e) {
 			logger.info(e.getMessage());
 		}
+	}
+
+	public Page getPage(HttpServletRequest req) {
+		Page pagination = (Page) req.getSession().getAttribute("page");
+		if (Objects.isNull(pagination) || req.getParameter("search") == null && req.getParameter("next") == null
+				&& req.getParameter("previous") == null && req.getParameter("pageAt") == null
+				&& req.getParameter("size") == null)
+			return new Page();
+		return pagination;
+	}
+
+	public void setAttributes(HttpServletRequest req, List<ComputerDTO> computers, int numberComputers,
+			Page pagination) {
+		req.setAttribute("offset", pagination.getOffset());
+		req.setAttribute("limit", pagination.getLimit());
+		req.setAttribute("pageNumber", pagination.getNumber());
+		req.setAttribute("computerNumber", numberComputers);
+		req.setAttribute("computers", computers);
+		req.getSession().setAttribute("page", pagination);
 	}
 
 	@Override

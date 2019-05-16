@@ -31,9 +31,9 @@ public class ComputerController {
 		this.computerMapper = computerMapper;
 	}
 
-	public int countComputers() throws UserException {
+	public int countComputers(String name) throws UserException {
 		int res = 0;
-		res = computerService.countComputers();
+		res = computerService.countComputers(name);
 		return res;
 	}
 
@@ -55,9 +55,9 @@ public class ComputerController {
 				.collect(Collectors.toList());
 	}
 
-	public List<ComputerDTO> search(String name, String filter) {
+	public List<ComputerDTO> search(String name, int offset, int limit) {
 		try {
-			return computerService.search(name, filter).stream().map(computerMapper::beanToDto)
+			return computerService.search(name, offset, limit).stream().map(computerMapper::beanToDto)
 					.collect(Collectors.toList());
 		} catch (UserException e) {
 			logger.info(e.getMessage());

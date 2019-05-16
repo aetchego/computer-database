@@ -28,11 +28,11 @@
             </h1>
             <div id="actions" class="form-horizontal">
                 <div class="pull-left">
-                    <form id="searchForm" action="search" method="GET" class="form-inline">
+                    <form id="searchForm" action="dashboard" method="GET" class="form-inline">
 
                         <input type="search" id="searchbox" name="name" class="form-control" placeholder="Search name" />
-                        <input type="submit" id="searchsubmit" name="searchComputer" value="Filter by computer" class="btn btn-primary" />
-                        <input type="submit" id="searchsubmit" name="searchCompany" value="Filter by company" class="btn btn-primary" />
+                        <input type="submit" id="searchsubmit" name="search" value="Search" class="btn btn-primary" />
+ 
                     </form>
                 </div>
                 <div class="pull-right">
@@ -40,23 +40,6 @@
                     <a class="btn btn-default" id="editComputer" href="#" onclick="$.fn.toggleEditMode();">Edit</a>
                 </div>
             </div>
-<!--            <div class="btn-group" role="group" aria-label="Button group with nested dropdown"> -->
-<!--   <button type="button" class="btn btn-secondary">1</button> -->
-<!--   <button type="button" class="btn btn-secondary">2</button> -->
-
-<!--   <div class="btn-group" role="group"> -->
-<!--     <button id="btnGroupDrop1" type="button" class="btn btn-secondary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> -->
-<!--       Dropdown -->
-<!--     </button> -->
-<!--     <div class="dropdown-menu" aria-labelledby="btnGroupDrop1" color=red> -->
-<!--       <a class="dropdown-item" href="#">Dropdown link</a> -->
-<!--       <a class="dropdown-item" href="#">Dropdown link</a> -->
-<!--     </div> -->
-<!--   </div> -->
-<!-- </div> -->
-            
-            
-            
             
         </div>
 

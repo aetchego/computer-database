@@ -25,8 +25,10 @@ public class ComputerDao {
 			+ "from company\n" + "RIGHT JOIN computer\n" + "ON company.id = computer.company_id";
 	private static final String DELETE = "DELETE FROM computer where(id) LIKE ?";
 	private static final String DETAILS = SELECT + " WHERE(computer.id) LIKE ?";
-	private static final String SEARCH_BY = SELECT + " WHERE(`computer-database-db`.";
+	private static final String SEARCH_BY = SELECT + " WHERE computer.name LIKE ? OR company.name LIKE ?";
 	private static final String COUNT = "SELECT COUNT(*) AS rowcount FROM computer";
+	private static final String COUNT_FILTERED = "SELECT COUNT(*) AS rowcount FROM computer LEFT JOIN company ON computer.company_id = company.id WHERE "
+			+ " computer.name LIKE ? OR company.name LIKE ?";
 	private final DataSource dataSource;
 	private final ComputerMapper computerMapper;
 
@@ -36,11 +38,14 @@ public class ComputerDao {
 		this.computerMapper = computerMapper;
 	}
 
-	public int countComputers() throws SQLException {
+	public int countComputers(String name) throws SQLException {
 		int res = 0;
 		ArrayList<Object> sql = new ArrayList<>();
 		try {
-			DaoUtilitaries.databaseAccess(sql, COUNT, this.dataSource, 0);
+			if (name != null && !name.isEmpty())
+				DaoUtilitaries.databaseAccess(sql, COUNT_FILTERED, this.dataSource, 0, name, name);
+			else
+				DaoUtilitaries.databaseAccess(sql, COUNT, this.dataSource, 0);
 			((ResultSet) sql.get(0)).next();
 			res = ((ResultSet) sql.get(0)).getInt("rowcount");
 
@@ -92,12 +97,13 @@ public class ComputerDao {
 		return computers;
 	}
 
-	public List<Computer> search(String name, String filter) throws SQLException, UserException {
+	public List<Computer> search(String name, int offset, int limit) throws SQLException, UserException {
 		Computer computer;
 		ArrayList<Computer> computers = new ArrayList<>();
 		ArrayList<Object> sql = new ArrayList<>();
 		try {
-			DaoUtilitaries.databaseAccess(sql, SEARCH_BY + filter + ") LIKE ?", this.dataSource, 0, name);
+			DaoUtilitaries.databaseAccess(sql, SEARCH_BY + " LIMIT ? OFFSET ?", this.dataSource, 0, name, name, limit,
+					offset);
 			while (((ResultSet) sql.get(0)).next()) {
 				computer = computerMapper.dbToBean((ResultSet) sql.get(0));
 				computers.add(computer);

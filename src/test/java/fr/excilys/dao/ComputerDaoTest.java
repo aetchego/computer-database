@@ -78,7 +78,7 @@ public class ComputerDaoTest {
 	@Test
 	public void count() throws DaoException, DaoConfigException, SQLException {
 		int actual = database.countComputers();
-		int expected = computerDao.countComputers();
+		int expected = computerDao.countComputers(null);
 		assertEquals(expected, actual);
 	}
 
@@ -90,7 +90,7 @@ public class ComputerDaoTest {
 		computer.setDiscontinued(Date.valueOf("2006-1-10"));
 		database.createComputer(computer);
 		computerDao.create(computer);
-		assertEquals(computerDao.showDetails(computerDao.countComputers()),
+		assertEquals(computerDao.showDetails(computerDao.countComputers(null)),
 				database.selectComputerById(database.countComputers()).get());
 	}
 
