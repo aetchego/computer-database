@@ -1,19 +1,15 @@
 package fr.excilys.dao;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
 import javax.sql.DataSource;
 
+import org.springframework.dao.DataAccessException;
+import org.springframework.jdbc.core.BeanPropertyRowMapper;
+import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Component;
 
-import fr.excilys.client.UserException;
-import fr.excilys.mapper.ComputerMapper;
 import fr.excilys.model.Computer;
 
 @Component
@@ -28,102 +24,48 @@ public class ComputerDao {
 	private static final String COUNT_FILTERED = "SELECT COUNT(*) AS rowcount FROM computer LEFT JOIN company ON computer.company_id = company.id WHERE "
 			+ " computer.name LIKE ? OR company.name LIKE ?";
 	private final DataSource dataSource;
-	private final ComputerMapper computerMapper;
+	private JdbcTemplate template;
 
-	public ComputerDao(DataSource dataSource, ComputerMapper computerMapper) {
+	public ComputerDao(DataSource dataSource) {
 		super();
 		this.dataSource = dataSource;
-		this.computerMapper = computerMapper;
+		this.template = new JdbcTemplate(this.dataSource);
 	}
 
-	public int countComputers(String name) throws SQLException {
-		int res = 0;
-		ArrayList<Object> sql = new ArrayList<>();
-		try {
-			if (name != null && !name.isEmpty())
-				DaoUtilitaries.databaseAccess(sql, COUNT_FILTERED, this.dataSource, 0, name, name);
-			else
-				DaoUtilitaries.databaseAccess(sql, COUNT, this.dataSource, 0);
-			((ResultSet) sql.get(0)).next();
-			res = ((ResultSet) sql.get(0)).getInt("rowcount");
+	public int countComputers(String name) throws DataAccessException {
 
-		} finally {
-			DaoUtilitaries.closeConnexions((ResultSet) sql.get(0), (PreparedStatement) sql.get(1),
-					(Connection) sql.get(2));
-		}
-		return res;
+		if (name != null && !name.isEmpty())
+			return template.queryForObject(COUNT_FILTERED, Integer.class, name, name);
+		return template.queryForObject(COUNT, Integer.class);
 	}
 
-	public void create(Computer computer) throws SQLException {
-		ArrayList<Object> sql = new ArrayList<>();
-		try {
-			Integer companyId = Objects.isNull(computer.getCompany()) ? null : computer.getCompany().getId();
-			DaoUtilitaries.databaseAccess(sql, INSERT, this.dataSource, 1, computer.getName(), computer.getIntroduced(),
-					computer.getDiscontinued(), companyId);
-		} finally {
-			DaoUtilitaries.closeConnexions((ResultSet) sql.get(0), (PreparedStatement) sql.get(1),
-					(Connection) sql.get(2));
-		}
+	public void create(Computer computer) throws DataAccessException {
+
+		Integer companyId = Objects.isNull(computer.getCompany()) ? null : computer.getCompany().getId();
+		template.update(INSERT, computer.getName(), computer.getIntroduced(), computer.getDiscontinued(), companyId);
 	}
 
-	public void delete(int id) throws SQLException, UserException {
-		ArrayList<Object> sql = new ArrayList<>();
-		try {
-			DaoUtilitaries.databaseAccess(sql, DELETE, this.dataSource, 1, id);
-			if ((Integer) sql.get(3) == 0)
-				throw new UserException("[ERROR] ID does not exist.");
-		} finally {
-			DaoUtilitaries.closeConnexions((ResultSet) sql.get(0), (PreparedStatement) sql.get(1),
-					(Connection) sql.get(2));
-		}
+	public void delete(int id) throws DataAccessException {
+
+		template.update(DELETE, id);
 	}
 
-	public List<Computer> search(String name, int offset, int limit, String query) throws SQLException, UserException {
-		Computer computer;
-		ArrayList<Computer> computers = new ArrayList<>();
-		ArrayList<Object> sql = new ArrayList<>();
-		try {
-			if (name != null && !name.isEmpty())
-				DaoUtilitaries.databaseAccess(sql, query, this.dataSource, 0, name, name, limit, offset);
-			else
-				DaoUtilitaries.databaseAccess(sql, query, this.dataSource, 0, limit, offset);
-			while (((ResultSet) sql.get(0)).next()) {
-				computer = computerMapper.dbToBean((ResultSet) sql.get(0));
-				computers.add(computer);
-			}
-		} finally {
-			DaoUtilitaries.closeConnexions((ResultSet) sql.get(0), (PreparedStatement) sql.get(1),
-					(Connection) sql.get(2));
-		}
-		return computers;
+	public List<Computer> search(String name, int offset, int limit, String query) throws DataAccessException {
+
+		return name != null && !name.isEmpty()
+				? template.query(query, new BeanPropertyRowMapper<Computer>(Computer.class), name, name, limit, offset)
+				: template.query(query, new BeanPropertyRowMapper<Computer>(Computer.class), limit, offset);
 	}
 
-	public Computer showDetails(int id) throws DaoException, SQLException, UserException {
-		ArrayList<Object> sql = new ArrayList<>();
-		Computer computer;
-		try {
-			DaoUtilitaries.databaseAccess(sql, DETAILS, this.dataSource, 0, id);
-			if (!((ResultSet) sql.get(0)).next())
-				throw new DaoException("[ERROR] No results have been found.");
-			computer = computerMapper.dbToBean((ResultSet) sql.get(0));
-		} finally {
-			DaoUtilitaries.closeConnexions((ResultSet) sql.get(0), (PreparedStatement) sql.get(1),
-					(Connection) sql.get(2));
-		}
-		return computer;
+	public Computer showDetails(int id) throws DataAccessException {
+
+		return template.queryForObject(DETAILS, Computer.class, id);
 	}
 
-	public void update(Integer id, Computer computer) throws DaoException, SQLException {
-		ArrayList<Object> sql = new ArrayList<>();
-		try {
-			Integer companyId = Objects.isNull(computer.getCompany()) ? null : computer.getCompany().getId();
-			DaoUtilitaries.databaseAccess(sql, UPDATE, this.dataSource, 1, computer.getName(), computer.getIntroduced(),
-					computer.getDiscontinued(), companyId, id);
-			if ((Integer) sql.get(3) == 0)
-				throw new DaoException("[ERROR] No results have been found.");
-		} finally {
-			DaoUtilitaries.closeConnexions((ResultSet) sql.get(0), (PreparedStatement) sql.get(1),
-					(Connection) sql.get(2));
-		}
+	public void update(Integer id, Computer computer) throws DataAccessException {
+
+		Integer companyId = Objects.isNull(computer.getCompany()) ? null : computer.getCompany().getId();
+		template.update(UPDATE, computer.getName(), computer.getIntroduced(), computer.getDiscontinued(), companyId,
+				id);
 	}
 }

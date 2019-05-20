@@ -1,14 +1,12 @@
 package fr.excilys.service;
 
-import java.sql.SQLException;
-import java.util.ArrayList;
 import java.util.List;
 
+import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Component;
 
 import fr.excilys.client.UserException;
 import fr.excilys.dao.ComputerDao;
-import fr.excilys.dao.DaoException;
 import fr.excilys.model.Computer;
 
 @Component
@@ -24,19 +22,17 @@ public class ComputerService {
 	}
 
 	public int countComputers(String name) throws UserException {
-		int res = 0;
 		try {
-			res = computerDao.countComputers(name);
-		} catch (SQLException e) {
+			return computerDao.countComputers(name);
+		} catch (DataAccessException e) {
 			throw new UserException(DATABASE_ERROR);
 		}
-		return res;
 	}
 
 	public void createComputer(Computer computer) throws UserException {
 		try {
 			computerDao.create(computer);
-		} catch (SQLException e) {
+		} catch (DataAccessException e) {
 			throw new UserException(DATABASE_ERROR);
 		}
 	}
@@ -44,25 +40,24 @@ public class ComputerService {
 	public void deleteComputer(int id) throws UserException {
 		try {
 			computerDao.delete(id);
-		} catch (SQLException e) {
+		} catch (DataAccessException e) {
 			throw new UserException(ID_ERROR);
 		}
 	}
 
 	public List<Computer> search(String name, int offset, int limit, String query) throws UserException {
-		List<Computer> computers = new ArrayList<>();
 		try {
-			computers = computerDao.search(name, offset, limit, query);
-		} catch (SQLException e) {
+			return computerDao.search(name, offset, limit, query);
+		} catch (DataAccessException e) {
+			System.out.println(e.getMessage());
 			throw new UserException(DATABASE_ERROR);
 		}
-		return computers;
 	}
 
 	public Computer showDetails(int id) throws UserException {
 		try {
 			return computerDao.showDetails(id);
-		} catch (DaoException | SQLException e) {
+		} catch (DataAccessException e) {
 			throw new UserException(ID_ERROR);
 		}
 	}
@@ -70,7 +65,7 @@ public class ComputerService {
 	public void updateComputer(int id, Computer computer) throws UserException {
 		try {
 			computerDao.update(id, computer);
-		} catch (DaoException | SQLException e) {
+		} catch (DataAccessException e) {
 			throw new UserException(ID_ERROR);
 		}
 	}
