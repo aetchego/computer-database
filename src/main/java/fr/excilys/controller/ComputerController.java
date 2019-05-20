@@ -1,6 +1,5 @@
 package fr.excilys.controller;
 
-import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -50,14 +49,13 @@ public class ComputerController {
 		computerService.deleteComputer(id);
 	}
 
-	public List<ComputerDTO> search(String name, int offset, int limit, String query) {
+	public List<ComputerDTO> search(String name, int offset, int limit, String query) throws UserException {
 		try {
 			return computerService.search(name, offset, limit, query).stream().map(computerMapper::beanToDto)
 					.collect(Collectors.toList());
 		} catch (UserException e) {
-			logger.info(e.getMessage());
+			throw new UserException(e.getMessage());
 		}
-		return Collections.emptyList();
 	}
 
 	public ComputerDTO showDetails(int id) throws UserException {

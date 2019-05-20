@@ -44,7 +44,6 @@ public class ComputerService {
 	public void deleteComputer(int id) throws UserException {
 		try {
 			computerDao.delete(id);
-
 		} catch (SQLException e) {
 			throw new UserException(ID_ERROR);
 		}

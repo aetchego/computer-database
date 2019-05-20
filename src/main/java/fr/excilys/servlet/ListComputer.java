@@ -40,10 +40,10 @@ public class ListComputer extends HttpServlet {
 			List<ComputerDTO> computers = controller.search(page.getName(), page.getOffset(), page.getLimit(),
 					mapper.toSqlQuery(page.getName(), page.getOrder(), page.getSens()));
 			this.setAttributes(req, computers, numberComputers, page);
-
 			req.getRequestDispatcher("/WEB-INF/views/dashboard.jsp").forward(req, res);
 		} catch (Exception e) {
 			logger.info(e.getMessage());
+			res.sendRedirect("/cdb_project/dashboard");
 		}
 	}
 
