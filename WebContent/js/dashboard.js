@@ -91,3 +91,9 @@ $(document).keydown(function(e) {
     }
 });
 
+$("#inputGroupSelect01").click(function() {
+	if ($("#inputGroupSelect01").val() == "computer.id")
+		$("#order").hide();
+	else
+		$("#order").show();
+});

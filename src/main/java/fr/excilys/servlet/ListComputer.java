@@ -17,12 +17,14 @@ import org.springframework.web.context.support.WebApplicationContextUtils;
 
 import fr.excilys.controller.ComputerController;
 import fr.excilys.dto.ComputerDTO;
+import fr.excilys.mapper.QueryMapper;
 
 @WebServlet(urlPatterns = "/dashboard")
 public class ListComputer extends HttpServlet {
 
 	private static final long serialVersionUID = -4657214759745320317L;
 	private ComputerController controller;
+	private QueryMapper mapper;
 	private final Logger logger = LoggerFactory.getLogger(ListComputer.class);
 
 	@Override
@@ -30,12 +32,13 @@ public class ListComputer extends HttpServlet {
 		try {
 			Page page = this.getPage(req);
 			page.setName(req.getParameter("name"));
+			page.setOrder(req.getParameter("order"));
+			page.setSens(req.getParameter("sens"));
 			int numberComputers = controller.countComputers(page.getName());
 			page.setCurrent(numberComputers, req.getParameter("pageAt"), req.getParameter("size"),
 					req.getParameter("previous"), req.getParameter("next"));
-			List<ComputerDTO> computers = Objects.isNull(page.getName())
-					? controller.listComputers(page.getOffset(), page.getLimit())
-					: controller.search(page.getName(), page.getOffset(), page.getLimit());
+			List<ComputerDTO> computers = controller.search(page.getName(), page.getOffset(), page.getLimit(),
+					mapper.toSqlQuery(page.getName(), page.getOrder(), page.getSens()));
 			this.setAttributes(req, computers, numberComputers, page);
 
 			req.getRequestDispatcher("/WEB-INF/views/dashboard.jsp").forward(req, res);
@@ -67,6 +70,7 @@ public class ListComputer extends HttpServlet {
 	public void init() throws ServletException {
 		WebApplicationContext wac = WebApplicationContextUtils.getRequiredWebApplicationContext(getServletContext());
 		controller = wac.getBean(ComputerController.class);
+		mapper = wac.getBean(QueryMapper.class);
 	}
 
 }

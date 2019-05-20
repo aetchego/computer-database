@@ -50,20 +50,10 @@ public class ComputerService {
 		}
 	}
 
-	public List<Computer> listComputers(int offset, int limit) throws UserException {
+	public List<Computer> search(String name, int offset, int limit, String query) throws UserException {
 		List<Computer> computers = new ArrayList<>();
 		try {
-			computers = computerDao.read(offset, limit);
-		} catch (SQLException e) {
-			throw new UserException(DATABASE_ERROR);
-		}
-		return computers;
-	}
-
-	public List<Computer> search(String name, int offset, int limit) throws UserException {
-		List<Computer> computers = new ArrayList<>();
-		try {
-			computers = computerDao.search(name, offset, limit);
+			computers = computerDao.search(name, offset, limit, query);
 		} catch (SQLException e) {
 			throw new UserException(DATABASE_ERROR);
 		}

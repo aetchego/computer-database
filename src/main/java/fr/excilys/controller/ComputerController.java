@@ -50,14 +50,9 @@ public class ComputerController {
 		computerService.deleteComputer(id);
 	}
 
-	public List<ComputerDTO> listComputers(int offset, int limit) throws UserException {
-		return computerService.listComputers(offset, limit).stream().map(computerMapper::beanToDto)
-				.collect(Collectors.toList());
-	}
-
-	public List<ComputerDTO> search(String name, int offset, int limit) {
+	public List<ComputerDTO> search(String name, int offset, int limit, String query) {
 		try {
-			return computerService.search(name, offset, limit).stream().map(computerMapper::beanToDto)
+			return computerService.search(name, offset, limit, query).stream().map(computerMapper::beanToDto)
 					.collect(Collectors.toList());
 		} catch (UserException e) {
 			logger.info(e.getMessage());

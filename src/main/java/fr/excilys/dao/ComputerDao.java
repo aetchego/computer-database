@@ -21,11 +21,9 @@ public class ComputerDao {
 
 	private static final String UPDATE = "UPDATE computer SET name = ?, introduced = ?, discontinued = ?, company_id = ? WHERE id = ?";
 	private static final String INSERT = "INSERT into computer(name, introduced, discontinued, company_id) values (?, ?, ?, ?)";
-	private static final String SELECT = "SELECT computer.id, computer.name, computer.introduced, computer.discontinued, company.name AS company_name, computer.company_id\n"
-			+ "from company\n" + "RIGHT JOIN computer\n" + "ON company.id = computer.company_id";
 	private static final String DELETE = "DELETE FROM computer where(id) LIKE ?";
-	private static final String DETAILS = SELECT + " WHERE(computer.id) LIKE ?";
-	private static final String SEARCH_BY = SELECT + " WHERE computer.name LIKE ? OR company.name LIKE ?";
+	private static final String DETAILS = "SELECT computer.id, computer.name, computer.introduced, computer.discontinued, company.name AS company_name, computer.company_id\\n\"\n"
+			+ "			+ \"from company\\n\" + \"RIGHT JOIN computer\\n\" + \"ON company.id = computer.company_id WHERE(computer.id) LIKE ?";
 	private static final String COUNT = "SELECT COUNT(*) AS rowcount FROM computer";
 	private static final String COUNT_FILTERED = "SELECT COUNT(*) AS rowcount FROM computer LEFT JOIN company ON computer.company_id = company.id WHERE "
 			+ " computer.name LIKE ? OR company.name LIKE ?";
@@ -80,30 +78,15 @@ public class ComputerDao {
 		}
 	}
 
-	public List<Computer> read(int offset, int limit) throws SQLException, UserException {
+	public List<Computer> search(String name, int offset, int limit, String query) throws SQLException, UserException {
 		Computer computer;
 		ArrayList<Computer> computers = new ArrayList<>();
 		ArrayList<Object> sql = new ArrayList<>();
 		try {
-			DaoUtilitaries.databaseAccess(sql, SELECT + " LIMIT ? OFFSET ?", this.dataSource, 0, limit, offset);
-			while (((ResultSet) sql.get(0)).next()) {
-				computer = computerMapper.dbToBean((ResultSet) sql.get(0));
-				computers.add(computer);
-			}
-		} finally {
-			DaoUtilitaries.closeConnexions((ResultSet) sql.get(0), (PreparedStatement) sql.get(1),
-					(Connection) sql.get(2));
-		}
-		return computers;
-	}
-
-	public List<Computer> search(String name, int offset, int limit) throws SQLException, UserException {
-		Computer computer;
-		ArrayList<Computer> computers = new ArrayList<>();
-		ArrayList<Object> sql = new ArrayList<>();
-		try {
-			DaoUtilitaries.databaseAccess(sql, SEARCH_BY + " LIMIT ? OFFSET ?", this.dataSource, 0, name, name, limit,
-					offset);
+			if (name != null && !name.isEmpty())
+				DaoUtilitaries.databaseAccess(sql, query, this.dataSource, 0, name, name, limit, offset);
+			else
+				DaoUtilitaries.databaseAccess(sql, query, this.dataSource, 0, limit, offset);
 			while (((ResultSet) sql.get(0)).next()) {
 				computer = computerMapper.dbToBean((ResultSet) sql.get(0));
 				computers.add(computer);

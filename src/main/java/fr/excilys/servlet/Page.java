@@ -10,6 +10,8 @@ public class Page implements Serializable {
 	private int number;
 	private int offset;
 	private String name;
+	private String order;
+	private String sens;
 
 	public void setName(String name) {
 		if (name != null)
@@ -18,6 +20,24 @@ public class Page implements Serializable {
 
 	public String getName() {
 		return this.name;
+	}
+
+	public void setOrder(String order) {
+		if (order != null)
+			this.order = order;
+	}
+
+	public String getOrder() {
+		return this.order;
+	}
+
+	public void setSens(String sens) {
+		if (sens != null)
+			this.sens = sens;
+	}
+
+	public String getSens() {
+		return this.sens;
 	}
 
 	public int getCurrent() {
