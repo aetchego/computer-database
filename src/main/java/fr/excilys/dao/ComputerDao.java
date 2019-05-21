@@ -6,15 +6,13 @@ import java.util.Objects;
 import javax.sql.DataSource;
 
 import org.springframework.dao.DataAccessException;
-import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Component;
-import org.springframework.transaction.annotation.Transactional;
 
+import fr.excilys.mapper.ComputerRowMapper;
 import fr.excilys.model.Computer;
 
 @Component
-@Transactional(readOnly = true)
 public class ComputerDao {
 
 	private static final String UPDATE = "UPDATE computer SET name = ?, introduced = ?, discontinued = ?, company_id = ? WHERE id = ?";
@@ -27,13 +25,13 @@ public class ComputerDao {
 			+ " computer.name LIKE ? OR company.name LIKE ?";
 	private static final String DELETE_COMPUTERS_BY_COMPANY = "DELETE FROM `computer-database-db`.computer where(company_id) = ?";
 
-	private final DataSource dataSource;
-	private JdbcTemplate template;
+	private final JdbcTemplate template;
+	private final ComputerRowMapper rowMapper;
 
-	public ComputerDao(DataSource dataSource) {
+	public ComputerDao(DataSource dataSource, ComputerRowMapper rowMapper) {
 		super();
-		this.dataSource = dataSource;
-		this.template = new JdbcTemplate(this.dataSource);
+		this.template = new JdbcTemplate(dataSource);
+		this.rowMapper = rowMapper;
 	}
 
 	public int countComputers(String name) throws DataAccessException {
@@ -51,6 +49,7 @@ public class ComputerDao {
 
 	public void delete(int id) throws DataAccessException {
 
+		System.out.println(id);
 		template.update(DELETE, id);
 	}
 
@@ -61,9 +60,8 @@ public class ComputerDao {
 
 	public List<Computer> search(String name, int offset, int limit, String query) throws DataAccessException {
 
-		return name != null && !name.isEmpty()
-				? template.query(query, new BeanPropertyRowMapper<Computer>(Computer.class), name, name, limit, offset)
-				: template.query(query, new BeanPropertyRowMapper<Computer>(Computer.class), limit, offset);
+		return name != null && !name.isEmpty() ? template.query(query, this.rowMapper, name, name, limit, offset)
+				: template.query(query, this.rowMapper, limit, offset);
 	}
 
 	public Computer showDetails(int id) throws DataAccessException {

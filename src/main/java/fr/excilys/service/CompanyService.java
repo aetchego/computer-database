@@ -1,6 +1,5 @@
 package fr.excilys.service;
 
-import java.sql.SQLException;
 import java.util.Optional;
 
 import org.springframework.dao.DataAccessException;
@@ -14,7 +13,6 @@ import fr.excilys.model.Companies;
 import fr.excilys.model.Company;
 
 @Component
-@Transactional(readOnly = true)
 public class CompanyService {
 
 	private static final String ERROR_MESSAGE = "[ERROR] Ooops, something went wrong !";
@@ -31,8 +29,8 @@ public class CompanyService {
 	public void deleteCompany(int id) throws UserException {
 		try {
 			computerDao.deleteByCompany(id);
-			companyDao.deleteCompany(id);
-		} catch (SQLException e) {
+			(companyDao.deleteCompany(id)).removeCompany(id);
+		} catch (DataAccessException e) {
 			throw new UserException(ERROR_MESSAGE);
 		}
 	}
@@ -47,11 +45,7 @@ public class CompanyService {
 		return companies;
 	}
 
-	public Optional<Company> findByName(String name) throws UserException {
-		try {
-			return companyDao.findByName(name);
-		} catch (SQLException e) {
-			throw new UserException(ERROR_MESSAGE);
-		}
+	public Optional<Company> findByName(String name) {
+		return companyDao.findByName(name);
 	}
 }

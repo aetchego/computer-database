@@ -9,16 +9,29 @@ public final class Companies {
 
 	private List<Company> companiesList = new ArrayList<>();
 
-	public void addCompany(Company company) {
-		this.companiesList.add(company);
-	}
-
 	public void setCompaniesList(List<Company> companies) {
 		this.companiesList = companies;
 	}
 
 	public List<Company> getCompaniesList() {
 		return companiesList;
+	}
+
+	public void addCompany(Company company) {
+		this.companiesList.add(company);
+	}
+
+	public void removeCompany(Optional<Company> company) {
+		if (company.isPresent())
+			this.companiesList.remove(company.get());
+	}
+
+	public void removeCompany(int id) {
+		for (Company e : this.companiesList)
+			if (e.getId() == id) {
+				this.removeCompany(Optional.of(e));
+				return;
+			}
 	}
 
 	@Override
@@ -39,11 +52,6 @@ public final class Companies {
 	@Override
 	public int hashCode() {
 		return Objects.hash(companiesList);
-	}
-
-	public void removeCompany(Optional<Company> company) {
-		if (company.isPresent())
-			this.companiesList.remove(company.get());
 	}
 
 	@Override

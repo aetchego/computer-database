@@ -1,6 +1,5 @@
 package fr.excilys.dao;
 
-import java.sql.SQLException;
 import java.util.List;
 import java.util.Optional;
 
@@ -10,14 +9,12 @@ import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Component;
-import org.springframework.transaction.annotation.Transactional;
 
 import fr.excilys.client.UserException;
 import fr.excilys.model.Companies;
 import fr.excilys.model.Company;
 
 @Component
-@Transactional(readOnly = true)
 public class CompanyDao {
 
 	private static final String SELECT = "SELECT * FROM company";
@@ -33,8 +30,9 @@ public class CompanyDao {
 		this.companies = this.read();
 	}
 
-	public void deleteCompany(int id) throws UserException, SQLException {
+	public Companies deleteCompany(int id) throws DataAccessException {
 		template.update(DELETE, id);
+		return this.companies;
 	}
 
 	public Companies read() throws DataAccessException {
@@ -52,7 +50,7 @@ public class CompanyDao {
 		throw new UserException("[ERROR] Company ID does not exist.");
 	}
 
-	public Optional<Company> findByName(String name) throws SQLException {
-		return this.read().getCompaniesList().stream().filter(c -> c.getName().equals(name)).findFirst();
+	public Optional<Company> findByName(String name) {
+		return this.companies.getCompaniesList().stream().filter(c -> c.getName().equals(name)).findFirst();
 	}
 }

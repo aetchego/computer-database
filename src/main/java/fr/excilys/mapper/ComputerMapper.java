@@ -1,8 +1,6 @@
 package fr.excilys.mapper;
 
 import java.sql.Date;
-import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.time.LocalDate;
 
 import org.springframework.stereotype.Component;
@@ -31,16 +29,6 @@ public class ComputerMapper {
 		if (computer.getCompany() != null)
 			computerDTO.setBrand(computer.getCompany().getName());
 		return computerDTO;
-	}
-
-	public Computer dbToBean(ResultSet rs) throws SQLException, UserException {
-		Computer computer = new Computer();
-		computer.setId(rs.getInt("id"));
-		computer.setName(rs.getString("name"));
-		computer.setIntroduced(rs.getDate("introduced"));
-		computer.setDiscontinued(rs.getDate("discontinued"));
-		companyService.findByName(rs.getString("company_name")).ifPresent(computer::setCompany);
-		return computer;
 	}
 
 	public Computer dtoToBean(ComputerDTO computerDto) throws UserException {
