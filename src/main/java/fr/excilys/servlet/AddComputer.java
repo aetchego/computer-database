@@ -4,15 +4,15 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import fr.excilys.client.UserException;
 import fr.excilys.controller.CompanyController;
 import fr.excilys.controller.ComputerController;
-import fr.excilys.mapper.ComputerMapper;
+import fr.excilys.dto.ComputerDTO;
 import fr.excilys.model.Companies;
 
 @Controller
@@ -22,14 +22,11 @@ public class AddComputer {
 	private final Logger logger = LoggerFactory.getLogger(AddComputer.class);
 	private final CompanyController companyController;
 	private final ComputerController computerController;
-	private final ComputerMapper mapper;
 
-	public AddComputer(CompanyController companyController, ComputerController computerController,
-			ComputerMapper mapper) {
+	public AddComputer(CompanyController companyController, ComputerController computerController) {
 		super();
 		this.companyController = companyController;
 		this.computerController = computerController;
-		this.mapper = mapper;
 	}
 
 	@GetMapping
@@ -45,10 +42,9 @@ public class AddComputer {
 	}
 
 	@PostMapping
-	public String doPost(@RequestParam String name, @RequestParam String inDate, @RequestParam String outDate,
-			@RequestParam String brand) {
+	public String doPost(@ModelAttribute ComputerDTO computer) {
 
-		computerController.createComputer(mapper.stringsToDto(name, inDate, outDate, brand));
+		computerController.createComputer(computer);
 		return "redirect:/dashboard";
 
 	}
