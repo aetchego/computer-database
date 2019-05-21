@@ -59,7 +59,7 @@
 				</div>
 				<div class="pull-right">
 					<a class="btn btn-success" id="addComputer"
-						href="${pageContext.request.contextPath}/addComputer">Add
+						href="${pageContext.request.contextPath}/computer/add">Add
 						Computer</a> <a class="btn btn-default" id="editComputer" href="#"
 						onclick="$.fn.toggleEditMode();">Edit</a>
 				</div>

@@ -1,43 +1,55 @@
 package fr.excilys.servlet;
 
-import java.io.IOException;
-
-import javax.servlet.ServletException;
-import javax.servlet.annotation.WebServlet;
-import javax.servlet.http.HttpServlet;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.web.context.WebApplicationContext;
-import org.springframework.web.context.support.WebApplicationContextUtils;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.ModelAndView;
 
 import fr.excilys.client.UserException;
 import fr.excilys.controller.CompanyController;
+import fr.excilys.controller.ComputerController;
+import fr.excilys.mapper.ComputerMapper;
 import fr.excilys.model.Companies;
 
-@WebServlet(urlPatterns = "/addComputer")
-public class AddComputer extends HttpServlet {
+@Controller
+@RequestMapping("/computer/add")
+public class AddComputer {
 
-	private static final long serialVersionUID = 3884356107883326043L;
 	private final Logger logger = LoggerFactory.getLogger(AddComputer.class);
-	private CompanyController controller;
+	private final CompanyController companyController;
+	private final ComputerController computerController;
+	private final ComputerMapper mapper;
 
-	@Override
-	public void doGet(HttpServletRequest req, HttpServletResponse res) {
-		try {
-			Companies companies = controller.listCompanies();
-			req.setAttribute("companies", companies.getCompaniesList());
-			req.getRequestDispatcher("/WEB-INF/views/addComputer.jsp").forward(req, res);
-		} catch (UserException | ServletException | IOException e) {
-			logger.info(e.getMessage());
-		}
+	public AddComputer(CompanyController companyController, ComputerController computerController,
+			ComputerMapper mapper) {
+		super();
+		this.companyController = companyController;
+		this.computerController = computerController;
+		this.mapper = mapper;
 	}
 
-	@Override
-	public void init() throws ServletException {
-		WebApplicationContext wac = WebApplicationContextUtils.getRequiredWebApplicationContext(getServletContext());
-		controller = wac.getBean(CompanyController.class);
+	@GetMapping
+	public ModelAndView doGet() {
+		ModelAndView modelAndView = new ModelAndView("addComputer");
+		try {
+			Companies companies = companyController.listCompanies();
+			modelAndView.addObject("companies", companies.getCompaniesList());
+		} catch (UserException e) {
+			logger.info(e.getMessage());
+		}
+		return modelAndView;
+	}
+
+	@PostMapping
+	public String doPost(@RequestParam String name, @RequestParam String inDate, @RequestParam String outDate,
+			@RequestParam String brand) {
+
+		computerController.createComputer(mapper.stringsToDto(name, inDate, outDate, brand));
+		return "redirect:/dashboard";
+
 	}
 }

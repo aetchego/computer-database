@@ -10,9 +10,9 @@
 <title>Computer Database</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <!-- Bootstrap -->
-<link href="css/bootstrap.min.css" rel="stylesheet" media="screen">
-<link href="css/font-awesome.css" rel="stylesheet" media="screen">
-<link href="css/main.css" rel="stylesheet" media="screen">
+<link href="${pageContext.request.contextPath}/css/bootstrap.min.css" rel="stylesheet" media="screen">
+<link href="${pageContext.request.contextPath}/css/font-awesome.css" rel="stylesheet" media="screen">
+<link href="${pageContext.request.contextPath}/css/main.css" rel="stylesheet" media="screen">
 <style type='text/css'>
 #error {display:none;}
 </style>
@@ -20,7 +20,7 @@
 <body>
     <header class="navbar navbar-inverse navbar-fixed-top">
         <div class="container">
-            <a class="navbar-brand" href="dashboard"> Application - Computer Database </a>
+            <a class="navbar-brand" href="${pageContext.request.contextPath}/dashboard"> Application - Computer Database </a>
         </div>
     </header>
 
@@ -31,7 +31,7 @@
                 <div class="alert alert-danger" role="alert" id="error"></div>
                 <c:out value="${error}"/>
                     <h1>Add Computer</h1>
-                    <form action="add" method="POST">
+                    <form action="${pageContext.request.contextPath}/computer/add" method="POST">
                         <fieldset>
                             <div class="form-group">
                                 <label for="computerName">Computer name</label>
