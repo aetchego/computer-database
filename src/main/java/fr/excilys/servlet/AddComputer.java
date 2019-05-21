@@ -28,7 +28,7 @@ public class AddComputer extends HttpServlet {
 	public void doGet(HttpServletRequest req, HttpServletResponse res) {
 		try {
 			Companies companies = controller.listCompanies();
-			req.setAttribute("companies", companies.getCompanies());
+			req.setAttribute("companies", companies.getCompaniesList());
 			req.getRequestDispatcher("/WEB-INF/views/addComputer.jsp").forward(req, res);
 		} catch (UserException | ServletException | IOException e) {
 			logger.info(e.getMessage());

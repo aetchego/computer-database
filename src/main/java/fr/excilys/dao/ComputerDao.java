@@ -9,10 +9,12 @@ import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Transactional;
 
 import fr.excilys.model.Computer;
 
 @Component
+@Transactional(readOnly = true)
 public class ComputerDao {
 
 	private static final String UPDATE = "UPDATE computer SET name = ?, introduced = ?, discontinued = ?, company_id = ? WHERE id = ?";
@@ -23,6 +25,8 @@ public class ComputerDao {
 	private static final String COUNT = "SELECT COUNT(*) AS rowcount FROM computer";
 	private static final String COUNT_FILTERED = "SELECT COUNT(*) AS rowcount FROM computer LEFT JOIN company ON computer.company_id = company.id WHERE "
 			+ " computer.name LIKE ? OR company.name LIKE ?";
+	private static final String DELETE_COMPUTERS_BY_COMPANY = "DELETE FROM `computer-database-db`.computer where(company_id) = ?";
+
 	private final DataSource dataSource;
 	private JdbcTemplate template;
 
@@ -48,6 +52,11 @@ public class ComputerDao {
 	public void delete(int id) throws DataAccessException {
 
 		template.update(DELETE, id);
+	}
+
+	public void deleteByCompany(int id) throws DataAccessException {
+
+		template.update(DELETE_COMPUTERS_BY_COMPANY, id);
 	}
 
 	public List<Computer> search(String name, int offset, int limit, String query) throws DataAccessException {

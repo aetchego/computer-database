@@ -4,12 +4,14 @@ import java.util.List;
 
 import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Transactional;
 
 import fr.excilys.client.UserException;
 import fr.excilys.dao.ComputerDao;
 import fr.excilys.model.Computer;
 
 @Component
+@Transactional(readOnly = true)
 public class ComputerService {
 
 	private static final String DATABASE_ERROR = "[ERROR] Ooops, something went wrong !";

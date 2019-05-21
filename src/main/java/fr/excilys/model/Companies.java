@@ -13,6 +13,14 @@ public final class Companies {
 		this.companiesList.add(company);
 	}
 
+	public void setCompaniesList(List<Company> companies) {
+		this.companiesList = companies;
+	}
+
+	public List<Company> getCompaniesList() {
+		return companiesList;
+	}
+
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj) {
@@ -26,10 +34,6 @@ public final class Companies {
 		}
 		Companies other = (Companies) obj;
 		return Objects.equals(companiesList, other.companiesList);
-	}
-
-	public List<Company> getCompanies() {
-		return companiesList;
 	}
 
 	@Override

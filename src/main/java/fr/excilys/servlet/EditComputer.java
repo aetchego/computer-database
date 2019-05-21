@@ -28,7 +28,7 @@ public class EditComputer extends HttpServlet {
 	public void doGet(HttpServletRequest req, HttpServletResponse res) {
 		try {
 			Companies companies = controller.listCompanies();
-			req.setAttribute("companies", companies.getCompanies());
+			req.setAttribute("companies", companies.getCompaniesList());
 			req.setAttribute("id", req.getParameter("id"));
 			req.setAttribute("name", req.getParameter("name"));
 			req.setAttribute("in", req.getParameter("in"));

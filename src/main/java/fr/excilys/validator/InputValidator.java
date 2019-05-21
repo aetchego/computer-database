@@ -33,7 +33,7 @@ public class InputValidator {
 	private void checkCompanyName(String brand) throws UserException {
 		if (brand == null || brand.trim().isEmpty() || brand.equals("---"))
 			return;
-		List<Company> comp = companyService.listCompanies().getCompanies();
+		List<Company> comp = companyService.listCompanies().getCompaniesList();
 		for (Company e : comp)
 			if (e.getName().equals(brand))
 				return;

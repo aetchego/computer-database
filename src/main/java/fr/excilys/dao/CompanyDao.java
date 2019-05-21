@@ -1,65 +1,48 @@
 package fr.excilys.dao;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
 import javax.sql.DataSource;
 
+import org.springframework.dao.DataAccessException;
+import org.springframework.jdbc.core.BeanPropertyRowMapper;
+import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Transactional;
 
 import fr.excilys.client.UserException;
-import fr.excilys.mapper.CompanyMapper;
 import fr.excilys.model.Companies;
 import fr.excilys.model.Company;
 
 @Component
+@Transactional(readOnly = true)
 public class CompanyDao {
 
 	private static final String SELECT = "SELECT * FROM company";
 	private static final String DELETE = "DELETE FROM `computer-database-db`.company where(id) LIKE ?";
-	private static final String DELETE_COMPUTERS = "DELETE FROM `computer-database-db`.computer where(company_id) = ?";
 	private final DataSource dataSource;
-	private final CompanyMapper companyMapper;
 	private Companies companies = null;
+	private JdbcTemplate template;
 
-	public CompanyDao(DataSource dataSource, CompanyMapper companyMapper) {
+	public CompanyDao(DataSource dataSource) {
 		super();
 		this.dataSource = dataSource;
-		this.companyMapper = companyMapper;
+		this.template = new JdbcTemplate(this.dataSource);
+		this.companies = this.read();
 	}
 
 	public void deleteCompany(int id) throws UserException, SQLException {
-		this.read();
-		ArrayList<Object> sql = new ArrayList<>();
-		try {
-			DaoUtilitaries.databaseAccess(sql, DELETE_COMPUTERS, this.dataSource, 1, id);
-			DaoUtilitaries.databaseAccess(sql, DELETE, this.dataSource, 1, id);
-			companies.removeCompany(searchCompany(companies.getCompanies(), id));
-		} finally {
-			DaoUtilitaries.closeConnexions((ResultSet) sql.get(0), (PreparedStatement) sql.get(1),
-					(Connection) sql.get(2));
-		}
+		template.update(DELETE, id);
 	}
 
-	public Companies read() throws SQLException {
-		ArrayList<Object> sql = new ArrayList<>();
+	public Companies read() throws DataAccessException {
 		if (this.companies == null) {
-			try {
-				companies = new Companies();
-				DaoUtilitaries.databaseAccess(sql, SELECT, this.dataSource, 0);
-				while (((ResultSet) sql.get(0)).next())
-					companyMapper.toBean((ResultSet) sql.get(0), companies);
-			} finally {
-				DaoUtilitaries.closeConnexions((ResultSet) sql.get(0), (PreparedStatement) sql.get(1),
-						(Connection) sql.get(2));
-			}
+			this.companies = new Companies();
+			this.companies.setCompaniesList(template.query(SELECT, new BeanPropertyRowMapper<Company>(Company.class)));
 		}
-		return companies;
+		return this.companies;
 	}
 
 	public Optional<Company> searchCompany(List<Company> companies, int id) throws UserException {
@@ -70,6 +53,6 @@ public class CompanyDao {
 	}
 
 	public Optional<Company> findByName(String name) throws SQLException {
-		return this.read().getCompanies().stream().filter(c -> c.getName().equals(name)).findFirst();
+		return this.read().getCompaniesList().stream().filter(c -> c.getName().equals(name)).findFirst();
 	}
 }
