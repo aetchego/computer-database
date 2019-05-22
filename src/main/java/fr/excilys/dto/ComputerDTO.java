@@ -1,8 +1,11 @@
 package fr.excilys.dto;
 
+import org.springframework.lang.NonNull;
+
 public class ComputerDTO {
 
-	private int id;
+	@NonNull
+	private Integer id;
 	private String name;
 	private String introduced;
 	private String discontinued;
@@ -16,7 +19,7 @@ public class ComputerDTO {
 		return discontinued;
 	}
 
-	public int getId() {
+	public Integer getId() {
 		return id;
 	}
 
@@ -36,7 +39,7 @@ public class ComputerDTO {
 		this.discontinued = discontinued;
 	}
 
-	public void setId(int id) {
+	public void setId(Integer id) {
 		this.id = id;
 	}
 

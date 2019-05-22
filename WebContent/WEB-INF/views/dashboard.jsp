@@ -27,7 +27,7 @@
 
 	<section id="main">
 		<div class="container">
-			<h1 id="homeTitle">${computerNumber} Computers found</h1>
+			<h1 id="homeTitle">${infos.computers} computers found</h1>
 			<div id="actions" class="form-horizontal">
 				<div class="pull-left">
 					<form id="searchForm" action="dashboard" method="GET"
@@ -51,7 +51,8 @@
 							</div>
 
 						<input type="search" id="searchbox" name="name"
-							class="form-control" placeholder="Search name" /> <input
+							class="form-control" placeholder="Search name" /> 
+						<input
 							type="submit" id="searchsubmit" name="search" value="Search"
 							class="btn btn-primary" />
 
@@ -68,7 +69,7 @@
 		</div>
 
 		<form id="deleteForm"
-			action="${pageContext.request.contextPath}/delete" method="POST">
+			action="${pageContext.request.contextPath}/computer/delete" method="POST">
 			<input type="hidden" name="selection" value="">
 		</form>
 
@@ -105,7 +106,7 @@
 							<td class="editMode"><input type="checkbox" name="cb"
 								class="cb" value=${s.id}></td>
 							<td><a
-								href="${pageContext.request.contextPath}/editComputer?id=${s.id}&name=${s.name}&in=${s.introduced}&out=${s.discontinued}&company=${s.brand}">${s.name}</a>
+								href="${pageContext.request.contextPath}/computer/edit?id=${s.id}&name=${s.name}&introduced=${s.introduced}&discontinued=${s.discontinued}&brand=${s.brand}">${s.name}</a>
 							</td>
 							<td>${s.introduced}</td>
 							<td>${s.discontinued}</td>
@@ -122,22 +123,25 @@
 	<footer class="navbar-fixed-bottom">
 		<div class="container text-center">
 			<ul class="pagination">
-				<li><a href="dashboard?previous=true" aria-label="Previous">
+			<c:if test="${page.current > 1}" >
+				<li><a href="dashboard?current=${page.current - 1}" aria-label="Previous">
 						<span aria-hidden="true">&laquo;</span>
 				</a></li>
-				<c:forEach begin="1" end="${pageNumber}" varStatus="loop">
-					<li><a href="dashboard?pageAt=${loop.index}">${loop.index}</a></li>
+			</c:if>
+				<c:forEach begin="1" end="${infos.pages}" varStatus="loop">
+					<li><a href="dashboard?current=${loop.index}">${loop.index}</a></li>
 				</c:forEach>
-
-				<li><a href="dashboard?next=true" aria-label="Next"> <span
+				<c:if test="${page.current < infos.pages}" >
+				<li><a href="dashboard?current=${page.current + 1}" aria-label="Next"> <span
 						aria-hidden="true">&raquo;</span>
 				</a></li>
+				</c:if>
 			</ul>
 
 			<div class="btn-group btn-group-sm pull-right" role="group">
-				<a href="dashboard?size=10" class="btn btn-default">10</a> <a
-					href="dashboard?size=50" class="btn btn-default">50</a> <a
-					href="dashboard?size=100" class="btn btn-default">100</a>
+				<a href="dashboard?limit=10" class="btn btn-default">10</a> <a
+					href="dashboard?limit=50" class="btn btn-default">50</a> <a
+					href="dashboard?limit=100" class="btn btn-default">100</a>
 			</div>
 		</div>
 

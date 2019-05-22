@@ -1,48 +1,50 @@
 package fr.excilys.servlet;
 
-import java.io.IOException;
-
-import javax.servlet.ServletException;
-import javax.servlet.annotation.WebServlet;
-import javax.servlet.http.HttpServlet;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.web.context.WebApplicationContext;
-import org.springframework.web.context.support.WebApplicationContextUtils;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.servlet.ModelAndView;
 
 import fr.excilys.client.UserException;
 import fr.excilys.controller.CompanyController;
+import fr.excilys.controller.ComputerController;
+import fr.excilys.dto.ComputerDTO;
 import fr.excilys.model.Companies;
 
-@WebServlet(urlPatterns = "/editComputer")
-public class EditComputer extends HttpServlet {
+@Controller
+@RequestMapping("/computer/edit")
+public class EditComputer {
 
-	private static final long serialVersionUID = 1L;
 	private final Logger logger = LoggerFactory.getLogger(EditComputer.class);
-	private CompanyController controller;
+	private CompanyController companyController;
+	private final ComputerController computerController;
 
-	@Override
-	public void doGet(HttpServletRequest req, HttpServletResponse res) {
-		try {
-			Companies companies = controller.listCompanies();
-			req.setAttribute("companies", companies.getCompaniesList());
-			req.setAttribute("id", req.getParameter("id"));
-			req.setAttribute("name", req.getParameter("name"));
-			req.setAttribute("in", req.getParameter("in"));
-			req.setAttribute("out", req.getParameter("out"));
-			req.setAttribute("company", req.getParameter("company"));
-			req.getRequestDispatcher("/WEB-INF/views/editComputer.jsp").forward(req, res);
-		} catch (UserException | ServletException | IOException e) {
-			logger.info(e.getMessage());
-		}
+	public EditComputer(CompanyController companyController, ComputerController computerController) {
+		super();
+		this.companyController = companyController;
+		this.computerController = computerController;
 	}
 
-	@Override
-	public void init() throws ServletException {
-		WebApplicationContext wac = WebApplicationContextUtils.getRequiredWebApplicationContext(getServletContext());
-		controller = wac.getBean(CompanyController.class);
+	@GetMapping
+	public ModelAndView doGet(@ModelAttribute ComputerDTO computer) {
+		ModelAndView modelAndView = new ModelAndView("editComputer");
+		try {
+			Companies companies = companyController.listCompanies();
+			modelAndView.addObject("companies", companies.getCompaniesList());
+			modelAndView.addObject("computer", computer);
+		} catch (UserException e) {
+			logger.info(e.getMessage());
+		}
+		return modelAndView;
+	}
+
+	@PostMapping
+	public String doPost(@ModelAttribute ComputerDTO computer) {
+		computerController.updateComputer(computer.getId(), computer);
+		return "redirect:/dashboard";
 	}
 }

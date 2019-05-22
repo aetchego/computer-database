@@ -29,34 +29,34 @@
                 <div class="alert alert-danger" role="alert" id="error"></div>
                		 <c:out value="${error}"/>
                     <div class="label label-default pull-right">
-                        id: ${id}
+                        id: ${computer.id}
                     </div>
                     <h1>Edit Computer</h1>
 
-                    <form action="edit" method="POST">
-                        <input type="hidden" value=${id} id="id" name="id"/> <!-- TODO: Change this value with the computer id -->
+                    <form action="${pageContext.request.contextPath}/computer/edit" method="POST">
+                        <input type="hidden" value='${computer.id}' id="id" name="id"/> <!-- TODO: Change this value with the computer id -->
                         <fieldset>
                             <div class="form-group">
                                 <label for="computerName">Computer name</label>
-                                <input type="text" class="form-control" id="computerName" name="name" placeholder="Computer name" value='${name}'>
+                                <input type="text" class="form-control" id="computerName" name="name" placeholder="Computer name" value='${computer.name}'>
                             </div>
                             <div class="form-group">
                                 <label for="introduced">Introduced date</label>
-                                <input type="date" class="form-control" id="introduced" name="introduced" placeholder="Introduced date" value=${in}>
+                                <input type="date" class="form-control" id="introduced" name="introduced" placeholder="Introduced date" value='${computer.introduced}'>
                             </div>
                             <div class="form-group">
                                 <label for="discontinued">Discontinued date</label>
-                                <input type="date" class="form-control" id="discontinued" name="discontinued" placeholder="Discontinued date" value=${out}>
+                                <input type="date" class="form-control" id="discontinued" name="discontinued" placeholder="Discontinued date" value='${computer.discontinued}'>
                             </div>
                             
                             <div class="form-group">
                                 <label for="companyId">Company</label>
-                                <select class="form-control" id="companyId" name="brand" value=${company}>
-                                <option value="${company}" selected>${company}</option>
+                                <select class="form-control" id="companyId" name="brand" value='${computer.brand}'>
+                                <option value='${computer.brand}' selected>${computer.brand}</option>
                            
-                                <c:forEach items="${companies}" var="s">
+                                <c:forEach items='${companies}' var="s">
                                     <%if(!"${company}".equals("s.name")) {%>
-                                        <option value="${s.name}">${s.name}</option>
+                                        <option value='${s.name}'>${s.name}</option>
                                     <%} %>
                                 </c:forEach>
                                 <option value=""></option>

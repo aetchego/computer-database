@@ -41,7 +41,6 @@ public class ComputerService {
 		try {
 			computerDao.delete(id);
 		} catch (DataAccessException e) {
-			System.out.println(e.getMessage());
 			throw new UserException(ID_ERROR);
 		}
 	}

@@ -1,76 +1,81 @@
 package fr.excilys.servlet;
 
-import java.io.IOException;
 import java.util.List;
 import java.util.Objects;
 
-import javax.servlet.ServletException;
-import javax.servlet.annotation.WebServlet;
-import javax.servlet.http.HttpServlet;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.web.context.WebApplicationContext;
-import org.springframework.web.context.support.WebApplicationContextUtils;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.SessionAttributes;
 
+import fr.excilys.client.UserException;
 import fr.excilys.controller.ComputerController;
 import fr.excilys.dto.ComputerDTO;
 import fr.excilys.mapper.QueryMapper;
+import fr.excilys.servlet.page.Page;
+import fr.excilys.servlet.page.PageInformation;
+import fr.excilys.servlet.page.PageQuery;
 
-@WebServlet(urlPatterns = "/dashboard")
-public class ListComputer extends HttpServlet {
+@Controller
+@RequestMapping("/dashboard")
+@SessionAttributes({ "page", "query" })
+public class ListComputer {
 
-	private static final long serialVersionUID = -4657214759745320317L;
-	private ComputerController controller;
-	private QueryMapper mapper;
+	private final ComputerController controller;
+	private final QueryMapper mapper;
 	private final Logger logger = LoggerFactory.getLogger(ListComputer.class);
 
-	@Override
-	public void doGet(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
+	public ListComputer(ComputerController controller, QueryMapper mapper) {
+		super();
+		this.controller = controller;
+		this.mapper = mapper;
+	}
+
+	@ModelAttribute("page")
+	public Page page() {
+		return new Page();
+	}
+
+	@ModelAttribute("query")
+	public PageQuery query() {
+		return new PageQuery();
+	}
+
+	@GetMapping
+	public Model doGet(Model model, @ModelAttribute("page") Page page, @ModelAttribute("query") PageQuery query) {
+		List<ComputerDTO> computers = null;
+		PageInformation infos = null;
 		try {
-			Page page = this.getPage(req);
-			page.setName(req.getParameter("name"));
-			page.setOrder(req.getParameter("order"));
-			page.setSens(req.getParameter("sens"));
-			int numberComputers = controller.countComputers(page.getName());
-			page.setCurrent(numberComputers, req.getParameter("pageAt"), req.getParameter("size"),
-					req.getParameter("previous"), req.getParameter("next"));
-			List<ComputerDTO> computers = controller.search(page.getName(), page.getOffset(), page.getLimit(),
-					mapper.toSqlQuery(page.getName(), page.getOrder(), page.getSens()));
-			this.setAttributes(req, computers, numberComputers, page);
-			req.getRequestDispatcher("/WEB-INF/views/dashboard.jsp").forward(req, res);
-		} catch (Exception e) {
-			logger.info(e.getMessage());
-			res.sendRedirect("/cdb_project/dashboard");
+
+			if (Objects.isNull(query.getSearch()) && page.getCurrent() == 1 && page.getLimit() == 20) {
+				page = new Page();
+				System.out.println("null");
+			}
+
+			infos = new PageInformation(controller.count(query.getName()), page.getLimit());
+			if (page.getCurrent() < 1 || infos.getPages() < page.getCurrent())
+				page.setCurrent(1);
+			;
+
+			computers = controller.search(query.getName(), (page.getCurrent() - 1) * page.getLimit(), page.getLimit(),
+					mapper.toSqlQuery(query.getName(), query.getOrder(), query.getSens()));
+
+			System.out.println("nb pages " + infos.getPages() + "curent " + page.getCurrent());
+
+		} catch (UserException e) {
+			e.printStackTrace();
 		}
-	}
 
-	public Page getPage(HttpServletRequest req) {
-		Page pagination = (Page) req.getSession().getAttribute("page");
-		if (Objects.isNull(pagination) || req.getParameter("search") == null && req.getParameter("next") == null
-				&& req.getParameter("previous") == null && req.getParameter("pageAt") == null
-				&& req.getParameter("size") == null)
-			return new Page();
-		return pagination;
-	}
-
-	public void setAttributes(HttpServletRequest req, List<ComputerDTO> computers, int numberComputers,
-			Page pagination) {
-		req.setAttribute("offset", pagination.getOffset());
-		req.setAttribute("limit", pagination.getLimit());
-		req.setAttribute("pageNumber", pagination.getNumber());
-		req.setAttribute("computerNumber", numberComputers);
-		req.setAttribute("computers", computers);
-		req.getSession().setAttribute("page", pagination);
-	}
-
-	@Override
-	public void init() throws ServletException {
-		WebApplicationContext wac = WebApplicationContextUtils.getRequiredWebApplicationContext(getServletContext());
-		controller = wac.getBean(ComputerController.class);
-		mapper = wac.getBean(QueryMapper.class);
+		model.addAttribute("computers", computers);
+		model.addAttribute("page", page);
+		model.addAttribute("infos", infos);
+		model.addAttribute("query", query);
+		System.out.println(query);
+		return model;
 	}
 
 }

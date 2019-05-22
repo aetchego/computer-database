@@ -48,8 +48,6 @@ public class ComputerDao {
 	}
 
 	public void delete(int id) throws DataAccessException {
-
-		System.out.println(id);
 		template.update(DELETE, id);
 	}
 

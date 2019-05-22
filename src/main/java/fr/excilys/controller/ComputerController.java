@@ -30,7 +30,7 @@ public class ComputerController {
 		this.computerMapper = computerMapper;
 	}
 
-	public int countComputers(String name) throws UserException {
+	public int count(String name) throws UserException {
 		int res = 0;
 		res = computerService.countComputers(name);
 		return res;

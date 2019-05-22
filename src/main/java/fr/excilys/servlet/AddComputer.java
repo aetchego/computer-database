@@ -43,9 +43,7 @@ public class AddComputer {
 
 	@PostMapping
 	public String doPost(@ModelAttribute ComputerDTO computer) {
-
 		computerController.createComputer(computer);
 		return "redirect:/dashboard";
-
 	}
 }
