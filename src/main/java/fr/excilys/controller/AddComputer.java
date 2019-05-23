@@ -1,4 +1,4 @@
-package fr.excilys.servlet;
+package fr.excilys.controller;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -10,31 +10,36 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
 import fr.excilys.client.UserException;
-import fr.excilys.controller.CompanyController;
-import fr.excilys.controller.ComputerController;
 import fr.excilys.dto.ComputerDTO;
-import fr.excilys.model.Companies;
+import fr.excilys.mapper.ComputerMapper;
+import fr.excilys.service.CompanyService;
+import fr.excilys.service.ComputerService;
+import fr.excilys.validator.InputValidator;
 
 @Controller
 @RequestMapping("/computer/add")
 public class AddComputer {
 
 	private final Logger logger = LoggerFactory.getLogger(AddComputer.class);
-	private final CompanyController companyController;
-	private final ComputerController computerController;
+	private final CompanyService companyService;
+	private final ComputerService computerService;
+	private final InputValidator validator;
+	private final ComputerMapper mapper;
 
-	public AddComputer(CompanyController companyController, ComputerController computerController) {
+	public AddComputer(CompanyService companyService, ComputerService computerService, InputValidator validator,
+			ComputerMapper mapper) {
 		super();
-		this.companyController = companyController;
-		this.computerController = computerController;
+		this.companyService = companyService;
+		this.computerService = computerService;
+		this.validator = validator;
+		this.mapper = mapper;
 	}
 
 	@GetMapping
 	public ModelAndView doGet() {
 		ModelAndView modelAndView = new ModelAndView("addComputer");
 		try {
-			Companies companies = companyController.listCompanies();
-			modelAndView.addObject("companies", companies.getCompaniesList());
+			modelAndView.addObject("companies", companyService.search().getCompaniesList());
 		} catch (UserException e) {
 			logger.info(e.getMessage());
 		}
@@ -43,7 +48,12 @@ public class AddComputer {
 
 	@PostMapping
 	public String doPost(@ModelAttribute ComputerDTO computer) {
-		computerController.createComputer(computer);
+		try {
+			validator.check(computer);
+			computerService.add(mapper.dtoToBean(computer));
+		} catch (UserException e) {
+			logger.info(e.getMessage());
+		}
 		return "redirect:/dashboard";
 	}
 }

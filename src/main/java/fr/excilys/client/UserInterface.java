@@ -54,7 +54,7 @@ public class UserInterface {
 			case 1:
 				this.askId();
 				if (this.id > 0)
-					companyController.deleteCompany(this.id);
+					companyController.delete(this.id);
 				break;
 			case 2:
 				System.out.println("Bye !");

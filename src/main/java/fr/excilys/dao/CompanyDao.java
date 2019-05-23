@@ -27,15 +27,15 @@ public class CompanyDao {
 		super();
 		this.dataSource = dataSource;
 		this.template = new JdbcTemplate(this.dataSource);
-		this.companies = this.read();
+		this.companies = this.search();
 	}
 
-	public Companies deleteCompany(int id) throws DataAccessException {
+	public Companies delete(int id) throws DataAccessException {
 		template.update(DELETE, id);
 		return this.companies;
 	}
 
-	public Companies read() throws DataAccessException {
+	public Companies search() throws DataAccessException {
 		if (this.companies == null) {
 			this.companies = new Companies();
 			this.companies.setCompaniesList(template.query(SELECT, new BeanPropertyRowMapper<Company>(Company.class)));

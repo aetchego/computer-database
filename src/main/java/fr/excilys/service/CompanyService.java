@@ -26,19 +26,19 @@ public class CompanyService {
 	}
 
 	@Transactional
-	public void deleteCompany(int id) throws UserException {
+	public void delete(int id) throws UserException {
 		try {
 			computerDao.deleteByCompany(id);
-			(companyDao.deleteCompany(id)).removeCompany(id);
+			(companyDao.delete(id)).removeCompany(id);
 		} catch (DataAccessException e) {
 			throw new UserException(ERROR_MESSAGE);
 		}
 	}
 
-	public Companies listCompanies() throws UserException {
+	public Companies search() throws UserException {
 		Companies companies;
 		try {
-			companies = companyDao.read();
+			companies = companyDao.search();
 		} catch (DataAccessException e) {
 			throw new UserException(ERROR_MESSAGE);
 		}

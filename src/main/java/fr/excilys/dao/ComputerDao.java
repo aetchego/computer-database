@@ -34,14 +34,14 @@ public class ComputerDao {
 		this.rowMapper = rowMapper;
 	}
 
-	public int countComputers(String name) throws DataAccessException {
+	public int count(String name) throws DataAccessException {
 
 		if (name != null && !name.isEmpty())
 			return template.queryForObject(COUNT_FILTERED, Integer.class, name, name);
 		return template.queryForObject(COUNT, Integer.class);
 	}
 
-	public void create(Computer computer) throws DataAccessException {
+	public void add(Computer computer) throws DataAccessException {
 
 		Integer companyId = Objects.isNull(computer.getCompany()) ? null : computer.getCompany().getId();
 		template.update(INSERT, computer.getName(), computer.getIntroduced(), computer.getDiscontinued(), companyId);

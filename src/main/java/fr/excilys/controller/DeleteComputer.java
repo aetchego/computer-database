@@ -1,4 +1,4 @@
-package fr.excilys.servlet;
+package fr.excilys.controller;
 
 import java.util.List;
 
@@ -10,25 +10,25 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import fr.excilys.client.UserException;
-import fr.excilys.controller.ComputerController;
+import fr.excilys.service.ComputerService;
 
 @Controller
 @RequestMapping("/computer/delete")
 public class DeleteComputer {
 
-	private ComputerController controller;
+	private ComputerService service;
 	private final Logger logger = LoggerFactory.getLogger(DeleteComputer.class);
 
-	public DeleteComputer(ComputerController controller) {
+	public DeleteComputer(ComputerService service) {
 		super();
-		this.controller = controller;
+		this.service = service;
 	}
 
 	@PostMapping
 	public String doPost(@RequestParam List<Integer> selection) {
 		for (Integer e : selection) {
 			try {
-				controller.deleteComputer(e);
+				service.delete(e);
 			} catch (UserException e1) {
 				logger.info(e1.getMessage());
 			}

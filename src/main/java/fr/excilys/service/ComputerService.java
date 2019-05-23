@@ -21,23 +21,23 @@ public class ComputerService {
 		this.computerDao = computerDao;
 	}
 
-	public int countComputers(String name) throws UserException {
+	public int count(String name) throws UserException {
 		try {
-			return computerDao.countComputers(name);
+			return computerDao.count(name);
 		} catch (DataAccessException e) {
 			throw new UserException(DATABASE_ERROR);
 		}
 	}
 
-	public void createComputer(Computer computer) throws UserException {
+	public void add(Computer computer) throws UserException {
 		try {
-			computerDao.create(computer);
+			computerDao.add(computer);
 		} catch (DataAccessException e) {
 			throw new UserException(DATABASE_ERROR);
 		}
 	}
 
-	public void deleteComputer(int id) throws UserException {
+	public void delete(int id) throws UserException {
 		try {
 			computerDao.delete(id);
 		} catch (DataAccessException e) {
@@ -61,7 +61,7 @@ public class ComputerService {
 		}
 	}
 
-	public void updateComputer(int id, Computer computer) throws UserException {
+	public void update(int id, Computer computer) throws UserException {
 		try {
 			computerDao.update(id, computer);
 		} catch (DataAccessException e) {
