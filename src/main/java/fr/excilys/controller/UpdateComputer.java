@@ -3,6 +3,9 @@ package fr.excilys.controller;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -14,7 +17,6 @@ import fr.excilys.dto.ComputerDTO;
 import fr.excilys.mapper.ComputerMapper;
 import fr.excilys.service.CompanyService;
 import fr.excilys.service.ComputerService;
-import fr.excilys.validator.InputValidator;
 
 @Controller
 @RequestMapping("/computer/edit")
@@ -23,15 +25,12 @@ public class UpdateComputer {
 	private final Logger logger = LoggerFactory.getLogger(UpdateComputer.class);
 	private final CompanyService companyService;
 	private final ComputerService computerService;
-	private final InputValidator validator;
 	private final ComputerMapper mapper;
 
-	public UpdateComputer(CompanyService companyService, ComputerService computerService, InputValidator validator,
-			ComputerMapper mapper) {
+	public UpdateComputer(CompanyService companyService, ComputerService computerService, ComputerMapper mapper) {
 		super();
 		this.companyService = companyService;
 		this.computerService = computerService;
-		this.validator = validator;
 		this.mapper = mapper;
 	}
 
@@ -48,9 +47,13 @@ public class UpdateComputer {
 	}
 
 	@PostMapping
-	public String doPost(@ModelAttribute ComputerDTO computer) {
+	public String doPost(@Validated @ModelAttribute("computer") ComputerDTO computer, BindingResult result,
+			Model model) {
 		try {
-			validator.check(computer);
+			if (result.hasErrors()) {
+				model.addAttribute("companies", companyService.search().getCompaniesList());
+				return "editComputer";
+			}
 			computerService.update(computer.getId(), mapper.dtoToBean(computer));
 		} catch (UserException e) {
 			logger.info(e.getMessage());

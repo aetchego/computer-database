@@ -1,14 +1,22 @@
 package fr.excilys.dto;
 
+import javax.validation.constraints.NotBlank;
+
 import org.springframework.lang.NonNull;
 
+import fr.excilys.validator.AreValidDates;
+import fr.excilys.validator.isCompany;
+
+@AreValidDates(introduced = "introduced", discontinued = "discontinued")
 public class ComputerDTO {
 
 	@NonNull
 	private Integer id;
+	@NotBlank(message = "Computer name cannot be empty.")
 	private String name;
 	private String introduced;
 	private String discontinued;
+	@isCompany
 	private String brand;
 
 	public String getBrand() {
