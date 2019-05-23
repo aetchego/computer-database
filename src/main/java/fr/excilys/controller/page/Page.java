@@ -1,4 +1,4 @@
-package fr.excilys.servlet.page;
+package fr.excilys.controller.page;
 
 public class Page {
 

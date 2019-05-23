@@ -13,12 +13,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.SessionAttributes;
 
 import fr.excilys.client.UserException;
+import fr.excilys.controller.page.Page;
+import fr.excilys.controller.page.PageInformation;
+import fr.excilys.controller.page.PageQuery;
 import fr.excilys.mapper.ComputerMapper;
 import fr.excilys.mapper.QueryMapper;
 import fr.excilys.service.ComputerService;
-import fr.excilys.servlet.page.Page;
-import fr.excilys.servlet.page.PageInformation;
-import fr.excilys.servlet.page.PageQuery;
 
 @Controller
 @RequestMapping("/dashboard")
