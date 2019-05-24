@@ -39,6 +39,7 @@ public class AddComputer {
 		ModelAndView modelAndView = new ModelAndView("addComputer");
 		try {
 			modelAndView.addObject("companies", companyService.search().getCompaniesList());
+			modelAndView.addObject("computer", new ComputerDTO());
 		} catch (UserException e) {
 			logger.info(e.getMessage());
 		}
@@ -46,7 +47,7 @@ public class AddComputer {
 	}
 
 	@PostMapping
-	public String doPost(@Validated @ModelAttribute("Computer") ComputerDTO computer, BindingResult result,
+	public String doPost(@Validated @ModelAttribute("computer") ComputerDTO computer, BindingResult result,
 			Model model) {
 		try {
 			if (result.hasErrors()) {

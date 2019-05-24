@@ -23,7 +23,6 @@ function checkDate(introduced, discontinued) {
 }
 
 $("#submit").click(function() {
-	/*return true;
 	var name = $("#computerName").val();
 	var introduced = $("#introduced").val();
 	var discontinued = $("#discontinued").val();
@@ -31,5 +30,5 @@ $("#submit").click(function() {
 	if (!checkName(name))
 		return false;
 	if (!checkDate(introduced, discontinued))
-		return false;*/
+		return false;
 });

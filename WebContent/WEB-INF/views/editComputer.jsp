@@ -26,9 +26,16 @@
 <body>
 	<header class="navbar navbar-inverse navbar-fixed-top">
 		<div class="container">
-			<a class="navbar-brand"
-				href="${pageContext.request.contextPath}/dashboard"> Application
-				- Computer Database </a>
+		<div class="row">
+		<div class="col-sm-9">
+			<a class="navbar-brand" href="${pageContext.request.contextPath}/dashboard"> 
+			<spring:message code="title" text="default text" /> </a>
+
+		</div>
+		<div class="col-sm">
+		<a class="navbar-brand" href="?lang=en">English |</a><a class="navbar-brand" href="?lang=fr">French</a>
+		</div>
+		</div>
 		</div>
 	</header>
 	<section id="main">
@@ -39,7 +46,7 @@
 					<c:out value="${error}" />
 					<div class="label label-default pull-right">id:
 						${computer.id}</div>
-					<h1>Edit Computer</h1>
+					<h1><spring:message code="edit_page" text="default text" /></h1>
 
 					<c:url value="/computer/edit" var="edit"></c:url>
 					<form:form action="${edit}" method="POST" modelAttribute="computer">
@@ -75,7 +82,7 @@
 							</spring:bind>
 							<spring:bind path="brand">
 								<div class='form-group ${status.error?"has-error":""}'>
-									<form:label path="brand">Company</form:label>
+									<form:label path="brand"><spring:message code="company" text="default text" /></form:label>
 									<form:select class="form-control" path="brand" id="brand">
 										<form:option value="">---</form:option>
 										<form:options items="${companies}" itemLabel="name"
