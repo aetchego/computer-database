@@ -25,7 +25,7 @@
 </head>
 <body>
 	<header class="navbar navbar-inverse navbar-fixed-top">
-		<div class="container">
+		 <div class="container">
 		<div class="row">
 		<div class="col-sm-9">
 			<a class="navbar-brand" href="${pageContext.request.contextPath}/dashboard"> 
@@ -33,7 +33,7 @@
 
 		</div>
 		<div class="col-sm">
-		<a class="navbar-brand" href="?lang=en">English |</a><a class="navbar-brand" href="?lang=fr">French</a>
+		<a class="navbar-brand" href="?lang=en"><spring:message code="english" text="default text" /> |</a><a class="navbar-brand" href="?lang=fr"><spring:message code="french" text="default text" /></a>
 		</div>
 		</div>
 		</div>
