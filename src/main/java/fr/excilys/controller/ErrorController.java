@@ -3,15 +3,13 @@ package fr.excilys.controller;
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.GetMapping;
 
 @Controller
 public class ErrorController {
-	@RequestMapping(value = "errors", method = RequestMethod.GET)
+	@GetMapping(value = "errors")
 	public String renderErrorPage(HttpServletRequest httpRequest) {
 		int httpErrorCode = getErrorCode(httpRequest);
-
 		if (httpErrorCode == 403 || httpErrorCode == 404 || httpErrorCode == 500)
 			return Integer.toString(httpErrorCode);
 		return "dashboard";

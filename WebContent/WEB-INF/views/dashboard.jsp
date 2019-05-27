@@ -28,7 +28,7 @@
 
 		</div>
 		<div class="col-sm">
-		<a class="navbar-brand" href="?lang=en"><spring:message code="english" text="default text" /> |</a><a class="navbar-brand" href="?lang=fr"><spring:message code="french" text="default text" /></a>
+		<a class="navbar-brand" href="?lang=en"><spring:message code="english" text="default text" /> |</a><a id="language"  class="navbar-brand" href="?lang=fr"><spring:message code="french" text="default text" /></a>
 		</div>
 		</div>
 		</div>
