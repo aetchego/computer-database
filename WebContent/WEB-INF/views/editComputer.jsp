@@ -33,7 +33,7 @@
 
 		</div>
 		<div class="col-sm">
-		<a class="navbar-brand" href="?lang=en"><spring:message code="english" text="default text" /> |</a><a class="navbar-brand" href="?lang=fr"><spring:message code="french" text="default text" /></a>
+		<a class="navbar-brand" id="lang_en" href="#" onclick="createURL('en')"><spring:message code="english" text="default text" /> |</a><a id="lang_fr" class="navbar-brand" onclick="createURL('fr')" href="#"><spring:message code="french" text="default text" /></a>
 		</div>
 		</div>
 		</div>

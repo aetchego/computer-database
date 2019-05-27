@@ -1,4 +1,4 @@
-package fr.excilys.client;
+package fr.excilys.exception;
 
 public class UserException extends Exception {
 

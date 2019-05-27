@@ -2,7 +2,7 @@ package fr.excilys.controller;
 
 import org.springframework.stereotype.Component;
 
-import fr.excilys.client.UserException;
+import fr.excilys.exception.UserException;
 import fr.excilys.service.CompanyService;
 
 @Component

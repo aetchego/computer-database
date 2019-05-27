@@ -32,3 +32,15 @@ $("#submit").click(function() {
 	if (!checkDate(introduced, discontinued))
 		return false;
 });
+
+function createURL(lang) {
+	var res = window.location.href.search("lang=");
+	if (res > -1 && lang == "en")
+		$("#lang_en").attr("href", window.location.href.replace("&lang=fr", "&lang=en"));
+	else if (res > -1 && lang == "fr")
+		$("#lang_fr").attr("href", window.location.href.replace("&lang=en", "&lang=fr"));
+	else if (res == -1 && lang == "en")
+		$("#lang_en").attr("href", window.location.href + "&lang=en");
+	else if (res == -1 && lang == "fr")
+		$("#lang_fr").attr("href", window.location.href + "&lang=fr");
+}

@@ -5,7 +5,7 @@ import java.util.List;
 import javax.validation.ConstraintValidator;
 import javax.validation.ConstraintValidatorContext;
 
-import fr.excilys.client.UserException;
+import fr.excilys.exception.UserException;
 import fr.excilys.model.Company;
 import fr.excilys.service.CompanyService;
 

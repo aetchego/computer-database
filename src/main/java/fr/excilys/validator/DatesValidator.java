@@ -7,8 +7,8 @@ import java.util.Optional;
 import javax.validation.ConstraintValidator;
 import javax.validation.ConstraintValidatorContext;
 
-import fr.excilys.client.UserException;
 import fr.excilys.dto.ComputerDTO;
+import fr.excilys.exception.UserException;
 
 public class DatesValidator implements ConstraintValidator<AreValidDates, ComputerDTO> {
 

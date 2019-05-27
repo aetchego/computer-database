@@ -9,7 +9,6 @@ import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Component;
 
-import fr.excilys.mapper.ComputerRowMapper;
 import fr.excilys.model.Computer;
 
 @Component

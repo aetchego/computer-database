@@ -5,8 +5,8 @@ import java.time.LocalDate;
 
 import org.springframework.stereotype.Component;
 
-import fr.excilys.client.UserException;
 import fr.excilys.dto.ComputerDTO;
+import fr.excilys.exception.UserException;
 import fr.excilys.model.Computer;
 import fr.excilys.service.CompanyService;
 
@@ -42,12 +42,4 @@ public class ComputerMapper {
 		return computer;
 	}
 
-	public ComputerDTO stringsToDto(String name, String introduced, String discontinued, String brand) {
-		ComputerDTO computer = new ComputerDTO();
-		computer.setName(name);
-		computer.setIntroduced(introduced);
-		computer.setDiscontinued(discontinued);
-		computer.setBrand(brand);
-		return computer;
-	}
 }

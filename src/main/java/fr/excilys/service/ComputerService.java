@@ -5,8 +5,8 @@ import java.util.List;
 import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Component;
 
-import fr.excilys.client.UserException;
 import fr.excilys.dao.ComputerDao;
+import fr.excilys.exception.UserException;
 import fr.excilys.model.Computer;
 
 @Component

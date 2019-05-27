@@ -11,11 +11,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringRunner;
 
-import fr.excilys.client.UserException;
 import fr.excilys.config.AppConfig;
 import fr.excilys.dao.DaoConfigException;
 import fr.excilys.dao.DaoException;
 import fr.excilys.database.UTDatabase;
+import fr.excilys.exception.UserException;
 import fr.excilys.mapper.ComputerMapper;
 
 @RunWith(SpringRunner.class)

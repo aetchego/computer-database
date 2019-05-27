@@ -10,7 +10,7 @@ import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Component;
 
-import fr.excilys.client.UserException;
+import fr.excilys.exception.UserException;
 import fr.excilys.model.Companies;
 import fr.excilys.model.Company;
 

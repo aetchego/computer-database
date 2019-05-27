@@ -6,9 +6,9 @@ import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
-import fr.excilys.client.UserException;
 import fr.excilys.dao.CompanyDao;
 import fr.excilys.dao.ComputerDao;
+import fr.excilys.exception.UserException;
 import fr.excilys.model.Companies;
 import fr.excilys.model.Company;
 
