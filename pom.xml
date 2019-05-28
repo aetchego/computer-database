@@ -14,10 +14,10 @@
 
 	<modules>
 		<module>core</module>
-		<module>binding</module>
 		<module>persistence</module>
+		<module>binding</module>
 		<module>service</module>
-		<module>web</module>
+		<module>webapp</module>
 		<module>console</module>
 	</modules>
 

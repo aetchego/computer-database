@@ -5,23 +5,23 @@ import java.util.List;
 import javax.validation.ConstraintValidator;
 import javax.validation.ConstraintValidatorContext;
 
+import fr.excilys.dao.CompanyDao;
 import fr.excilys.exception.UserException;
 import fr.excilys.model.Company;
-import fr.excilys.service.CompanyService;
 
 public class CompanyValidator implements ConstraintValidator<isCompany, String> {
 
-	private CompanyService companyService;
+	private CompanyDao dao;
 
-	public CompanyValidator(CompanyService companyService) {
+	public CompanyValidator(CompanyDao dao) {
 		super();
-		this.companyService = companyService;
+		this.dao = dao;
 	}
 
 	private void checkCompanyName(String brand) throws UserException {
 		if (brand == null || brand.trim().isEmpty() || brand.equals("---"))
 			return;
-		List<Company> comp = companyService.search().getCompaniesList();
+		List<Company> comp = dao.search().getCompaniesList();
 		for (Company e : comp)
 			if (e.getName().equals(brand))
 				return;

@@ -12,7 +12,9 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
+import fr.excilys.dto.ComputerDTO;
 import fr.excilys.exception.UserException;
+import fr.excilys.mapper.BeanMapper;
 import fr.excilys.service.CompanyService;
 import fr.excilys.service.ComputerService;
 
@@ -23,9 +25,9 @@ public class AddComputer {
 	private final Logger logger = LoggerFactory.getLogger(AddComputer.class);
 	private final CompanyService companyService;
 	private final ComputerService computerService;
-	private final ComputerMapper mapper;
+	private final BeanMapper mapper;
 
-	public AddComputer(CompanyService companyService, ComputerService computerService, ComputerMapper mapper) {
+	public AddComputer(CompanyService companyService, ComputerService computerService, BeanMapper mapper) {
 		super();
 		this.companyService = companyService;
 		this.computerService = computerService;

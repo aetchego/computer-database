@@ -8,7 +8,7 @@
     <version>0.0.1-SNAPSHOT</version>
   </parent>
   
- <artifactId>web</artifactId>
+ <artifactId>webapp</artifactId>
     <version>${module.version}</version>
     <packaging>war</packaging>
     <modelVersion>4.0.0</modelVersion>
@@ -33,7 +33,7 @@
 			<version>${module.version}</version>
 		</dependency>
 	
-	<dependency>
+		<dependency>
 			<groupId>fr.excilys</groupId>
 			<artifactId>service</artifactId>
 			<version>${module.version}</version>
