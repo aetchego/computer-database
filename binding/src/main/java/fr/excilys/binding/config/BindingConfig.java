@@ -1,0 +1,24 @@
+package fr.excilys.binding.config;
+
+import org.springframework.context.MessageSource;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.ComponentScan;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Import;
+import org.springframework.context.support.ResourceBundleMessageSource;
+
+import fr.excilys.persistence.config.PersistenceConfig;
+
+@Configuration
+@ComponentScan(basePackages = {
+		"fr.excilys.binding.mapper" }, excludeFilters = @ComponentScan.Filter(Configuration.class))
+@Import(PersistenceConfig.class)
+public class BindingConfig {
+
+	@Bean
+	public MessageSource messageSource() {
+		final ResourceBundleMessageSource bundleMessage = new ResourceBundleMessageSource();
+		bundleMessage.addBasenames("bundle");
+		return bundleMessage;
+	}
+}

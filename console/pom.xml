@@ -13,4 +13,32 @@
     <packaging>jar</packaging>
     <modelVersion>4.0.0</modelVersion>
     
+      <dependencies>
+
+		<dependency>
+			<groupId>fr.excilys</groupId>
+			<artifactId>core</artifactId>
+			<version>${module.version}</version>
+		</dependency>
+
+		<dependency>
+			<groupId>fr.excilys</groupId>
+			<artifactId>binding</artifactId>
+			<version>${module.version}</version>
+		</dependency>
+		
+		<dependency>
+			<groupId>fr.excilys</groupId>
+			<artifactId>persistence</artifactId>
+			<version>${module.version}</version>
+		</dependency>
+	
+		<dependency>
+			<groupId>fr.excilys</groupId>
+			<artifactId>service</artifactId>
+			<version>${module.version}</version>
+		</dependency>
+		
+	</dependencies>
+    
 </project>
