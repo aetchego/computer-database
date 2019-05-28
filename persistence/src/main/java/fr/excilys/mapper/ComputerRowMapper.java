@@ -1,4 +1,4 @@
-package fr.excilys.dao;
+package fr.excilys.mapper;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;

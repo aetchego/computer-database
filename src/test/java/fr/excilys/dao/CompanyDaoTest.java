@@ -15,6 +15,8 @@ import org.springframework.test.context.junit4.SpringRunner;
 
 import fr.excilys.config.AppConfig;
 import fr.excilys.database.UTDatabase;
+import fr.excilys.exception.DaoConfigException;
+import fr.excilys.exception.DaoException;
 import fr.excilys.model.Company;
 
 @RunWith(SpringRunner.class)

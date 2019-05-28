@@ -1,4 +1,4 @@
-package fr.excilys.dao;
+package fr.excilys.exception;
 
 public class DaoException extends Exception {
 

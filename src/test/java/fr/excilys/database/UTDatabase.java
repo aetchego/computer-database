@@ -19,7 +19,6 @@ import javax.sql.DataSource;
 
 import org.springframework.stereotype.Component;
 
-import fr.excilys.mapper.CompanyMapper;
 import fr.excilys.model.Company;
 import fr.excilys.model.Computer;
 
@@ -28,14 +27,12 @@ public class UTDatabase {
 
 	private static final String ENTRIES_SQL = "entriesUT.sql";
 	private static final String SCHEMA_SQL = "schema.sql";
-	private final CompanyMapper companyMapper;
 	private final DataSource dataSource;
 	private Map<Integer, Computer> computers = new TreeMap<>();
 	private Map<Integer, Company> companies = new TreeMap<>();
 
-	public UTDatabase(CompanyMapper companyMapper, DataSource dataSource) {
+	public UTDatabase(DataSource dataSource) {
 		super();
-		this.companyMapper = companyMapper;
 		this.dataSource = dataSource;
 		this.addCompanies();
 		this.addComputers();
@@ -76,7 +73,7 @@ public class UTDatabase {
 	}
 
 	private void addCompany(int id, String name) {
-		Company company = companyMapper.toBean(id, name);
+		Company company = null;
 		companies.put(id, company);
 	}
 

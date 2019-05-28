@@ -3,12 +3,11 @@ package fr.excilys.dao;
 import java.util.List;
 import java.util.Objects;
 
-import javax.sql.DataSource;
-
 import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Component;
 
+import fr.excilys.mapper.ComputerRowMapper;
 import fr.excilys.model.Computer;
 
 @Component
@@ -27,9 +26,9 @@ public class ComputerDao {
 	private final JdbcTemplate template;
 	private final ComputerRowMapper rowMapper;
 
-	public ComputerDao(DataSource dataSource, ComputerRowMapper rowMapper) {
+	public ComputerDao(ComputerRowMapper rowMapper, JdbcTemplate template) {
 		super();
-		this.template = new JdbcTemplate(dataSource);
+		this.template = template;
 		this.rowMapper = rowMapper;
 	}
 
