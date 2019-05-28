@@ -48,7 +48,6 @@
 						<fieldset>
 							<spring:bind path="name">
 								<div class='form-group ${status.error?"has-error":""}'>
-									<%--                                 <spring:message code="computer.name" var="name"/> --%>
 									<form:label path="name">${name}</form:label>
 									<form:input type="text" class="form-control" path="name"
 										id="computerName" placeholder="${name}" />
@@ -57,7 +56,6 @@
 							</spring:bind>
 							<spring:bind path="introduced">
 								<div class='form-group ${status.error?"has-error":""}'>
-									<%--                                 <spring:message code="computer.introduced" var="introduced"/> --%>
 									<form:label path="introduced">${introduced}</form:label>
 									<form:input type="date" class="form-control" path="introduced"
 										id="introduced" placeholder="${introduced}" />
@@ -66,7 +64,6 @@
 							</spring:bind>
 							<spring:bind path="discontinued">
 								<div class='form-group ${status.error?"has-error":""}'>
-									<%--                                 <spring:message code="computer.discontinued" var="discontinued"/> --%>
 									<form:label path="discontinued">${discontinued}</form:label>
 									<form:input type="date" class="form-control"
 										path="discontinued" id="discontinued"
