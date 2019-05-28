@@ -14,7 +14,19 @@
     <modelVersion>4.0.0</modelVersion>
     
     <dependencies>
-    
+   
+     <dependency>
+            <groupId>fr.excilys</groupId>
+            <artifactId>core</artifactId>
+            <version>${module.version}</version>
+     </dependency>
+        
+     <dependency>
+            <groupId>fr.excilys</groupId>
+            <artifactId>binding</artifactId>
+            <version>${module.version}</version>
+        </dependency>   
+        
      <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-jdbc</artifactId>

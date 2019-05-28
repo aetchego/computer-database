@@ -3,8 +3,6 @@ package fr.excilys.dao;
 import java.util.List;
 import java.util.Optional;
 
-import javax.sql.DataSource;
-
 import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -19,14 +17,12 @@ public class CompanyDao {
 
 	private static final String SELECT = "SELECT * FROM company";
 	private static final String DELETE = "DELETE FROM `computer-database-db`.company where(id) LIKE ?";
-	private final DataSource dataSource;
 	private Companies companies = null;
 	private JdbcTemplate template;
 
-	public CompanyDao(DataSource dataSource) {
+	public CompanyDao(JdbcTemplate template) {
 		super();
-		this.dataSource = dataSource;
-		this.template = new JdbcTemplate(this.dataSource);
+		this.template = template;
 		this.companies = this.search();
 	}
 

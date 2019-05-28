@@ -1,9 +1,5 @@
 package fr.excilys.config;
 
-import java.io.BufferedReader;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.io.IOException;
 import java.util.TimeZone;
 
 import javax.sql.DataSource;
@@ -25,7 +21,7 @@ import com.zaxxer.hikari.HikariDataSource;
 @ComponentScan(basePackages = { "fr.excilys.persistence.dao",
 		"fr.excilys.persistence.mapper" }, excludeFilters = @ComponentScan.Filter(Configuration.class))
 @EnableTransactionManagement
-public class AppConfig {
+public class PersistanceConfig {
 
 	@Bean(destroyMethod = "close")
 	public DataSource dataSource(HikariConfig config) {
@@ -35,30 +31,6 @@ public class AppConfig {
 
 	@Bean
 	public HikariConfig hikariConfig() {
-		// This will reference one line at a time
-		String line = null;
-		String filename = "/hikari.properties";
-
-		try {
-			// FileReader reads text files in the default encoding.
-			FileReader fileReader = new FileReader(filename);
-
-			// Always wrap FileReader in BufferedReader.
-			BufferedReader bufferedReader = new BufferedReader(fileReader);
-
-			while ((line = bufferedReader.readLine()) != null) {
-				System.out.println(line);
-			}
-
-			// Always close files.
-			bufferedReader.close();
-		} catch (FileNotFoundException ex) {
-			System.out.println("Unable to open file '" + filename + "'");
-		} catch (IOException ex) {
-			System.out.println("Error reading file '" + filename + "'");
-			// Or we could just do this:
-			// ex.printStackTrace();
-		}
 		return new HikariConfig("/hikari.properties");
 	}
 
