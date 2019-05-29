@@ -4,37 +4,38 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.dao.DataAccessException;
-import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Component;
 
 import fr.excilys.model.Companies;
 import fr.excilys.model.Company;
+import fr.excilys.persistence.crud.CompanyRepository;
 import fr.excilys.persistence.exception.DaoException;
 
 @Component
 public class CompanyDao {
 
-	private static final String SELECT = "SELECT * FROM company";
 	private static final String DELETE = "DELETE FROM `computer-database-db`.company where(id) LIKE ?";
 	private Companies companies = null;
 	private JdbcTemplate template;
+	private CompanyRepository repository;
 
-	public CompanyDao(JdbcTemplate template) {
+	public CompanyDao(JdbcTemplate template, CompanyRepository repository) {
 		super();
 		this.template = template;
+		this.repository = repository;
 		this.companies = this.search();
 	}
 
 	public Companies delete(int id) throws DataAccessException {
-		template.update(DELETE, id);
+		this.repository.deleteById((long) id);
 		return this.companies;
 	}
 
 	public Companies search() throws DataAccessException {
 		if (this.companies == null) {
 			this.companies = new Companies();
-			this.companies.setCompaniesList(template.query(SELECT, new BeanPropertyRowMapper<Company>(Company.class)));
+			this.companies.setCompaniesList(this.repository.findAll());
 		}
 		return this.companies;
 	}

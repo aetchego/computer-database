@@ -2,6 +2,8 @@ package fr.excilys.service.services;
 
 import java.util.List;
 
+import javax.transaction.Transactional;
+
 import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Component;
 
@@ -33,15 +35,16 @@ public class ComputerService {
 		try {
 			computerDao.add(computer);
 		} catch (DataAccessException e) {
-			throw new UserException(DATABASE_ERROR);
+			throw new UserException(e.getMessage());
 		}
 	}
 
+	@Transactional
 	public void delete(int id) throws UserException {
 		try {
 			computerDao.delete(id);
 		} catch (DataAccessException e) {
-			throw new UserException(ID_ERROR);
+			throw new UserException(e.getMessage());
 		}
 	}
 
@@ -63,9 +66,11 @@ public class ComputerService {
 
 	public void update(int id, Computer computer) throws UserException {
 		try {
-			computerDao.update(id, computer);
+			System.out.println(computer.getId());
+			// computerDao.update(id, computer);
+			computerDao.add(computer);
 		} catch (DataAccessException e) {
-			throw new UserException(ID_ERROR);
+			throw new UserException(e.getMessage());
 		}
 	}
 }

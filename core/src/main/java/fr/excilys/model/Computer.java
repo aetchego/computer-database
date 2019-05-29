@@ -3,12 +3,21 @@ package fr.excilys.model;
 import java.sql.Date;
 import java.util.Objects;
 
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.OneToOne;
+import javax.persistence.Table;
+
+@Entity
+@Table(name = "computer")
 public class Computer {
 
+	@Id
 	private Integer id;
 	private String name;
 	private Date introduced;
 	private Date discontinued;
+	@OneToOne
 	private Company company;
 
 	@Override
@@ -35,7 +44,7 @@ public class Computer {
 		return discontinued;
 	}
 
-	public int getId() {
+	public Integer getId() {
 		return id;
 	}
 

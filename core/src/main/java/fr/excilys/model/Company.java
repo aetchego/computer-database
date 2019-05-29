@@ -2,8 +2,15 @@ package fr.excilys.model;
 
 import java.util.Objects;
 
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.Table;
+
+@Entity
+@Table(name = "company")
 public final class Company {
 
+	@Id
 	private int id;
 	private String name;
 
