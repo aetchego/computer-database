@@ -10,9 +10,17 @@ public interface ComputerRepository extends Repository<Computer, Long> {
 
 	List<Computer> findAll();
 
-	void deleteComputerByCompanyId(Long CompanyId);
+	// void deleteComputerByCompanyId(Integer CompanyId);
 
 	<S extends Computer> S save(S entity);
 
 	void deleteById(Integer id);
+
+	void deleteByCompanyId(Integer id);
+
+	int count();
+
+	int countByCompanyName(String name);
+
+	int countByName(String name);
 }

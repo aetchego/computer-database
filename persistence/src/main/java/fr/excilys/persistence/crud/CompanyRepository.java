@@ -9,5 +9,5 @@ import fr.excilys.model.Company;
 public interface CompanyRepository extends Repository<Company, Long> {
 	List<Company> findAll();
 
-	void deleteById(Long id);
+	void deleteById(Integer id);
 }

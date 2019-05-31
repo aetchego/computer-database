@@ -66,8 +66,6 @@ public class ComputerService {
 
 	public void update(int id, Computer computer) throws UserException {
 		try {
-			System.out.println(computer.getId());
-			// computerDao.update(id, computer);
 			computerDao.add(computer);
 		} catch (DataAccessException e) {
 			throw new UserException(e.getMessage());

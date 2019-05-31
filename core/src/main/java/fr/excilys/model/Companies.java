@@ -3,7 +3,6 @@ package fr.excilys.model;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
-import java.util.Optional;
 
 public final class Companies {
 
@@ -21,17 +20,23 @@ public final class Companies {
 		this.companiesList.add(company);
 	}
 
-	public void removeCompany(Optional<Company> company) {
-		if (company.isPresent())
-			this.companiesList.remove(company.get());
-	}
-
+//	public void removeCompany(Optional<Company> company) {
+//		if (company.isPresent())
+//			this.companiesList.remove(company.get());
+//	}
+	/*
+	 * FAIRE HASHMAP POUR METTRE LES ID EN CLé ET SUPPRIMER FACILEMENT UNE COMPANY
+	 */
 	public void removeCompany(int id) {
-		for (Company e : this.companiesList)
-			if (e.getId() == id) {
-				this.removeCompany(Optional.of(e));
-				return;
-			}
+		if (id > this.companiesList.size())
+			return;
+		this.companiesList.remove(id - 1);
+
+//		for (Company e : this.companiesList)
+//			if (e.getId() == id) {
+//				this.removeCompany(Optional.of(e));
+//				return;
+//			}
 	}
 
 	@Override

@@ -28,10 +28,10 @@ public class CompanyService {
 	@Transactional
 	public void delete(int id) throws UserException {
 		try {
-			// computerDao.deleteByCompany(id);
+			computerDao.deleteByCompanyId(id);
 			(companyDao.delete(id)).removeCompany(id);
 		} catch (DataAccessException e) {
-			throw new UserException(ERROR_MESSAGE);
+			throw new UserException(e.getMessage());
 		}
 	}
 

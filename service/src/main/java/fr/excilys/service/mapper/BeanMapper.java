@@ -28,11 +28,10 @@ public class BeanMapper {
 			computer.setDiscontinued(Date.valueOf(LocalDate.parse(computerDto.getDiscontinued())));
 		companyService.findByName(computerDto.getBrand()).ifPresent(computer::setCompany);
 		computer.setName(computerDto.getName());
-		if (computer.getId() == null)
+		if (computerDto.getId() == null)
 			computer.setId(0);
 		else
 			computer.setId(computerDto.getId());
-		System.out.println(computerDto.getId());
 		return computer;
 	}
 }
