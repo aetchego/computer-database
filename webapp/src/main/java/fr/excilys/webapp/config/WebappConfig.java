@@ -7,7 +7,7 @@ import fr.excilys.binding.config.BindingConfig;
 import fr.excilys.service.config.ServiceConfig;
 
 @Configuration
-@Import({ BindingConfig.class, ServiceConfig.class })
+@Import({ BindingConfig.class, ServiceConfig.class, WebSecurityConfiguration.class })
 public class WebappConfig {
 
 }

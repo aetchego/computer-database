@@ -50,8 +50,6 @@ public class ComputerService {
 
 	public Page<Computer> search(Pageable pageable, String name) throws UserException {
 		try {
-			System.out.println(
-					name + " " + pageable.getOffset() + " " + pageable.getPageNumber() + " " + pageable.getPageSize());
 			if (Objects.isNull(name) || name.trim().isEmpty())
 				return computerDao.search(pageable);
 			return computerDao.findByName(pageable, name);
