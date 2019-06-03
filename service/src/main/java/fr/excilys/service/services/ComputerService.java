@@ -1,10 +1,12 @@
 package fr.excilys.service.services;
 
-import java.util.List;
+import java.util.Objects;
 
 import javax.transaction.Transactional;
 
 import org.springframework.dao.DataAccessException;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Component;
 
 import fr.excilys.binding.exception.UserException;
@@ -14,8 +16,6 @@ import fr.excilys.persistence.dao.ComputerDao;
 @Component
 public class ComputerService {
 
-	private static final String DATABASE_ERROR = "[ERROR] Ooops, something went wrong !";
-	private static final String ID_ERROR = "[ERROR] ID does not exist.";
 	private final ComputerDao computerDao;
 
 	public ComputerService(ComputerDao computerDao) {
@@ -27,7 +27,7 @@ public class ComputerService {
 		try {
 			return computerDao.count(name);
 		} catch (DataAccessException e) {
-			throw new UserException(DATABASE_ERROR);
+			throw new UserException(e.getMessage());
 		}
 	}
 
@@ -48,23 +48,27 @@ public class ComputerService {
 		}
 	}
 
-	public List<Computer> search(String name, int offset, int limit, String query) throws UserException {
+	public Page<Computer> search(Pageable pageable, String name) throws UserException {
 		try {
-			return computerDao.search(name, offset, limit, query);
+			System.out.println(
+					name + " " + pageable.getOffset() + " " + pageable.getPageNumber() + " " + pageable.getPageSize());
+			if (Objects.isNull(name) || name.trim().isEmpty())
+				return computerDao.search(pageable);
+			return computerDao.findByName(pageable, name);
 		} catch (DataAccessException e) {
-			throw new UserException(DATABASE_ERROR);
+			throw new UserException(e.getMessage());
 		}
 	}
 
-	public Computer showDetails(int id) throws UserException {
+	public Computer findById(int id) throws UserException {
 		try {
-			return computerDao.showDetails(id);
+			return computerDao.findById(id);
 		} catch (DataAccessException e) {
-			throw new UserException(ID_ERROR);
+			throw new UserException(e.getMessage());
 		}
 	}
 
-	public void update(int id, Computer computer) throws UserException {
+	public void update(Computer computer) throws UserException {
 		try {
 			computerDao.add(computer);
 		} catch (DataAccessException e) {

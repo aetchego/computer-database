@@ -3,8 +3,8 @@ package fr.excilys.webapp.pagination;
 public class PageQuery {
 
 	private String name;
-	private String order;
-	private String sens;
+	private String order = "id";
+	private String sens = "ASC";
 	private String search;
 
 	public String getName() {

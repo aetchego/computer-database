@@ -54,7 +54,7 @@ public class UpdateComputer {
 				model.addAttribute("companies", companyService.search().getCompaniesList());
 				return "editComputer";
 			}
-			computerService.update(computer.getId(), mapper.dtoToBean(computer));
+			computerService.update(mapper.dtoToBean(computer));
 		} catch (UserException e) {
 			logger.info(e.getMessage());
 		}

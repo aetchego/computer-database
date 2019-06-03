@@ -44,10 +44,10 @@
 
 							<div class="input-group mb-3">
 								<select class="custom-select" id="inputGroupSelect01" name="order">
-									<option selected value="computer.id"><spring:message code="order" text="default text" /></option>
-									<option value="computer.name"><spring:message code="computer" text="default text" /></option>
-									<option value="computer.introduced"><spring:message code="intro" text="default text" /></option>
-									<option value="computer.discontinued"><spring:message code="discon" text="default text" /></option>
+									<option selected value="id"><spring:message code="order" text="default text" /></option>
+									<option value="name"><spring:message code="computer" text="default text" /></option>
+									<option value="introduced"><spring:message code="intro" text="default text" /></option>
+									<option value="discontinued"><spring:message code="discon" text="default text" /></option>
 									<option value="company.name"><spring:message code="company" text="default text" /></option>
 								</select>
 							</div>
