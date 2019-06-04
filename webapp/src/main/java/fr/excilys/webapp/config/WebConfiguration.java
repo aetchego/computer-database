@@ -17,7 +17,7 @@ import org.springframework.web.servlet.theme.ThemeChangeInterceptor;
 
 @Configuration
 @EnableWebMvc
-@ComponentScan("fr.excilys")
+@ComponentScan("fr.excilys.webapp")
 public class WebConfiguration implements WebMvcConfigurer {
 
 	@Override

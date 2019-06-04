@@ -10,7 +10,7 @@ import org.springframework.context.support.ResourceBundleMessageSource;
 import fr.excilys.persistence.config.PersistenceConfig;
 
 @Configuration
-@ComponentScan(basePackages = { "fr.excilys.service.services" })
+@ComponentScan(basePackages = { "fr.excilys.services.services", "fr.excilys.services.mapper" })
 @Import(PersistenceConfig.class)
 public class ServiceConfig {
 	@Bean

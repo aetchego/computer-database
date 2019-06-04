@@ -6,7 +6,7 @@ import org.springframework.context.annotation.Import;
 import fr.excilys.services.config.ServiceConfig;
 
 @Configuration
-@Import({ ServiceConfig.class/* , WebSecurityConfiguration.class */ })
+@Import({ ServiceConfig.class })
 public class WebappConfig {
 
 }
