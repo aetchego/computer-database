@@ -26,12 +26,6 @@
 
 		<dependency>
 			<groupId>fr.excilys</groupId>
-			<artifactId>binding</artifactId>
-			<version>${module.version}</version>
-		</dependency>
-
-		<dependency>
-			<groupId>fr.excilys</groupId>
 			<artifactId>persistence</artifactId>
 			<version>${module.version}</version>
 		</dependency>
@@ -40,18 +34,6 @@
 			<groupId>fr.excilys</groupId>
 			<artifactId>service</artifactId>
 			<version>${module.version}</version>
-		</dependency>
-
-		<dependency>
-			<groupId>org.springframework.security</groupId>
-			<artifactId>spring-security-config</artifactId>
-			<version>${spring-framework.version}</version>
-		</dependency>
-
-		<dependency>
-			<groupId>org.springframework.security</groupId>
-			<artifactId>spring-security-web</artifactId>
-			<version>${spring-framework.version}</version>
 		</dependency>
 
 		<dependency>

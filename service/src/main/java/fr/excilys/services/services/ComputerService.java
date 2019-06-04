@@ -1,4 +1,4 @@
-package fr.excilys.service.services;
+package fr.excilys.services.services;
 
 import java.util.Objects;
 
@@ -9,31 +9,33 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Component;
 
-import fr.excilys.binding.exception.UserException;
 import fr.excilys.model.Computer;
-import fr.excilys.persistence.dao.ComputerDao;
+import fr.excilys.persistence.crud.ComputerRepository;
+import fr.excilys.services.exception.UserException;
 
 @Component
 public class ComputerService {
 
-	private final ComputerDao computerDao;
+	private final ComputerRepository repository;
 
-	public ComputerService(ComputerDao computerDao) {
+	public ComputerService(ComputerRepository repository) {
 		super();
-		this.computerDao = computerDao;
+		this.repository = repository;
 	}
 
 	public int count(String name) throws UserException {
 		try {
-			return computerDao.count(name);
+			if (name != null && !name.isEmpty())
+				return repository.countByNameOrCompanyName(name, name);
+			return ((Long) repository.count()).intValue();
 		} catch (DataAccessException e) {
 			throw new UserException(e.getMessage());
 		}
 	}
 
-	public void add(Computer computer) throws UserException {
+	public void save(Computer computer) throws UserException {
 		try {
-			computerDao.add(computer);
+			repository.save(computer);
 		} catch (DataAccessException e) {
 			throw new UserException(e.getMessage());
 		}
@@ -42,7 +44,7 @@ public class ComputerService {
 	@Transactional
 	public void delete(int id) throws UserException {
 		try {
-			computerDao.delete(id);
+			repository.deleteById(id);
 		} catch (DataAccessException e) {
 			throw new UserException(e.getMessage());
 		}
@@ -51,8 +53,8 @@ public class ComputerService {
 	public Page<Computer> search(Pageable pageable, String name) throws UserException {
 		try {
 			if (Objects.isNull(name) || name.trim().isEmpty())
-				return computerDao.search(pageable);
-			return computerDao.findByName(pageable, name);
+				return repository.findAll(pageable);
+			return repository.findByNameOrCompanyName(pageable, name, name);
 		} catch (DataAccessException e) {
 			throw new UserException(e.getMessage());
 		}
@@ -60,15 +62,7 @@ public class ComputerService {
 
 	public Computer findById(int id) throws UserException {
 		try {
-			return computerDao.findById(id);
-		} catch (DataAccessException e) {
-			throw new UserException(e.getMessage());
-		}
-	}
-
-	public void update(Computer computer) throws UserException {
-		try {
-			computerDao.add(computer);
+			return repository.findById(id);
 		} catch (DataAccessException e) {
 			throw new UserException(e.getMessage());
 		}

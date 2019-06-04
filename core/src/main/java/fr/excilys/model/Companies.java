@@ -1,42 +1,35 @@
 package fr.excilys.model;
 
-import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Objects;
+import java.util.stream.Collectors;
 
 public final class Companies {
 
-	private List<Company> companiesList = new ArrayList<>();
+	private Map<Integer, Company> companiesMap = new HashMap<>();
 
-	public void setCompaniesList(List<Company> companies) {
-		this.companiesList = companies;
+	public void setCompaniesMap(List<Company> companies) {
+		this.companiesMap = companies.stream().collect(Collectors.toMap(Company::getId, c -> c));
+	}
+
+	public Map<Integer, Company> getCompaniesMap() {
+		return companiesMap;
 	}
 
 	public List<Company> getCompaniesList() {
-		return companiesList;
+		return this.companiesMap.values().stream().collect(Collectors.toList());
 	}
 
-	public void addCompany(Company company) {
-		this.companiesList.add(company);
+	public void delete(int id) {
+		if (companiesMap.containsKey(id))
+			companiesMap.remove(id);
 	}
 
-//	public void removeCompany(Optional<Company> company) {
-//		if (company.isPresent())
-//			this.companiesList.remove(company.get());
-//	}
-	/*
-	 * FAIRE HASHMAP POUR METTRE LES ID EN CLé ET SUPPRIMER FACILEMENT UNE COMPANY
-	 */
-	public void removeCompany(int id) {
-		if (id > this.companiesList.size())
-			return;
-		this.companiesList.remove(id - 1);
-
-//		for (Company e : this.companiesList)
-//			if (e.getId() == id) {
-//				this.removeCompany(Optional.of(e));
-//				return;
-//			}
+	@Override
+	public int hashCode() {
+		return Objects.hash(companiesMap);
 	}
 
 	@Override
@@ -51,16 +44,12 @@ public final class Companies {
 			return false;
 		}
 		Companies other = (Companies) obj;
-		return Objects.equals(companiesList, other.companiesList);
-	}
-
-	@Override
-	public int hashCode() {
-		return Objects.hash(companiesList);
+		return Objects.equals(companiesMap, other.companiesMap);
 	}
 
 	@Override
 	public String toString() {
-		return "Companies [companies=" + companiesList + "\n ]";
+		return "Companies [companiesMap=" + companiesMap + "]";
 	}
+
 }

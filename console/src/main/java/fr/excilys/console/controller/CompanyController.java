@@ -2,8 +2,8 @@ package fr.excilys.console.controller;
 
 import org.springframework.stereotype.Component;
 
-import fr.excilys.binding.exception.UserException;
-import fr.excilys.service.services.CompanyService;
+import fr.excilys.services.exception.UserException;
+import fr.excilys.services.services.CompanyService;
 
 @Component
 public class CompanyController {

@@ -12,11 +12,11 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
-import fr.excilys.binding.dto.ComputerDTO;
-import fr.excilys.binding.exception.UserException;
-import fr.excilys.service.mapper.BeanMapper;
-import fr.excilys.service.services.CompanyService;
-import fr.excilys.service.services.ComputerService;
+import fr.excilys.services.dto.ComputerDTO;
+import fr.excilys.services.exception.UserException;
+import fr.excilys.services.mapper.BeanMapper;
+import fr.excilys.services.services.CompanyService;
+import fr.excilys.services.services.ComputerService;
 
 @Controller
 @RequestMapping("/computer/edit")
@@ -54,7 +54,7 @@ public class UpdateComputer {
 				model.addAttribute("companies", companyService.search().getCompaniesList());
 				return "editComputer";
 			}
-			computerService.update(mapper.dtoToBean(computer));
+			computerService.save(mapper.dtoToBean(computer));
 		} catch (UserException e) {
 			logger.info(e.getMessage());
 		}

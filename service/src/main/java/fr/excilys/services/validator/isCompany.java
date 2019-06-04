@@ -1,4 +1,4 @@
-package fr.excilys.binding.validator;
+package fr.excilys.services.validator;
 
 import java.lang.annotation.Documented;
 import java.lang.annotation.ElementType;

@@ -23,12 +23,6 @@
 
 		<dependency>
 			<groupId>fr.excilys</groupId>
-			<artifactId>binding</artifactId>
-			<version>${module.version}</version>
-		</dependency>
-		
-		<dependency>
-			<groupId>fr.excilys</groupId>
 			<artifactId>persistence</artifactId>
 			<version>${module.version}</version>
 		</dependency>

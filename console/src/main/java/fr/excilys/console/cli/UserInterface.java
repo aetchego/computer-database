@@ -6,8 +6,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 
-import fr.excilys.binding.exception.UserException;
 import fr.excilys.console.controller.CompanyController;
+import fr.excilys.services.exception.UserException;
 
 @Component
 public class UserInterface {

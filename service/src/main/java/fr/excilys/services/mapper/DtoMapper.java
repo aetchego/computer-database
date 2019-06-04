@@ -1,9 +1,9 @@
-package fr.excilys.binding.mapper;
+package fr.excilys.services.mapper;
 
 import org.springframework.stereotype.Component;
 
-import fr.excilys.binding.dto.ComputerDTO;
 import fr.excilys.model.Computer;
+import fr.excilys.services.dto.ComputerDTO;
 
 @Component
 public class DtoMapper {

@@ -12,8 +12,9 @@ public class WebAppInitializer implements WebApplicationInitializer {
 
 	@Override
 	public void onStartup(ServletContext container) {
+		// rootContext.register(WebSecurityConfiguration.class);
+
 		AnnotationConfigWebApplicationContext rootContext = new AnnotationConfigWebApplicationContext();
-		rootContext.register(WebSecurityConfiguration.class);
 
 		container.addListener(new ContextLoaderListener(rootContext));
 

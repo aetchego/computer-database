@@ -9,8 +9,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import fr.excilys.binding.exception.UserException;
-import fr.excilys.service.services.ComputerService;
+import fr.excilys.services.exception.UserException;
+import fr.excilys.services.services.ComputerService;
 
 @Controller
 @RequestMapping("/computer/delete")

@@ -1,27 +1,27 @@
-package fr.excilys.binding.validator;
+package fr.excilys.services.validator;
 
 import java.util.List;
 
 import javax.validation.ConstraintValidator;
 import javax.validation.ConstraintValidatorContext;
 
-import fr.excilys.binding.exception.UserException;
 import fr.excilys.model.Company;
-import fr.excilys.persistence.dao.CompanyDao;
+import fr.excilys.services.exception.UserException;
+import fr.excilys.services.services.CompanyService;
 
 public class CompanyValidator implements ConstraintValidator<isCompany, String> {
 
-	private CompanyDao dao;
+	private CompanyService service;
 
-	public CompanyValidator(CompanyDao dao) {
+	public CompanyValidator(CompanyService service) {
 		super();
-		this.dao = dao;
+		this.service = service;
 	}
 
 	private void checkCompanyName(String brand) throws UserException {
 		if (brand == null || brand.trim().isEmpty() || brand.equals("---"))
 			return;
-		List<Company> comp = dao.search().getCompaniesList();
+		List<Company> comp = service.search().getCompaniesList();
 		for (Company e : comp)
 			if (e.getName().equals(brand))
 				return;

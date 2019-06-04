@@ -1,14 +1,14 @@
-package fr.excilys.service.mapper;
+package fr.excilys.services.mapper;
 
 import java.sql.Date;
 import java.time.LocalDate;
 
 import org.springframework.stereotype.Component;
 
-import fr.excilys.binding.dto.ComputerDTO;
-import fr.excilys.binding.exception.UserException;
 import fr.excilys.model.Computer;
-import fr.excilys.service.services.CompanyService;
+import fr.excilys.services.dto.ComputerDTO;
+import fr.excilys.services.exception.UserException;
+import fr.excilys.services.services.CompanyService;
 
 @Component
 public class BeanMapper {
