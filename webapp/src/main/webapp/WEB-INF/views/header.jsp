@@ -15,7 +15,7 @@
 			</div>
 			<div class="col-sm">
 				<a class="navbar-brand" href="?lang=en"><span
-					class="flag-icon flag-icon-us"></span></a> | <a class="navbar-brand"
+					class="flag-icon flag-icon-us"></span></a><a class="navbar-brand"
 					href="?lang=fr"><span class="flag-icon flag-icon-fr"></span></a>
 				<c:url value="/logout" var="logout" />
 				<a href="${logout}" class="navbar-brand"> <span
