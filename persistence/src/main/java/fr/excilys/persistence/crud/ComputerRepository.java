@@ -26,5 +26,5 @@ public interface ComputerRepository extends PagingAndSortingRepository<Computer,
 	@Override
 	long count();
 
-	int countByNameOrCompanyName(String name, String Bis);
+	int countByNameOrCompanyName(String name, String nameBis);
 }

@@ -21,10 +21,10 @@ import com.zaxxer.hikari.HikariConfig;
 import com.zaxxer.hikari.HikariDataSource;
 
 @Configuration
-@ComponentScan(basePackages = { "fr.excilys.persistence.dao", "fr.excilys.persistence.mapper",
+@ComponentScan(basePackages = {
 		"fr.excilys.persistence.crud" }, excludeFilters = @ComponentScan.Filter(Configuration.class))
 @EnableTransactionManagement
-@EnableJpaRepositories(basePackages = { "fr.excilys.persistence.dao",
+@EnableJpaRepositories(basePackages = {
 		"fr.excilys.persistence.crud" }, entityManagerFactoryRef = "entityManagerFactory")
 public class PersistenceConfig {
 
