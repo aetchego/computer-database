@@ -10,11 +10,11 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
-import fr.excilys.services.config.ServiceConfig;
+import fr.excilys.binding.config.BindingConfig;
 
 @Configuration
 @EnableWebSecurity
-@Import({ ServiceConfig.class })
+@Import({ BindingConfig.class })
 public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
 
 	private final UserDetailsService userService;

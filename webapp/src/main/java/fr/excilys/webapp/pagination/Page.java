@@ -10,7 +10,6 @@ public class Page {
 	}
 
 	public void setCurrent(int current) {
-		System.out.println("je passe là");
 		this.current = current;
 	}
 

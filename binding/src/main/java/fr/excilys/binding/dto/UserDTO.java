@@ -1,4 +1,4 @@
-package fr.excilys.services.dto;
+package fr.excilys.binding.dto;
 
 public class UserDTO {
 

@@ -1,12 +1,12 @@
-package fr.excilys.services.mapper;
+package fr.excilys.binding.mapper;
 
 import java.sql.Date;
 import java.time.LocalDate;
 
 import org.springframework.stereotype.Component;
 
+import fr.excilys.binding.dto.ComputerDTO;
 import fr.excilys.model.Computer;
-import fr.excilys.services.dto.ComputerDTO;
 import fr.excilys.services.exception.UserException;
 import fr.excilys.services.services.CompanyService;
 

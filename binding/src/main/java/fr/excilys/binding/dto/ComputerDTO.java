@@ -1,11 +1,11 @@
-package fr.excilys.services.dto;
+package fr.excilys.binding.dto;
 
 import javax.validation.constraints.NotBlank;
 
 import org.springframework.lang.NonNull;
 
-import fr.excilys.services.validator.AreValidDates;
-import fr.excilys.services.validator.isCompany;
+import fr.excilys.binding.validator.AreValidDates;
+import fr.excilys.binding.validator.isCompany;
 
 @AreValidDates(introduced = "introduced", discontinued = "discontinued")
 public class ComputerDTO {

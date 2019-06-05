@@ -1,4 +1,4 @@
-package fr.excilys.services.validator;
+package fr.excilys.binding.validator;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeParseException;
@@ -7,7 +7,7 @@ import java.util.Optional;
 import javax.validation.ConstraintValidator;
 import javax.validation.ConstraintValidatorContext;
 
-import fr.excilys.services.dto.ComputerDTO;
+import fr.excilys.binding.dto.ComputerDTO;
 import fr.excilys.services.exception.UserException;
 
 public class DatesValidator implements ConstraintValidator<AreValidDates, ComputerDTO> {

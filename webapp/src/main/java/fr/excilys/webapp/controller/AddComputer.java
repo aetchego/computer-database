@@ -12,9 +12,9 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
-import fr.excilys.services.dto.ComputerDTO;
+import fr.excilys.binding.dto.ComputerDTO;
+import fr.excilys.binding.mapper.BeanMapper;
 import fr.excilys.services.exception.UserException;
-import fr.excilys.services.mapper.BeanMapper;
 import fr.excilys.services.services.CompanyService;
 import fr.excilys.services.services.ComputerService;
 
