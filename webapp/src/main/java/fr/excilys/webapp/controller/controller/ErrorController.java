@@ -1,4 +1,4 @@
-package fr.excilys.webapp.controller;
+package fr.excilys.webapp.controller.controller;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -10,7 +10,7 @@ public class ErrorController {
 	@GetMapping(value = "errors")
 	public String renderErrorPage(HttpServletRequest httpRequest) {
 		int httpErrorCode = getErrorCode(httpRequest);
-		if (httpErrorCode == 403 || httpErrorCode == 404 || httpErrorCode == 500)
+		if (httpErrorCode == 403 || httpErrorCode == 404 || httpErrorCode == 500 || httpErrorCode == 400)
 			return Integer.toString(httpErrorCode);
 		return "dashboard";
 	}

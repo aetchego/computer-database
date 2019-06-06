@@ -1,4 +1,4 @@
-package fr.excilys.webapp.controller;
+package fr.excilys.webapp.controller.controller;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

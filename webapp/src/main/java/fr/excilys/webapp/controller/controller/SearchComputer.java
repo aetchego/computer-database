@@ -1,4 +1,4 @@
-package fr.excilys.webapp.controller;
+package fr.excilys.webapp.controller.controller;
 
 import java.util.Objects;
 import java.util.stream.Collectors;

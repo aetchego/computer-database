@@ -12,6 +12,7 @@ import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringRunner;
 
@@ -72,6 +73,52 @@ public class ComputerDaoTest {
 		database.deleteById(3);
 		assertEquals(StreamSupport.stream(repository.findAll().spliterator(), false).collect(Collectors.toList()),
 				database.findAll());
+	}
+
+	@Test(expected = EmptyResultDataAccessException.class)
+	public void deleteNegative() {
+		repository.deleteById(-3);
+	}
+
+	@Test(expected = EmptyResultDataAccessException.class)
+	public void deleteInexistent() {
+		repository.deleteById(150000);
+	}
+
+	@Test
+	public void addOK() {
+		Computer computer = database.createComputer(21, "Test", null, null, 2);
+		repository.save(computer);
+		assertEquals(repository.findById(21), computer);
+	}
+
+	@Test
+	public void addWrongId() {
+		Computer computer = database.createComputer(-2, "Test", null, null, 2);
+		repository.save(computer);
+		assertEquals(repository.findById(-2), computer);
+	}
+
+	@Test
+	public void updateLargeId() {
+		Computer computer = database.createComputer(120, "Replaced", null, null, 7);
+		repository.save(computer);
+		assertEquals(repository.findById(120), computer);
+	}
+
+	@Test
+	public void updateOK() {
+		Computer computer = database.createComputer(4, "Replaced", null, null, 7);
+		repository.save(computer);
+		database.update(computer);
+		assertEquals(repository.findById(4), database.findById(4));
+	}
+
+	@Test
+	public void countByComputerOrCompanyNameOK() {
+		Integer expected = repository.countByNameOrCompanyName("Apple Inc.", "Apple Inc.");
+		Long result = database.countByComputerOrCompanyName("Apple Inc.");
+		assertEquals(expected, result);
 	}
 
 }

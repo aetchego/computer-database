@@ -15,9 +15,9 @@
 <%@include file="header.jsp" %>
 
 	<section id="main">
-		<div class="container">	
+		<div class="container">
 			<div class="alert alert-danger">
-				<spring:message code="500" text="default text" />
+				<spring:message code="bad_request" text="default text" />
 				<br/>
 				<!-- stacktrace -->
 			</div>
