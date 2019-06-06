@@ -1,7 +1,6 @@
 package fr.excilys.webapp.controller.rest;
 
 import java.util.List;
-import java.util.Optional;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
 
@@ -15,7 +14,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.method.annotation.MethodArgumentTypeMismatchException;
 
 import fr.excilys.model.Computer;
 import fr.excilys.persistence.crud.ComputerRepository;
@@ -41,8 +39,8 @@ public class ComputerRest {
 
 	@GetMapping(value = "/{id}")
 	@ResponseStatus(HttpStatus.FOUND)
-	public Optional<Computer> findById(@PathVariable("id") Integer id) throws MethodArgumentTypeMismatchException {
-		return Preconditions.checkFound(repository.findById(id));
+	public Computer findById(@PathVariable("id") Integer id) {
+		return Preconditions.checkFound(repository.findById(id).get());
 	}
 
 	@PostMapping
